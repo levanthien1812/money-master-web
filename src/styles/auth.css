@@ -1,0 +1,19 @@
+.flip-card {
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+.flip-card.active {
+  transform: rotateY(180deg);
+}
+
+.benefits-card,
+.form-card {
+  position: absolute;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.benefits-card {
+  transform: rotateY(180deg);
+}
