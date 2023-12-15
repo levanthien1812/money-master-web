@@ -14,6 +14,7 @@ import PlansService from "../../../services/plans";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchWallets } from "../../../stores/wallets";
 import EventsService from "../../../services/events";
+import { CATEGORY_TYPES } from "../../../config/constants";
 
 function AddTransaction({
   setIsAdding,
@@ -50,7 +51,7 @@ function AddTransaction({
 
   useEffect(() => {
     if (
-      type === "expenses" ||
+      type === CATEGORY_TYPES.EXPENSES ||
       (transaction && transaction.category.type === CATEGORY_TYPES.EXPENSES)
     )
       setLoadingPlan(true);
@@ -102,6 +103,8 @@ function AddTransaction({
     }
     setLoadingCategories(false);
   };
+
+  console.log(categories);
 
   const getEvents = async () => {
     try {
@@ -259,7 +262,7 @@ function AddTransaction({
                 required
                 error={(errors && errors.title) || null}
               />
-              {(type === "expenses" ||
+              {(type === CATEGORY_TYPES.EXPENSES ||
                 (transaction &&
                   transaction.category.type === CATEGORY_TYPES.EXPENSES)) && (
                 <>

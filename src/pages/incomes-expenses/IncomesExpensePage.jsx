@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SelectWallet from "../wallets/components/SelectWallet";
 import { useSelector } from "react-redux";
+import { CATEGORY_TYPES } from "../../config/constants";
 
 function IncomesExpensePage() {
   const [transactions, setTransactions] = useState(null);
@@ -146,14 +147,14 @@ function IncomesExpensePage() {
           <button
             className="py-2 xl:px-8 px-4 rounded-s-xl font-semibold text-purple-600 w-1/2 hover:bg-purple-100"
             id="add-income-btn"
-            onClick={() => handleClickAddTx("incomes")}
+            onClick={() => handleClickAddTx(CATEGORY_TYPES.INCOMES)}
           >
             Add income
           </button>
           <button
             className="py-2 xl:px-8 px-4 text-center rounded-e-xl font-semibold bg-purple-500 text-white hover:bg-purple-600 w-1/2"
             id="add-expense-btn"
-            onClick={() => handleClickAddTx("expenses")}
+            onClick={() => handleClickAddTx(CATEGORY_TYPES.EXPENSES)}
           >
             Add expense
           </button>
