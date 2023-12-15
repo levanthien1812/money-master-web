@@ -131,8 +131,7 @@ function IncomesExpensePage() {
   }, [month, year, walletChosen, search, day]);
 
   return (
-    <div className="lg:p-8 sm:p-14 p-2">
-      {/* Header */}
+    <div className="lg:p-8 sm:p-14 p-2 max-h-screen">
       <div className="mb-4 flex justify-between items-center flex-col lg:flex-row gap-4">
         <div className="flex gap-4 items-center justify-between lg:justify-start lg:w-3/5 w-full">
           <h2 className="sm:text-4xl text-3xl">Transactions</h2>

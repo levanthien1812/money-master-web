@@ -119,13 +119,13 @@ function Report({
         <>
           <div className="mb-8 py-2 sm:px-4 px-0 rounded-xl flex gap-1 flex-row lg:flex-col xl:flex-row">
             <div className="bg-white sm:py-2 py-1 sm:px-4 px-2 rounded-xl w-1/2 xl:w-1/2 sm:w-full text-center shadow-lg">
-              <p className="text-md uppercase mb-1">Total incomes:</p>
+              <p className="text-md uppercase mb-1 text-gray-400 hover:text-gray-500 font-bold">Total incomes:</p>
               <p className="text-2xl font-semibold text-green-500">
                 {formatCurrency(report[CATEGORY_TYPES.INCOMES])}
               </p>
             </div>
             <div className="bg-white py-1 px-2 sm:py-2 sm:px-4  rounded-xl w-1/2 xl:w-1/2 sm:w-full text-center shadow-lg">
-              <p className="text-md uppercase mb-1">Total expenses:</p>
+              <p className="text-md uppercase mb-1 text-gray-400 hover:text-gray-500 font-bold">Total expenses:</p>
               <p className="text-2xl font-semibold text-orange-500">
                 {"-" + formatCurrency(report[CATEGORY_TYPES.EXPENSES])}
               </p>

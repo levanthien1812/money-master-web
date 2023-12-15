@@ -75,6 +75,8 @@ function AddCategoryPlan({
         wallet: walletSelected?.id,
       });
 
+      console.log(responseDataLastMonth);
+
       if (responseDataLastMonth.data.reports[categoryChosen.id])
         setLastMonthValue(
           responseDataLastMonth.data.reports[categoryChosen.id].amount

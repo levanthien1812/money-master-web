@@ -12,6 +12,7 @@ import formatCurrency from "../../../utils/currencyFormatter";
 import PlansService from "../../../services/plans";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import { CATEGORY_TYPES } from "../../../config/constants";
 
 function AddMonthPlan({ onClose, onAddingSuccess, _month, _year }) {
   const { wallets, walletChosen } = useSelector((state) => state.wallet);
@@ -44,14 +45,14 @@ function AddMonthPlan({ onClose, onAddingSuccess, _month, _year }) {
       });
 
       if (responseData.data.reports[month.id + ""]) {
-        setLastMonthValue(responseData.data.reports[month.id + ""].expenses);
+        setLastMonthValue(responseData.data.reports[month.id + ""][CATEGORY_TYPES.EXPENSES]);
       } else {
         setLastMonthValue(0);
       }
 
       if (responseData.data.reports[month.id + 1 + ""]) {
         setCurrentMonthValue(
-          responseData.data.reports[month.id + 1 + ""].expenses
+          responseData.data.reports[month.id + 1 + ""][CATEGORY_TYPES.EXPENSES]
         );
       } else {
         setCurrentMonthValue(0);
