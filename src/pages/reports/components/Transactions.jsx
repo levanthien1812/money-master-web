@@ -2,6 +2,7 @@ import React from "react";
 import Loading from "../../../components/others/Loading";
 import TransactionsByCategory from "./TransactionsByCategory";
 import TransactionsByTime from "./TransactionsByTime";
+import { REPORT_TYPES } from "../../../config/constants";
 
 function Transactions({
   reports,
@@ -24,7 +25,7 @@ function Transactions({
           />
         )}
       {!loading &&
-        reportType === "expenses-incomes" &&
+        reportType === REPORT_TYPES.DAY_MONTH &&
         reports &&
         Object.keys(reports).length > 0 && (
           <TransactionsByTime

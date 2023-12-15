@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import TransactionsByCategoryItem from "./TransactionsByCategoryItem";
 import Select from "../../../components/elements/Select";
+import { PERIODS } from "../../../config/constants";
 
 const sortOptions = [
   { id: 1, name: "Category name" },
@@ -63,7 +64,7 @@ function TransactionsByCategory({ reports, month, year, totalAmount, period }) {
               key={Math.random()}
               item={item}
               index={index}
-              month={period === "month" ? month.id + 1 : null}
+              month={period === PERIODS.MONTH ? month.id + 1 : null}
               year={year.id}
               wallet={walletChosen?.id}
               percentage={

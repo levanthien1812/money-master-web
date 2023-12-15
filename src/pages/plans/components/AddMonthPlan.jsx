@@ -12,7 +12,7 @@ import formatCurrency from "../../../utils/currencyFormatter";
 import PlansService from "../../../services/plans";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
-import { CATEGORY_TYPES } from "../../../config/constants";
+import { CATEGORY_TYPES, REPORT_TYPES } from "../../../config/constants";
 
 function AddMonthPlan({ onClose, onAddingSuccess, _month, _year }) {
   const { wallets, walletChosen } = useSelector((state) => state.wallet);
@@ -40,7 +40,7 @@ function AddMonthPlan({ onClose, onAddingSuccess, _month, _year }) {
       setLoadingTotal(true);
       const responseData = await ReportsService.getReports({
         year: year.id,
-        report_type: "expenses-incomes",
+        report_type: REPORT_TYPES.DAY_MONTH,
         wallet: walletSelected?.id,
       });
 

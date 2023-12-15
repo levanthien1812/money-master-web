@@ -7,11 +7,12 @@ import GoalList from "./components/GoalList";
 import Congratulation from "./components/Congratulation";
 import { useDispatch } from "react-redux";
 import { fetchWallets } from "../../stores/wallets";
+import { GOAL_STATUS } from "../../config/constants";
 
 function GoalsPage() {
   const [isAddingGoal, setIsAddingGoal] = useState(false);
   const [loadingGoals, setLoadingGoals] = useState(false);
-  const [status, setStatus] = useState(2);
+  const [status, setStatus] = useState(GOAL_STATUS.IN_PROGRESS);
   const [isCongratulating, setIsCongratulating] = useState(false);
   const [goals, setGoals] = useState([]);
   const [countAll, setCountAll] = useState();

@@ -1,6 +1,7 @@
 import React from "react";
 import { Chart, registerables } from "chart.js";
 import { Bar, Doughnut } from "react-chartjs-2";
+import { REPORT_TYPES } from "../../../config/constants";
 
 function Charts({
   loading,
@@ -17,7 +18,7 @@ function Charts({
 
   return (
     <div className="mb-5">
-      {!loading && reportType === "expenses-incomes" && (
+      {!loading && reportType === REPORT_TYPES.DAY_MONTH && (
         <div style={{ maxHeight: 400 }} className="w-full">
           <Bar
             height={400}
