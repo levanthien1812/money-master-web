@@ -14,7 +14,7 @@ import { faFileExcel } from "@fortawesome/free-regular-svg-icons";
 import { motion } from "framer-motion";
 import TransactionsService from "../../services/transactions";
 import { toast } from "react-toastify";
-import { CATEGORY_TYPES } from "../../config/constants";
+import { CATEGORY_TYPES, PERIODS, REPORT_TYPES, TRANSACTION_TYPE } from "../../config/constants";
 
 function ReportsPage() {
   const location = useLocation();
@@ -27,9 +27,9 @@ function ReportsPage() {
     )
   );
 
-  const [transactionType, setTransactionType] = useState("total");
-  const [reportType, setReportType] = useState("expenses-incomes");
-  const [period, setPeriod] = useState("month");
+  const [transactionType, setTransactionType] = useState(TRANSACTION_TYPE.TOTAL);
+  const [reportType, setReportType] = useState(REPORT_TYPES.DAY_MONTH);
+  const [period, setPeriod] = useState(PERIODS.MONTH);
   const [reports, setReports] = useState();
   const [filledReports, setFilledReports] = useState([]);
   const [chartLabels, setChartLabels] = useState([]);
@@ -156,14 +156,14 @@ function ReportsPage() {
         wallet: walletChosen.id,
       };
 
-      if (period === "month") {
+      if (period === PERIODS.MONTH) {
         params = { ...params, month: month.id + 1 };
       }
       getReports(params);
     }
 
-    if (reportType === "expenses-incomes") {
-      if (period === "month") {
+    if (reportType === REPORT_TYPES.DAY_MONTH) {
+      if (period === PERIODS.MONTH) {
         setChartLabels(getDaysInMonth(year?.id, month.id + 1));
       } else {
         setChartLabels([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
@@ -181,20 +181,20 @@ function ReportsPage() {
   useEffect(() => {
     if (reports) {
       setFilledReports(reports);
-      if (reportType === "expenses-incomes") {
+      if (reportType === REPORT_TYPES.DAY_MONTH) {
         fillReports(chartLabels);
       }
     }
   }, [reports, chartLabels]);
 
   useEffect(() => {
-    if (reportType === "expenses-incomes") {
+    if (reportType === REPORT_TYPES.DAY_MONTH) {
       const expensesDataset = {
         label: "Total expenses",
         data:
           filledReports &&
           Object.values(filledReports).map((report) =>
-            period === "year" && transactionType === "total"
+            period === PERIODS.YEAR && transactionType === TRANSACTION_TYPE.TOTAL
               ? report[CATEGORY_TYPES.EXPENSES] * -1
               : report[CATEGORY_TYPES.EXPENSES]
           ),
@@ -214,14 +214,14 @@ function ReportsPage() {
         //   barThickness: 30,
       };
 
-      if (transactionType === "total") {
+      if (transactionType === TRANSACTION_TYPE.TOTAL) {
         setDatasets([incomesDataset, expensesDataset]);
       }
 
-      if (transactionType === "incomes") {
+      if (transactionType === TRANSACTION_TYPE.INCOME) {
         setDatasets([incomesDataset]);
       }
-      if (transactionType === "expenses") {
+      if (transactionType === TRANSACTION_TYPE.EXPENSE) {
         setDatasets([expensesDataset]);
       }
     } else {
@@ -255,7 +255,7 @@ function ReportsPage() {
         <div className="lg:w-1/2 xl:w-7/12 w-full sm:p-4 p-2 rounded-2xl bg-white">
           <div className="mb-3">
             <div className="flex justify-end gap-3">
-              {period === "month" && (
+              {period === PERIODS.MONTH && (
                 <div className="lg:w-1/6 sm:w-1/3 w-1/2">
                   <Select
                     selected={month}
@@ -291,34 +291,34 @@ function ReportsPage() {
           <div>
             <div className="flex gap-2 mb-2 p-2 rounded-xl bg-purple-100">
               <button
-                onClick={() => setPeriod("month")}
-                className={periodStyle("month")}
+                onClick={() => setPeriod(PERIODS.MONTH)}
+                className={periodStyle(PERIODS.MONTH)}
               >
                 Month
               </button>
               <button
-                onClick={() => setPeriod("year")}
-                className={periodStyle("year")}
+                onClick={() => setPeriod(PERIODS.YEAR)}
+                className={periodStyle(PERIODS.YEAR)}
               >
                 Year
               </button>
             </div>
             <div className="flex gap-2">
               <button
-                onClick={() => setTransactionType("total")}
-                className={transactionTypeStyle("total")}
+                onClick={() => setTransactionType(TRANSACTION_TYPE.TOTAL)}
+                className={transactionTypeStyle(TRANSACTION_TYPE.TOTAL)}
               >
                 Total
               </button>
               <button
-                onClick={() => setTransactionType("incomes")}
-                className={transactionTypeStyle("incomes")}
+                onClick={() => setTransactionType(TRANSACTION_TYPE.INCOME)}
+                className={transactionTypeStyle(TRANSACTION_TYPE.INCOME)}
               >
                 Incomes
               </button>
               <button
-                onClick={() => setTransactionType("expenses")}
-                className={transactionTypeStyle("expenses")}
+                onClick={() => setTransactionType(TRANSACTION_TYPE.EXPENSE)}
+                className={transactionTypeStyle(TRANSACTION_TYPE.EXPENSE)}
               >
                 Expenses
               </button>
@@ -329,10 +329,10 @@ function ReportsPage() {
         <div className="xl:w-5/12 lg:w-1/2 w-full">
           <div className="flex border-b border-b-purple-200 items-center lg:justify-start justify-center">
             <button
-              className={reportTypeStyle("expenses-incomes")}
-              onClick={() => setReportType("expenses-incomes")}
+              className={reportTypeStyle(REPORT_TYPES.DAY_MONTH)}
+              onClick={() => setReportType(REPORT_TYPES.DAY_MONTH)}
             >
-              {period === "month" ? "By days" : "By months"}
+              {period === PERIODS.MONTH ? "By days" : "By months"}
             </button>
             <button
               className={reportTypeStyle("categories")}

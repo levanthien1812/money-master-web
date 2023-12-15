@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import TransactionByTimeItem from "./TransactionsByTimeItem";
 import Select from "../../../components/elements/Select";
+import { PERIODS, TRANSACTION_TYPE } from "../../../config/constants";
 
 const sortOptions = [
   { id: 1, name: "Date/Month" },
@@ -29,7 +30,7 @@ function TransactionsByTime({ reports, month, year, period }) {
           return sortOrder.id === 1 ? b.key - a.key : a.key - b.key;
         });
     } else {
-      const type = sortBy.id === 2 ? "expenses" : "incomes";
+      const type = sortBy.id === 2 ? TRANSACTION_TYPE.EXPENSE : TRANSACTION_TYPE.INCOME;
       tempReports = Object.entries(reports)
         .map(([day, values]) => ({ key: day, ...values }))
         .sort((a, b) => {
@@ -64,9 +65,9 @@ function TransactionsByTime({ reports, month, year, period }) {
         {sortedReports.map((item, index) => (
           <TransactionByTimeItem
             item={item}
-            day={period === "month" ? item.key : null}
+            day={period === PERIODS.MONTH ? item.key : null}
             index={index}
-            month={period === "year" ? item.key : month.id + 1}
+            month={period === PERIODS.YEAR ? item.key : month.id + 1}
             year={year.id}
             wallet={walletChosen?.id}
             key={Math.random()}

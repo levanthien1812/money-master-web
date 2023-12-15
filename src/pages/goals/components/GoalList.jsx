@@ -1,6 +1,7 @@
 import React from "react";
 import GoalItem from "./GoalItem";
 import Loading from "../../../components/others/Loading";
+import { GOAL_STATUS } from "../../../config/constants";
 
 function GoalList({ goals, status, setStatus, onUpdateSuccess, loading }) {
   const statusType = (_status) => {
@@ -16,16 +17,16 @@ function GoalList({ goals, status, setStatus, onUpdateSuccess, loading }) {
     <div>
       <div className="mb-4">
         <div className="flex border-b border-b-purple-200 lg:justify-start justify-center">
-          <button className={statusType(1)} onClick={() => setStatus(1)}>
+          <button className={statusType(GOAL_STATUS.NOT_STARTED)} onClick={() => setStatus(GOAL_STATUS.NOT_STARTED)}>
             Not started
           </button>
-          <button className={statusType(2)} onClick={() => setStatus(2)}>
+          <button className={statusType(GOAL_STATUS.IN_PROGRESS)} onClick={() => setStatus(GOAL_STATUS.IN_PROGRESS)}>
             In progress
           </button>
-          <button className={statusType(3)} onClick={() => setStatus(3)}>
+          <button className={statusType(GOAL_STATUS.FINISH)} onClick={() => setStatus(GOAL_STATUS.FINISH)}>
             Finished
           </button>
-          <button className={statusType(4)} onClick={() => setStatus(4)}>
+          <button className={statusType(GOAL_STATUS.NOT_COMPLETED)} onClick={() => setStatus(GOAL_STATUS.NOT_COMPLETED)}>
             Not completed
           </button>
         </div>

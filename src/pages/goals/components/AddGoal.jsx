@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import formatCurrency from "../../../utils/currencyFormatter";
+import { GOAL_STATUS } from "../../../config/constants";
 
 function AddGoal({ goal = null, status, onClose, onUpdateSuccess }) {
   const types = [
@@ -172,7 +173,7 @@ function AddGoal({ goal = null, status, onClose, onUpdateSuccess }) {
         value={name}
         error={errors && errors.name}
       />
-      {goal && status !== 1 && (
+      {goal && status !== GOAL_STATUS.NOT_STARTED && (
         <div className="flex items-center gap-2">
           <FontAwesomeIcon icon={faInfoCircle} className="text-blue-600" />
           <p className="text-sm text-blue-600 italic">
@@ -209,7 +210,7 @@ function AddGoal({ goal = null, status, onClose, onUpdateSuccess }) {
         size="sm"
         value={format(new Date(dateBegin), "yyyy-MM-dd")}
         error={errors && errors.date_begin}
-        disable={goal && status !== 1}
+        disable={goal && status !== GOAL_STATUS.NOT_STARTED}
       />
       <Input
         label={"Ending Date"}
