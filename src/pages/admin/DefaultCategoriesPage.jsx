@@ -7,6 +7,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import AddCategories from "../categories/components/AddCategories";
 import CategoryItem from "./components/CategoryItem";
 import { toast } from "react-toastify";
+import { CATEGORY_TYPES } from "../../config/constants";
 
 function DefaultCategoriesPage() {
   const [categories, setCategories] = useState([]);
@@ -131,22 +132,22 @@ function DefaultCategoriesPage() {
                 <button
                   className={
                     `uppercase text-sm px-4 py-1.5 rounded-full border border-orange-500 ` +
-                    (type === "expenses"
+                    (type === CATEGORY_TYPES.EXPENSES
                       ? "bg-orange-500 text-white"
                       : " bg-gray-200 ")
                   }
-                  onClick={() => setType("expenses")}
+                  onClick={() => setType(CATEGORY_TYPES.EXPENSES)}
                 >
                   Expenses
                 </button>
                 <button
                   className={
                     `uppercase text-sm px-4 py-1.5 rounded-full border border-green-500 ` +
-                    (type === "incomes"
+                    (type === CATEGORY_TYPES.INCOMES
                       ? "bg-green-500 text-white"
                       : " bg-gray-200 ")
                   }
-                  onClick={() => setType("incomes")}
+                  onClick={() => setType(CATEGORY_TYPES.INCOMES)}
                 >
                   Incomes
                 </button>

@@ -13,6 +13,7 @@ import formatCurrency from "../../../utils/currencyFormatter";
 import PlansService from "../../../services/plans";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import { CATEGORY_TYPES } from "../../../config/constants";
 
 function AddCategoryPlan({
   onClose,
@@ -48,7 +49,7 @@ function AddCategoryPlan({
     try {
       setLoadingCategories(true);
       const data = await CategoriesService.getCategories({
-        type: "expenses",
+        type: CATEGORY_TYPES.EXPENSES,
         ignore_exists: true,
         month: month.id + 1,
         year: year.id,
