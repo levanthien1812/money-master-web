@@ -33,7 +33,7 @@ function Charts({
         </div>
       )}
 
-      {!loading && reportType === "categories" && (
+      {!loading && reportType === REPORT_TYPES.CATEGORY && (
         <div style={{ maxHeight: 400 }} className="w-full">
           <Doughnut
             height={400}

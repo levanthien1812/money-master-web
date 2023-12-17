@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
 import { Outlet, useNavigate } from "react-router";
 import AuthService from "../../services/auth";
@@ -7,6 +7,11 @@ import { useDispatch, useSelector } from "react-redux";
 import AddWallet from "../../pages/wallets/components/AddWallets";
 import { walletActions } from "../../stores/wallets";
 import { authActions } from "../../stores/auth";
+import {
+  fetchNotifications,
+  notificationsActions,
+} from "../../stores/notifications";
+import pusher from "../../config/pusher";
 
 function Layout() {
   const [isLogging, setIsLogging] = useState(false);
@@ -16,6 +21,18 @@ function Layout() {
   const { haveDefaultWallet, loadingWallets } = useSelector(
     (state) => state.wallet
   );
+  const user = useSelector((state) => state.auth.user);
+
+  useEffect(() => {
+    dispatch(fetchNotifications());
+
+    var channel = pusher.subscribe("channel-user-" + user.id);
+
+    channel.bind("remind-add-transactions-event", function (data) {
+      dispatch(fetchNotifications());
+      toast.info(data.message);
+    });
+  }, []);
 
   const handleLogout = async () => {
     try {

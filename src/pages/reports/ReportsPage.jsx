@@ -335,8 +335,8 @@ function ReportsPage() {
               {period === PERIODS.MONTH ? "By days" : "By months"}
             </button>
             <button
-              className={reportTypeStyle("categories")}
-              onClick={() => setReportType("categories")}
+              className={reportTypeStyle(REPORT_TYPES.CATEGORY)}
+              onClick={() => setReportType(REPORT_TYPES.CATEGORY)}
             >
               By categories
             </button>
