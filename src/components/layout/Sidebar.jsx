@@ -14,7 +14,7 @@ import Wallets from "../../pages/wallets/components/Wallets";
 import Profile from "../../pages/profile/components/Profile";
 import { useSelector } from "react-redux";
 import "../../styles/sidebar.css";
-import Notifications from "./Notifications";
+import Notifications from "../../pages/notifications/components/Notifications";
 
 function Sidebar({ onLogout }) {
   const [isWalletsShown, setIsWalletsShown] = useState(false);
@@ -22,6 +22,7 @@ function Sidebar({ onLogout }) {
   const [isNotificationsShown, setIsNotificationsShown] = useState(false);
 
   const { user, roles } = useSelector((state) => state.auth);
+  const { notifications } = useSelector((state) => state.notification);
 
   const sidebarItems = useMemo(() => {
     if (roles.includes("user")) {
@@ -125,7 +126,7 @@ function Sidebar({ onLogout }) {
         >
           <FontAwesomeIcon icon={faBell} className="text-xl" />
           <span className="block bg-red-500 text-white text-sm px-2 rounded-full absolute -top-2 right-0">
-            1
+            {notifications.length}
           </span>
         </button>
         {isNotificationsShown && <Notifications />}

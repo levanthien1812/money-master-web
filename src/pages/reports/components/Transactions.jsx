@@ -17,7 +17,7 @@ function Transactions({
     <>
       {loading && <Loading />}
       {!loading &&
-        reportType === "categories" &&
+        reportType === REPORT_TYPES.CATEGORY &&
         reports &&
         Object.keys(reports).length > 0 && (
           <TransactionsByCategory

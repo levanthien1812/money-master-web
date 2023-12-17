@@ -14,7 +14,7 @@ import PlansService from "../../../services/plans";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchWallets } from "../../../stores/wallets";
 import EventsService from "../../../services/events";
-import { CATEGORY_TYPES } from "../../../config/constants";
+import { CATEGORY_TYPES, TRANSACTION_TYPE } from "../../../config/constants";
 
 function AddTransaction({
   setIsAdding,
@@ -228,7 +228,11 @@ function AddTransaction({
         <div className="flex items-start justify-center p-5 border-b border-solid border-slate-200 rounded-t max-h-screen">
           <h3 className="text-2xl text-center">
             {" "}
-            {transaction ? "Transaction detail" : `Add ${type}`}
+            {transaction
+              ? "Transaction detail"
+              : `Add ${
+                  TRANSACTION_TYPE.EXPENSE === type ? "expense" : "income"
+                }`}
           </h3>
         </div>
 

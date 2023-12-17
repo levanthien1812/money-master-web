@@ -13,7 +13,7 @@ import formatCurrency from "../../../utils/currencyFormatter";
 import PlansService from "../../../services/plans";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
-import { CATEGORY_TYPES } from "../../../config/constants";
+import { CATEGORY_TYPES, REPORT_TYPES } from "../../../config/constants";
 
 function AddCategoryPlan({
   onClose,
@@ -71,7 +71,7 @@ function AddCategoryPlan({
       const responseDataLastMonth = await ReportsService.getReports({
         year: year.id,
         month: month.id,
-        report_type: "categories",
+        report_type: REPORT_TYPES.CATEGORY,
         wallet: walletSelected?.id,
       });
 
@@ -86,7 +86,7 @@ function AddCategoryPlan({
       const responseDataCurrentMonth = await ReportsService.getReports({
         year: year.id,
         month: month.id + 1,
-        report_type: "categories",
+        report_type: REPORT_TYPES.CATEGORY,
         wallet: walletSelected?.id,
       });
 
