@@ -12,11 +12,12 @@ function NotificationItem({ notification }) {
   const [IsHover, setIsHover] = useState(false);
 
   const handleNavigate = () => {
+    handleMarkAsRead();
     navigate(notification.data.link);
   };
 
   const handleMarkAsRead = async (e) => {
-    e.stopPropagation();
+    if (e) e.stopPropagation();
 
     try {
       const responseData = await NotificationsService.markAsRead(
