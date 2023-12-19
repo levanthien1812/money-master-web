@@ -68,6 +68,22 @@ function TransactionItem({ transaction, index, onModifySuccess }) {
           </p>
         </div>
 
+        {transaction.image && (
+          <div
+            className={`rounded-full border-2 ${
+              index % 2 !== 0 ? "border-gray-200" : "border-white"
+            }  p-0.5 me-2`}
+          >
+            <div className="w-14 h-14 overflow-hidden rounded-full">
+              <img
+                src={transaction.image}
+                alt=""
+                className="object-cover w-full h-full"
+              />
+            </div>
+          </div>
+        )}
+
         <div className="flex flex-col justify-center">
           <p
             className={
