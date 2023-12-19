@@ -49,7 +49,7 @@ function Notifications() {
   }, [selectedOption, notifications]);
 
   return (
-    <div className="w-[400px] absolute left-40 top-0 bg-white p-4 rounded-2xl shadow-lg">
+    <div className="lg:w-[400px] md:w-3/5 w-full absolute lg:left-40 md:left-4 left-0 lg:top-0 md:top-28 top-24 bg-white p-4 rounded-2xl shadow-lg">
       <div className="flex justify-between">
         <p className="text-2xl mb-3">Notifications</p>
         <div>

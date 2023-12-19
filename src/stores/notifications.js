@@ -33,6 +33,9 @@ const notificationsSlice = createSlice({
             state.notifications.forEach(notification => {
                 notification.read_at = new Date()
             })
+        },
+        deleteNotification: (state, action) => {
+            state.notifications = state.notifications.filter(notification => notification.id !== action.payload)
         }
     },
     extraReducers: (builder) => {

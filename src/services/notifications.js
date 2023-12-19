@@ -18,4 +18,10 @@ export default class NotificationsService {
 
         return response.data;
     }
+
+    static async deleteNotification(id) {
+        const response = await instance.delete("/notifications/" + id);
+
+        return response.data;
+    }
 }

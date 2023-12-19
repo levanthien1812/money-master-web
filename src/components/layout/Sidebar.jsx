@@ -98,7 +98,7 @@ function Sidebar({ onLogout }) {
 
   return (
     <div
-      className="sidebar w-screen lg:h-screen bg-white lg:w-40 px-5 sm:py-5 py-4 lg:px-3 shadow-lg flex lg:flex-col lg:justify-start flex-row sm:justify-center justify-start gap-5 items-center lg:rounded-br-3xl h-fit sticky top-0 left-0 bg-opacity-90"
+      className="sidebar w-screen lg:h-screen bg-white lg:w-40 px-5 sm:py-5 py-4 lg:px-3 shadow-lg flex lg:flex-col lg:justify-start flex-row sm:justify-center justify-start lg:gap-5 gap-3 items-center lg:rounded-br-3xl h-fit sticky top-0 left-0 bg-opacity-90"
       style={{ zIndex: 25 }}
     >
       <div className="lg:mb-2 mb-0 flex flex-col items-center relative">
@@ -119,14 +119,18 @@ function Sidebar({ onLogout }) {
         </div>
       </div>
 
-      <div className="w-full relative">
+      <div className="lg:w-full lg:relative">
         <button
-          className="bg-gray-200 rounded-md w-full py-1.5 hover:bg-gray-300 relative"
+          className="bg-gray-200 rounded-md w-full py-1.5 px-3 hover:bg-gray-300 relative"
           onClick={() => setIsNotificationsShown(!isNotificationsShown)}
         >
           <FontAwesomeIcon icon={faBell} className="text-xl" />
           <span className="block bg-red-500 text-white text-sm px-2 rounded-full absolute -top-2 right-0">
-            {notifications.length}
+            {
+              notifications.filter(
+                (notification) => notification.read_at === null
+              ).length
+            }
           </span>
         </button>
         {isNotificationsShown && <Notifications />}
