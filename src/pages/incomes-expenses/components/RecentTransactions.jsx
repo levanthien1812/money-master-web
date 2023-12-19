@@ -45,6 +45,7 @@ function RecentTransactions({
           <input
             type="text"
             name="search"
+            placeholder="Search transactions"
             className="outline-none sm:w-64 w-24"
             onChange={onSearch}
           />

@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 function NotificationItem({ notification }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [showMarkAsRead, setShowMarkAsRead] = useState(false);
+  const [IsHover, setIsHover] = useState(false);
 
   const handleNavigate = () => {
     navigate(notification.data.link);
@@ -31,6 +31,22 @@ function NotificationItem({ notification }) {
     }
   };
 
+  const handleDelete = async (e) => {
+    e.stopPropagation();
+
+    try {
+      const responseData = await NotificationsService.deleteNotification(
+        notification.id
+      );
+
+      if (responseData.status === "success") {
+        dispatch(notificationsActions.deleteNotification(notification.id));
+      }
+    } catch (e) {
+      toast.error();
+    }
+  };
+
   return (
     <div
       className={`${
@@ -39,16 +55,24 @@ function NotificationItem({ notification }) {
         !notification.read_at ? "bg-purple-200" : "bg-gray-200"
       }`}
       onClick={handleNavigate}
-      onMouseOver={() => setShowMarkAsRead(true)}
-      onMouseOut={() => setShowMarkAsRead(false)}
+      onMouseOver={() => setIsHover(true)}
+      onMouseOut={() => setIsHover(false)}
     >
       <div className="flex justify-end mb-1 gap-2">
-        {showMarkAsRead && !notification.read_at && (
+        {IsHover && !notification.read_at && (
           <button
             className="text-purple-500 hover:underline hover:text-purple-600 text-sm "
             onClick={handleMarkAsRead}
           >
             Mark as read
+          </button>
+        )}
+        {IsHover && (
+          <button
+            className="text-red-500 hover:underline hover:text-red-600 text-sm "
+            onClick={handleDelete}
+          >
+            Delete
           </button>
         )}
         <p

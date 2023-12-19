@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import AddCategories from "../../categories/components/AddCategories";
 import ConfirmDeleteModal from "../../../components/modal/ConfirmDeleteModal";
@@ -28,6 +28,20 @@ function CategoryItem({ category, onUpdateSuccess }) {
     }
   };
 
+  const timeoutRef = useRef(null);
+
+  const handleMouseEnter = () => {
+    // Set a timeout to show the child after 0.2 seconds
+    timeoutRef.current = setTimeout(() => {
+      setIsHover(true);
+    }, 200);
+  };
+
+  const handleMouseLeave = () => {
+    clearTimeout(timeoutRef.current);
+    setIsHover(false);
+  };
+
   return (
     <>
       <motion.div
@@ -36,8 +50,8 @@ function CategoryItem({ category, onUpdateSuccess }) {
         whileHover={{
           scale: 1.05,
         }}
-        onMouseOver={() => setIsHover(true)}
-        onMouseOut={() => setIsHover(false)}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
       >
         <div className="w-20 h-20 rounded-full overflow-hidden flex items-center justify-center shadow-sm shrink-0">
           <img
@@ -55,7 +69,7 @@ function CategoryItem({ category, onUpdateSuccess }) {
                   : "bg-green-600"
               }`}
             >
-              {category.type}
+              {category.type === CATEGORY_TYPES.EXPENSES ? "Expense" : "Income"}
             </p>
           </div>
 

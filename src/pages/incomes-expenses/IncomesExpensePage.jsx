@@ -24,17 +24,6 @@ function IncomesExpensePage() {
 
   const walletChosen = useSelector((state) => state.wallet.walletChosen);
 
-  // window.Echo = new Echo({
-    
-  // })
-  //   .channel("notifications").listen(
-  //   "DailyTransactionReminderEvent",
-  //   (data) => {
-  //     // Handle the received event data
-  //     console.log(data);
-  //   }
-  // );
-
   const increaseMonth = () => {
     if (year >= new Date().getFullYear() && month > new Date().getMonth()) {
       return;
@@ -140,7 +129,7 @@ function IncomesExpensePage() {
           </div>
         </div>
         <div
-          className="flex border-2 border-purple-500 rounded-2xl relative lg:w-1/4 md:w-1/2 w-4/5"
+          className="flex border-2 border-purple-500 rounded-2xl relative 2xl:w-1/4 lg:w-2/5 md:w-1/2 w-4/5"
           id="add-transactions-container"
         >
           <button
