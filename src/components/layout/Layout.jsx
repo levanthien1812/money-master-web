@@ -12,6 +12,8 @@ import {
   notificationsActions,
 } from "../../stores/notifications";
 import pusher from "../../config/pusher";
+import Echo from "laravel-echo";
+import Pusher from "pusher-js";
 
 function Layout() {
   const [isLogging, setIsLogging] = useState(false);
@@ -28,9 +30,16 @@ function Layout() {
 
     var channel = pusher.subscribe("channel-user-" + user.id);
 
-    channel.bind("remind-add-transactions-event", function (data) {
-      dispatch(fetchNotifications());
-      toast.info(data.message);
+    const events = [
+      "remind-add-transactions-event",
+      "remind-overspend-category-plan-event",
+    ];
+
+    events.forEach((event) => {
+      channel.bind(event, function (data) {
+        dispatch(fetchNotifications());
+        toast.warning(data.message);
+      });
     });
   }, []);
 

@@ -104,8 +104,6 @@ function AddTransaction({
     setLoadingCategories(false);
   };
 
-  console.log(categories);
-
   const getEvents = async () => {
     try {
       setLoadingEvents(true);
