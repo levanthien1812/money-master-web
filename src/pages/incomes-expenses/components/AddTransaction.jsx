@@ -9,7 +9,7 @@ import ImageChoserPreview from "../../../components/others/ImageChoserPreview";
 import { toast } from "react-toastify";
 import formatCurrency from "../../../utils/currencyFormatter";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import { faInfoCircle, faWarning } from "@fortawesome/free-solid-svg-icons";
 import PlansService from "../../../services/plans";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchWallets } from "../../../stores/wallets";
@@ -46,6 +46,8 @@ function AddTransaction({
   const [loadingCategories, setLoadingCategories] = useState(false);
   const [loadingEvents, setLoadingEvents] = useState(false);
   const [processingSave, setProcessingSave] = useState(false);
+  const [isWarningOverspend, setIsWarningOverspend] = useState(false);
+  const [isCloning, setIsCloning] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -86,6 +88,7 @@ function AddTransaction({
       setPhoto("");
       setDate(new Date(transaction.date));
       setDescription(transaction.description || "");
+      
     } else {
       setWalletSelected(walletChosen);
       setCategorySelected(categories[0]);
@@ -172,7 +175,7 @@ function AddTransaction({
         }
 
         let responseData;
-        if (!transaction) {
+        if (!transaction || isCloning) {
           responseData = await TransactionsService.createTransaction(data);
         } else {
           responseData = await TransactionsService.updateTransaction(
@@ -206,6 +209,12 @@ function AddTransaction({
     const { value } = event.target;
     const cleanAmount = value.replace(/[^0-9]/g, "");
 
+    if (parseInt(cleanAmount) > planData.amount - planData.actual) {
+      setIsWarningOverspend(true);
+    } else {
+      setIsWarningOverspend(false);
+    }
+
     if (value.length > 0 && isNaN(parseInt(value))) {
       setErrors((prev) => {
         return { ...prev, amount: "Invalid amount!" };
@@ -214,6 +223,10 @@ function AddTransaction({
       setFormattedAmount(cleanAmount.replace(/\B(?=(\d{3})+(?!\d))/g, ","));
       setAmount(cleanAmount);
     }
+  };
+
+  const handleClone = () => {
+    setIsCloning(true);
   };
 
   return (
@@ -225,8 +238,7 @@ function AddTransaction({
         {/*HEADER*/}
         <div className="flex items-start justify-center p-5 border-b border-solid border-slate-200 rounded-t max-h-screen">
           <h3 className="text-2xl text-center">
-            {" "}
-            {transaction
+            {transaction && !isCloning
               ? "Transaction detail"
               : `Add ${
                   TRANSACTION_TYPE.EXPENSE === type ? "expense" : "income"
@@ -278,15 +290,23 @@ function AddTransaction({
                       {planData && (
                         <div className="flex items-center gap-2">
                           <FontAwesomeIcon
-                            icon={faInfoCircle}
+                            icon={isWarningOverspend ? faWarning : faInfoCircle}
                             className={
                               planData.amount - planData.actual >= 0
-                                ? "text-blue-600"
+                                ? isWarningOverspend
+                                  ? "text-yellow-600"
+                                  : "text-blue-600"
                                 : "text-red-600"
                             }
                           />
                           {planData.amount - planData.actual >= 0 && (
-                            <p className="text-sm text-blue-600 italic">
+                            <p
+                              className={`text-sm ${
+                                isWarningOverspend
+                                  ? "text-yellow-600"
+                                  : "text-blue-600"
+                              } italic`}
+                            >
                               As you planned, the remaining of expenses for this
                               category this month is{" "}
                               <span className="font-bold">
@@ -381,16 +401,22 @@ function AddTransaction({
         <div
           className={
             "flex items-center px-6 py-4 border-t border-solid border-slate-200 rounded-b " +
-            (transaction ? "justify-between" : "justify-end")
+            (transaction && !isCloning ? "justify-between" : "justify-end")
           }
         >
-          {transaction && (
-            <div>
+          {transaction && !isCloning && (
+            <div className="flex justify-end gap-2">
               <button
-                className="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-2 rounded-xl shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                className="text-red-600 active:bg-red-600 font-bold uppercase text-sm px-6 py-2 rounded-xl shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                 onClick={() => setIsDeleting(true)}
               >
                 Delete
+              </button>
+              <button
+                className="text-purple-600 active:bg-purple-600 font-bold uppercase text-sm px-6 py-2 rounded-xl shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                onClick={handleClone}
+              >
+                Clone
               </button>
             </div>
           )}
@@ -410,7 +436,7 @@ function AddTransaction({
             >
               {processingSave
                 ? "Processing..."
-                : !transaction
+                : !transaction || isCloning
                 ? "Add transaction"
                 : "Update"}
             </button>
