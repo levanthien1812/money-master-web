@@ -3,6 +3,7 @@ import Table from "./components/Table";
 import Loading from "../../components/others/Loading";
 import UsersServices from "../../services/users";
 import { toast } from "react-toastify";
+import logo from "../../assets/images/logo-money-master.png";
 
 function UsersPage() {
   const [loading, setLoading] = useState(false);
@@ -26,7 +27,10 @@ function UsersPage() {
 
   return (
     <div className="lg:p-8 sm:p-14 p-2">
-      <div className="flex gap-4 items-center p-1">
+      <div className="flex gap-4 items-center">
+        <div className="lg:w-16 lg:h-16 w-10 h-10">
+          <img src={logo} alt="" className="w-full h-full object-cover" />
+        </div>
         <h2 className="sm:text-4xl text-3xl">Users</h2>
       </div>
       <div className="w-full">

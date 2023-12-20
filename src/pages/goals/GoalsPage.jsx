@@ -8,6 +8,7 @@ import Congratulation from "./components/Congratulation";
 import { useDispatch } from "react-redux";
 import { fetchWallets } from "../../stores/wallets";
 import { GOAL_STATUS } from "../../config/constants";
+import logo from "../../assets/images/logo-money-master.png";
 
 function GoalsPage() {
   const [isAddingGoal, setIsAddingGoal] = useState(false);
@@ -54,7 +55,12 @@ function GoalsPage() {
   return (
     <div className="lg:p-8 sm:p-14 p-3">
       <div className="sm:mb-8 mb-4 flex justify-between items-center">
-        <h2 className="sm:text-4xl text-3xl">Goals & Savings</h2>
+        <div className="flex items-center gap-4">
+          <div className="lg:w-16 lg:h-16 w-10 h-10">
+            <img src={logo} alt="" className="w-full h-full object-cover" />
+          </div>
+          <h2 className="sm:text-4xl text-3xl">Goals & Savings</h2>
+        </div>
         {countAll !== 0 && (
           <button
             className="sm:py-2 sm:px-12 py-1 px-4 text-center rounded-xl font-semibold bg-purple-500 text-white hover:bg-purple-600"

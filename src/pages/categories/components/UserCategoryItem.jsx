@@ -104,7 +104,7 @@ function UserCategoryItem({ category, onUpdateSuccess }) {
       {isDeletingCategory && (
         <ConfirmDeleteModal
           message={
-            "Deleting this cateogry will also delete all transactions belongs to it! Are you sure to delete this category?"
+            "Deleting this category will also delete all transactions belongs to it! Are you sure to delete this category?"
           }
           onAccept={handleDeleteCategory}
           onClose={() => setisDeletingCategory(false)}

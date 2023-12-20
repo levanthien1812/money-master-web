@@ -11,6 +11,7 @@ import CategoriesService from "../../services/categories";
 import { toast } from "react-toastify";
 import StatisticItem from "./components/StatisticItem";
 import Select from "../../components/elements/Select";
+import logo from "../../assets/images/logo-money-master.png";
 
 const options = {
   scales: {
@@ -222,6 +223,9 @@ function AdminPage() {
   return (
     <div className="lg:p-8 sm:p-14 p-3">
       <div className="flex gap-4 items-center">
+        <div className="lg:w-16 lg:h-16 w-10 h-10">
+          <img src={logo} alt="" className="w-full h-full object-cover" />
+        </div>
         <h2 className="sm:text-4xl text-3xl">Dash board</h2>
       </div>
       <div className="mb-3">

@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import SelectWallet from "../wallets/components/SelectWallet";
 import { useSelector } from "react-redux";
 import { CATEGORY_TYPES } from "../../config/constants";
+import logo from "../../assets/images/logo-money-master.png";
 
 function IncomesExpensePage() {
   const [transactions, setTransactions] = useState(null);
@@ -123,6 +124,9 @@ function IncomesExpensePage() {
     <div className="lg:p-8 sm:p-14 p-2 max-h-screen">
       <div className="mb-4 flex justify-between items-center flex-col lg:flex-row gap-4">
         <div className="flex gap-4 items-center justify-between lg:justify-start lg:w-3/5 w-full">
+          <div className="lg:w-16 lg:h-16 w-10 h-10">
+            <img src={logo} alt="" className="w-full h-full object-cover" />
+          </div>
           <h2 className="sm:text-4xl text-3xl">Transactions</h2>
           <div className="w-40">
             <SelectWallet />

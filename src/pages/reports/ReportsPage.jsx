@@ -14,7 +14,13 @@ import { faFileExcel } from "@fortawesome/free-regular-svg-icons";
 import { motion } from "framer-motion";
 import TransactionsService from "../../services/transactions";
 import { toast } from "react-toastify";
-import { CATEGORY_TYPES, PERIODS, REPORT_TYPES, TRANSACTION_TYPE } from "../../config/constants";
+import {
+  CATEGORY_TYPES,
+  PERIODS,
+  REPORT_TYPES,
+  TRANSACTION_TYPE,
+} from "../../config/constants";
+import logo from "../../assets/images/logo-money-master.png";
 
 function ReportsPage() {
   const location = useLocation();
@@ -27,7 +33,9 @@ function ReportsPage() {
     )
   );
 
-  const [transactionType, setTransactionType] = useState(TRANSACTION_TYPE.TOTAL);
+  const [transactionType, setTransactionType] = useState(
+    TRANSACTION_TYPE.TOTAL
+  );
   const [reportType, setReportType] = useState(REPORT_TYPES.DAY_MONTH);
   const [period, setPeriod] = useState(PERIODS.MONTH);
   const [reports, setReports] = useState();
@@ -194,7 +202,8 @@ function ReportsPage() {
         data:
           filledReports &&
           Object.values(filledReports).map((report) =>
-            period === PERIODS.YEAR && transactionType === TRANSACTION_TYPE.TOTAL
+            period === PERIODS.YEAR &&
+            transactionType === TRANSACTION_TYPE.TOTAL
               ? report[CATEGORY_TYPES.EXPENSES] * -1
               : report[CATEGORY_TYPES.EXPENSES]
           ),
@@ -208,7 +217,9 @@ function ReportsPage() {
         label: "Total incomes",
         data:
           filledReports &&
-          Object.values(filledReports).map((report) => report[CATEGORY_TYPES.INCOMES]),
+          Object.values(filledReports).map(
+            (report) => report[CATEGORY_TYPES.INCOMES]
+          ),
         borderRadius: 10,
         backgroundColor: "#16A34Aaa",
         //   barThickness: 30,
@@ -244,7 +255,12 @@ function ReportsPage() {
     <div className="lg:p-8 sm:p-14 p-3">
       {/* Header */}
       <div className="flex gap-4 items-center justify-between mb-4">
-        <h2 className="sm:text-4xl text-3xl">Reports</h2>
+        <div className="flex items-center gap-4">
+          <div className="lg:w-16 lg:h-16 w-10 h-10">
+            <img src={logo} alt="" className="w-full h-full object-cover" />
+          </div>
+          <h2 className="sm:text-4xl text-3xl">Reports</h2>
+        </div>
         <div className="w-40">
           <SelectWallet />
         </div>
