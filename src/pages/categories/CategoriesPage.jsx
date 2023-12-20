@@ -5,6 +5,7 @@ import UserCategories from "./components/UserCategories";
 import AddCategories from "./components/AddCategories";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import logo from "../../assets/images/logo-money-master.png";
 
 function CategoriesPage() {
   const [defaultCategories, setDefaultCategories] = useState([]);
@@ -64,7 +65,10 @@ function CategoriesPage() {
     <div className="lg:p-8 sm:p-14 p-3">
       {/* Header */}
       <div className="sm:mb-8 mb-4 flex justify-between items-center">
-        <div className="flex gap-4">
+        <div className="flex gap-4 items-center">
+          <div className="lg:w-16 lg:h-16 w-10 h-10">
+            <img src={logo} alt="" className="w-full h-full object-cover" />
+          </div>
           <h2 className="sm:text-4xl text-3xl">Categories</h2>
         </div>
         <div

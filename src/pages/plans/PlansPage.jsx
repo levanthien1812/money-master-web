@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import CategoryPlans from "./components/CategoryPlans";
 import MonthPlans from "./components/MonthPlans";
 import SelectWallet from "../wallets/components/SelectWallet";
+import logo from "../../assets/images/logo-money-master.png";
 
 function PlansPage() {
   const [viewBy, setViewBy] = useState("months");
@@ -32,7 +33,13 @@ function PlansPage() {
   return (
     <div className="lg:p-8 sm:p-14 p-3">
       <div className="flex gap-4 items-center justify-between mb-4">
-        <h2 className="sm:text-4xl text-3xl">Plans</h2>
+        <div className="flex items-center gap-4">
+          <div className="lg:w-16 lg:h-16 w-10 h-10">
+            <img src={logo} alt="" className="w-full h-full object-cover" />
+          </div>
+          <h2 className="sm:text-4xl text-3xl">Plans</h2>
+        </div>
+
         <div className="w-40">
           <SelectWallet />
         </div>

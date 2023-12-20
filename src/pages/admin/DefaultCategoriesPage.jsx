@@ -8,6 +8,7 @@ import AddCategories from "../categories/components/AddCategories";
 import CategoryItem from "./components/CategoryItem";
 import { toast } from "react-toastify";
 import { CATEGORY_TYPES } from "../../config/constants";
+import logo from "../../assets/images/logo-money-master.png";
 
 function DefaultCategoriesPage() {
   const [categories, setCategories] = useState([]);
@@ -64,7 +65,12 @@ function DefaultCategoriesPage() {
   return (
     <div className="lg:p-8 sm:p-14 p-3">
       <div className="flex gap-4 items-center lg:justify-between justify-center lg:flex-row flex-col">
-        <h2 className="sm:text-4xl text-3xl">Default cateogries</h2>
+        <div className="flex gap-4 items-center">
+          <div className="lg:w-16 lg:h-16 w-10 h-10">
+            <img src={logo} alt="" className="w-full h-full object-cover" />
+          </div>
+          <h2 className="sm:text-4xl text-3xl">Default categories</h2>
+        </div>
         <div className="sm:w-72 w-full">
           <Input
             name={"search"}
