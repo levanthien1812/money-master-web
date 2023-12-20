@@ -105,7 +105,7 @@ function TransactionItem({ transaction, index, onModifySuccess }) {
         <AddTransaction
           setIsAdding={setIsViewingDetail}
           transaction={transaction}
-          type={transaction.type}
+          type={transaction.category.type}
           isDeleting={isDeleting}
           setIsDeleting={setIsDeleting}
           onAddingSuccess={onModifySuccess}
