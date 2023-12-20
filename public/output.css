@@ -2842,6 +2842,10 @@ video {
     height: 10rem;
   }
 
+  .md\:h-14 {
+    height: 3.5rem;
+  }
+
   .md\:w-1\/2 {
     width: 50%;
   }
@@ -2870,6 +2874,10 @@ video {
 
   .md\:w-3\/5 {
     width: 60%;
+  }
+
+  .md\:w-14 {
+    width: 3.5rem;
   }
 
   .md\:rotate-12 {
@@ -2905,6 +2913,10 @@ video {
 
   .md\:rounded-tr-full {
     border-top-right-radius: 9999px;
+  }
+
+  .md\:border-2 {
+    border-width: 2px;
   }
 
   .md\:bg-gradient-to-br {
