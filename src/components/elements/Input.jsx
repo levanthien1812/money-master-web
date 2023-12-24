@@ -34,7 +34,7 @@ function Input({
   return (
     <div className={mb}>
       {label && (
-        <label htmlFor={name} className="flex items-center">
+        <label htmlFor={name} className={`flex items-center ${size === "medium" ? "text-md" : "text-sm"}`}>
           {label}{" "}
           <span className="text-red-600 text-2xl">{required && "*"}</span>
         </label>
