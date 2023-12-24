@@ -16,6 +16,7 @@ import { useSelector } from "react-redux";
 import "../../styles/sidebar.css";
 import Notifications from "../../pages/notifications/components/Notifications";
 import IncomeTaxInfo from "../../pages/personal-income-tax/components/IncomeTaxInfo";
+import { useTranslation } from "react-i18next";
 
 function Sidebar({ onLogout }) {
   const [isWalletsShown, setIsWalletsShown] = useState(false);
@@ -26,42 +27,44 @@ function Sidebar({ onLogout }) {
   const { user, roles } = useSelector((state) => state.auth);
   const { notifications } = useSelector((state) => state.notification);
 
+  const { t, i18n } = useTranslation();
+
   const sidebarItems = useMemo(() => {
     if (roles.includes("user")) {
       return [
         {
           id: 1,
-          name: "Transactions",
+          name: t("sidebar.transactions"),
           image: expenses,
           link: "/transactions",
         },
         {
           id: 2,
-          name: "Plans",
+          name: t("sidebar.plans"),
           image: plan,
           link: "/plans",
         },
         {
           id: 3,
-          name: "Reports",
+          name: t("sidebar.reports"),
           image: report,
           link: "/reports",
         },
         {
           id: 4,
-          name: "Goals",
+          name: t("sidebar.goals"),
           image: target,
           link: "/goals",
         },
         {
           id: 5,
-          name: "Categories",
+          name: t("sidebar.categories"),
           image: categories,
           link: "/categories",
         },
         {
           id: 6,
-          name: "Events",
+          name: t("sidebar.events"),
           image: categories,
           link: "/events",
         },
@@ -70,19 +73,19 @@ function Sidebar({ onLogout }) {
       return [
         {
           id: 1,
-          name: "Dashboard",
+          name: t("sidebar.dashboard"),
           image: expenses,
           link: "/admin",
         },
         {
           id: 2,
-          name: "Users",
+          name: t("sidebar.users"),
           image: users,
           link: "/admin/users",
         },
         {
           id: 3,
-          name: "Default categories",
+          name: t("sidebar.default_categories"),
           image: categories,
           link: "/admin/categories",
         },
@@ -98,6 +101,14 @@ function Sidebar({ onLogout }) {
     setIsProfileShown(true);
   };
 
+  const handleClickLanguage = () => {
+    if (i18n.language === "vi") {
+      i18n.changeLanguage("en");
+    } else {
+      i18n.changeLanguage("vi");
+    }
+  };
+
   return (
     <div
       className="sidebar w-screen lg:h-screen bg-white lg:w-40 px-5 sm:py-5 py-4 lg:px-3 shadow-lg flex lg:flex-col lg:justify-start flex-row sm:justify-center justify-start lg:gap-5 gap-3 items-center lg:rounded-br-3xl h-fit sticky top-0 left-0 bg-opacity-90"
@@ -110,6 +121,7 @@ function Sidebar({ onLogout }) {
             onClickWallets={handleClickWallets}
             onClickProfile={handleClickProfile}
             onClickIncomeTax={() => setIsIncomeTaxShown(true)}
+            onClickLanguage={handleClickLanguage}
           />
         </div>
 

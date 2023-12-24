@@ -1,0 +1,30 @@
+{
+  "sidebar": {
+    "transactions": "Transactions",
+    "plans": "Plan",
+    "categories": "Categories",
+    "default_categories": "Default Categories",
+    "reports": "Reports",
+    "goals": "Roals",
+    "users": "Users",
+    "dashboard": "Dashboard",
+    "events": "Events"
+  },
+  "transaction": {
+    "transactions": "Transactions",
+    "add_income": "Add Income",
+    "add_expense": "Add expense",
+    "recent_transactions": "Recent transactions",
+    "search_transactions": "Search transactions",
+    "total_incomes": "Total incomes",
+    "total_expenses": "Total expenses",
+    "remainder": "Remainder",
+    "exceeding": "Exceeding",
+    "setup_plan": "Set up plan for this month",
+    "view_report": "View report",
+    "all": "All",
+    "custom_date": "Custom date",
+    "no_transactions": "You didn't make any transactions in this period!",
+    "no_results": "No results"
+  }
+}
