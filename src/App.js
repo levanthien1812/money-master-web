@@ -6,7 +6,7 @@ import LoginPage from "./pages/auth/LoginPage";
 import ResetPasswordPage from "./pages/auth/ResetPasswordPage";
 import ProtectedRoute from "./components/routes/ProtectedRoute";
 import GuessRoute from "./components/routes/GuessRoute";
-import IncomesExpensePage from "./pages/incomes-expenses/IncomesExpensePage";
+import IncomesExpensePage from "./pages/transactions/IncomesExpensePage";
 import ReportsPage from "./pages/reports/ReportsPage";
 import CategoriesPage from "./pages/categories/CategoriesPage";
 import PlansPage from "./pages/plans/PlansPage";

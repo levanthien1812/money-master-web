@@ -2,6 +2,7 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEllipsis,
+  faMoneyBill,
   faUser,
   faWallet,
 } from "@fortawesome/free-solid-svg-icons";
@@ -12,6 +13,7 @@ function AccountPopup({
   onLogout,
   onClickWallets,
   onClickProfile,
+  onClickIncomeTax
 }) {
   const roles = useSelector((state) => state.auth.roles);
 
@@ -34,16 +36,28 @@ function AccountPopup({
             View profile
           </Popover.Button>
           {roles.includes("user") && (
-            <Popover.Button
-              className="bg-blue-100 py-2 w-52 rounded-md whitespace-nowrap hover:bg-blue-200 hover:font-semibold"
-              onClick={onClickWallets}
-            >
-              <FontAwesomeIcon
-                icon={faWallet}
-                className="text-xl me-2 text-blue-400"
-              />
-              Your wallets
-            </Popover.Button>
+            <>
+              <Popover.Button
+                className="bg-blue-100 py-2 w-52 rounded-md whitespace-nowrap hover:bg-blue-200 hover:font-semibold"
+                onClick={onClickWallets}
+              >
+                <FontAwesomeIcon
+                  icon={faWallet}
+                  className="text-xl me-2 text-blue-400"
+                />
+                Your wallets
+              </Popover.Button>
+              <Popover.Button
+                className="bg-blue-100 py-2 w-52 rounded-md whitespace-nowrap hover:bg-blue-200 hover:font-semibold"
+                onClick={onClickIncomeTax}
+              >
+                <FontAwesomeIcon
+                  icon={faMoneyBill}
+                  className="text-xl me-2 text-blue-400"
+                />
+                Personal Income Tax
+              </Popover.Button>
+            </>
           )}
           <Popover.Button
             className="bg-blue-100 py-2 w-52 rounded-md whitespace-nowrap hover:bg-blue-200 hover:font-semibold uppercase text-red-400"

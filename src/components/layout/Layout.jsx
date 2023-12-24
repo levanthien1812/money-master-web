@@ -33,6 +33,7 @@ function Layout() {
     const events = [
       "remind-add-transactions-event",
       "remind-overspend-category-plan-event",
+      "remind-overspent-category-plan-event",
     ];
 
     events.forEach((event) => {

@@ -15,11 +15,13 @@ import Profile from "../../pages/profile/components/Profile";
 import { useSelector } from "react-redux";
 import "../../styles/sidebar.css";
 import Notifications from "../../pages/notifications/components/Notifications";
+import IncomeTaxInfo from "../../pages/personal-income-tax/components/IncomeTaxInfo";
 
 function Sidebar({ onLogout }) {
   const [isWalletsShown, setIsWalletsShown] = useState(false);
   const [isProfileShown, setIsProfileShown] = useState(false);
   const [isNotificationsShown, setIsNotificationsShown] = useState(false);
+  const [isIncomeTaxShown, setIsIncomeTaxShown] = useState(false);
 
   const { user, roles } = useSelector((state) => state.auth);
   const { notifications } = useSelector((state) => state.notification);
@@ -107,6 +109,7 @@ function Sidebar({ onLogout }) {
             onLogout={onLogout}
             onClickWallets={handleClickWallets}
             onClickProfile={handleClickProfile}
+            onClickIncomeTax={() => setIsIncomeTaxShown(true)}
           />
         </div>
 
@@ -154,6 +157,9 @@ function Sidebar({ onLogout }) {
 
       {isWalletsShown && <Wallets onClose={() => setIsWalletsShown(false)} />}
       {isProfileShown && <Profile onClose={() => setIsProfileShown(false)} />}
+      {isIncomeTaxShown && (
+        <IncomeTaxInfo onClose={() => setIsIncomeTaxShown(false)} />
+      )}
     </div>
   );
 }
