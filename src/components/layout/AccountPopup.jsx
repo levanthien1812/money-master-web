@@ -2,20 +2,25 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEllipsis,
+  faLanguage,
   faMoneyBill,
+  faRotate,
   faUser,
   faWallet,
 } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
 import { Popover } from "@headlessui/react";
+import { useTranslation } from "react-i18next";
 
 function AccountPopup({
   onLogout,
   onClickWallets,
   onClickProfile,
-  onClickIncomeTax
+  onClickIncomeTax,
+  onClickLanguage,
 }) {
   const roles = useSelector((state) => state.auth.roles);
+  const { i18n } = useTranslation();
 
   return (
     <Popover className={"flex justify-center"}>
@@ -23,10 +28,10 @@ function AccountPopup({
         <FontAwesomeIcon icon={faEllipsis} />
       </Popover.Button>
 
-      <Popover.Panel className="absolute z-10 left-8 top-0 shadow-lg bg-white p-3 rounded-xl overflow-hidden">
+      <Popover.Panel className="absolute z-10 left-8 top-0 shadow-lg bg-white p-3 rounded-xl overflow-hidden flex flex-col">
         <div className="flex flex-col gap-2">
           <Popover.Button
-            className="bg-blue-100 py-2 w-52 rounded-md whitespace-nowrap hover:bg-blue-200 hover:font-semibold"
+            className="bg-blue-100 py-2 px-3 rounded-md whitespace-nowrap hover:bg-blue-200 hover:font-semibold"
             onClick={onClickProfile}
           >
             <FontAwesomeIcon
@@ -38,7 +43,7 @@ function AccountPopup({
           {roles.includes("user") && (
             <>
               <Popover.Button
-                className="bg-blue-100 py-2 w-52 rounded-md whitespace-nowrap hover:bg-blue-200 hover:font-semibold"
+                className="bg-blue-100 py-2 px-3 rounded-md whitespace-nowrap hover:bg-blue-200 hover:font-semibold"
                 onClick={onClickWallets}
               >
                 <FontAwesomeIcon
@@ -48,7 +53,7 @@ function AccountPopup({
                 Your wallets
               </Popover.Button>
               <Popover.Button
-                className="bg-blue-100 py-2 w-52 rounded-md whitespace-nowrap hover:bg-blue-200 hover:font-semibold"
+                className="bg-blue-100 py-2 px-3 rounded-md whitespace-nowrap hover:bg-blue-200 hover:font-semibold"
                 onClick={onClickIncomeTax}
               >
                 <FontAwesomeIcon
@@ -60,7 +65,21 @@ function AccountPopup({
             </>
           )}
           <Popover.Button
-            className="bg-blue-100 py-2 w-52 rounded-md whitespace-nowrap hover:bg-blue-200 hover:font-semibold uppercase text-red-400"
+            className="bg-blue-100 py-2 px-3 rounded-md whitespace-nowrap hover:bg-blue-200 hover:font-semibold"
+            onClick={onClickLanguage}
+          >
+            <FontAwesomeIcon
+              icon={faLanguage}
+              className="text-xl me-2 text-blue-400"
+            />
+            Language: {i18n.language === "vi" ? "Tiếng Việt" : "English"}
+            <FontAwesomeIcon
+              icon={faRotate}
+              className="text-xl ms-2 text-blue-400"
+            />
+          </Popover.Button>
+          <Popover.Button
+            className="bg-blue-100 py-2 px-3 rounded-md whitespace-nowrap hover:bg-blue-200 hover:font-semibold uppercase text-red-400"
             onClick={() => onLogout()}
           >
             Log out

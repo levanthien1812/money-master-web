@@ -1,0 +1,30 @@
+{
+  "sidebar": {
+    "transactions": "Thu chi",
+    "plans": "Kế hoạch",
+    "categories": "Danh mục",
+    "default_categories": "Danh mục mặc định",
+    "reports": "Báo cáo",
+    "goals": "Mục tiêu",
+    "users": "Người dùng",
+    "dashboard": "Bảng điều khiển",
+    "events": "Sự kiện"
+  },
+  "transaction": {
+    "transactions": "Thu chi",
+    "add_income": "Thêm thu",
+    "add_expense": "Thêm chi",
+    "recent_transactions": "Thu chi gần đây",
+    "search_transactions": "Tìm thu chi",
+    "total_incomes": "Tổng thu",
+    "total_expenses": "Tổng chi",
+    "remainder": "Còn lại",
+    "exceeding": "Vượt quá",
+    "setup_plan": "Lập kế hoạch cho tháng này",
+    "view_report": "Xem báo cáo",
+    "all": "Tất cả",
+    "custom_date": "Theo ngày",
+    "no_transactions": "Không tìm thấy thu chi nào trong khoảng thời gian này",
+    "no_results": "Không có kết quả"
+  }
+}

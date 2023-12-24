@@ -10,6 +10,7 @@ import SelectWallet from "../wallets/components/SelectWallet";
 import { useSelector } from "react-redux";
 import { CATEGORY_TYPES } from "../../config/constants";
 import logo from "../../assets/images/logo-money-master.png";
+import { useTranslation } from "react-i18next";
 
 function IncomesExpensePage() {
   const [transactions, setTransactions] = useState(null);
@@ -24,6 +25,8 @@ function IncomesExpensePage() {
   const [day, setDay] = useState(null);
 
   const walletChosen = useSelector((state) => state.wallet.walletChosen);
+
+  const { t } = useTranslation();
 
   const increaseMonth = () => {
     if (year >= new Date().getFullYear() && month > new Date().getMonth()) {
@@ -127,7 +130,9 @@ function IncomesExpensePage() {
           <div className="lg:w-16 lg:h-16 w-10 h-10">
             <img src={logo} alt="" className="w-full h-full object-cover" />
           </div>
-          <h2 className="sm:text-4xl text-3xl">Transactions</h2>
+          <h2 className="sm:text-4xl text-3xl">
+            {t("transaction.transactions")}
+          </h2>
           <div className="w-40">
             <SelectWallet />
           </div>
@@ -141,14 +146,14 @@ function IncomesExpensePage() {
             id="add-income-btn"
             onClick={() => handleClickAddTx(CATEGORY_TYPES.INCOMES)}
           >
-            Add income
+            {t("transaction.add_income")}
           </button>
           <button
             className="py-2 xl:px-8 px-4 text-center rounded-e-xl font-semibold bg-purple-500 text-white hover:bg-purple-600 w-1/2"
             id="add-expense-btn"
             onClick={() => handleClickAddTx(CATEGORY_TYPES.EXPENSES)}
           >
-            Add expense
+            {t("transaction.add_expense")}
           </button>
         </div>
       </div>

@@ -18,6 +18,7 @@ import Loading from "../../../components/others/Loading";
 import getMonthName from "../../../utils/getMonthName";
 import { toast } from "react-toastify";
 import { CATEGORY_TYPES } from "../../../config/constants";
+import { useTranslation } from "react-i18next";
 
 function Report({
   month,
@@ -33,6 +34,7 @@ function Report({
   const [loadingPlan, setLoadingPlan] = useState(false);
 
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const getPlan = async () => {
     try {
@@ -119,13 +121,17 @@ function Report({
         <>
           <div className="mb-8 py-2 sm:px-4 px-0 rounded-xl flex gap-1 flex-row lg:flex-col xl:flex-row">
             <div className="bg-white sm:py-2 py-1 sm:px-4 px-2 rounded-xl w-1/2 xl:w-1/2 sm:w-full text-center shadow-lg">
-              <p className="text-md uppercase mb-1 text-gray-400 hover:text-gray-500 font-bold">Total incomes:</p>
+              <p className="text-md uppercase mb-1 text-gray-400 hover:text-gray-500 font-bold">
+                {t("transaction.total_incomes")}
+              </p>
               <p className="text-2xl font-semibold text-green-500">
                 {formatCurrency(report[CATEGORY_TYPES.INCOMES])}
               </p>
             </div>
             <div className="bg-white py-1 px-2 sm:py-2 sm:px-4  rounded-xl w-1/2 xl:w-1/2 sm:w-full text-center shadow-lg">
-              <p className="text-md uppercase mb-1 text-gray-400 hover:text-gray-500 font-bold">Total expenses:</p>
+              <p className="text-md uppercase mb-1 text-gray-400 hover:text-gray-500 font-bold">
+                {t("transaction.total_expenses")}
+              </p>
               <p className="text-2xl font-semibold text-orange-500">
                 {"-" + formatCurrency(report[CATEGORY_TYPES.EXPENSES])}
               </p>
@@ -158,7 +164,7 @@ function Report({
             {report[CATEGORY_TYPES.INCOMES] - report[CATEGORY_TYPES.EXPENSES] >=
               0 && (
               <p className="text-xl">
-                Remainder:{" "}
+                {t("transaction.remainder")}:{" "}
                 <span className="font-semibold text-purple-600 text-2xl">
                   {formatCurrency(
                     report[CATEGORY_TYPES.INCOMES] -
@@ -170,7 +176,7 @@ function Report({
             {report[CATEGORY_TYPES.INCOMES] - report[CATEGORY_TYPES.EXPENSES] <
               0 && (
               <p className="text-xl">
-                Exceeding:{" "}
+                {t("transaction.exceeding")}:{" "}
                 <span className="font-semibold text-red-600 text-2xl">
                   {formatCurrency(
                     (report[CATEGORY_TYPES.INCOMES] -
@@ -188,7 +194,7 @@ function Report({
                 className="py-2 px-8 rounded-lg bg-transparent text-purple-500 font-semibold hover:bg-white mb-3"
                 onClick={() => setIsAddingPlan(true)}
               >
-                Set up plan for this month
+                {t("transaction.setup_plan")}
               </button>
             )}
             {!loadingPlan && plan && (
@@ -245,7 +251,7 @@ function Report({
               className="py-2 px-8 rounded-lg bg-purple-500 text-white text-sm font-semibold uppercase mt-3 hover:bg-purple-600"
               onClick={handleClickViewReport}
             >
-              View report
+              {t("transaction.view_report")}
             </button>
           </div>
         </>
@@ -254,7 +260,7 @@ function Report({
       {!loading && !report && (
         <>
           <p className="text-center text-3xl mt-12 text-gray-400 font-light">
-            You didn&apos;t make any transactions in this period!
+            {t("transaction.no_transactions")}
           </p>
         </>
       )}

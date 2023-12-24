@@ -5,6 +5,7 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Loading from "../../../components/others/Loading";
 import Input from "../../../components/elements/Input";
 import { format } from "date-fns";
+import { useTranslation } from "react-i18next";
 
 function RecentTransactions({
   transactions,
@@ -15,6 +16,7 @@ function RecentTransactions({
   month,
   year,
 }) {
+  const { t } = useTranslation();
   const [date, setDate] = useState(
     new Date(year, month - 1, new Date().getDate())
   );
@@ -38,14 +40,14 @@ function RecentTransactions({
     <div className="lg:w-7/12 sm:w-full">
       <div className="flex border-b border-b-purple-200 justify-between mb-6 items-center">
         <button className="py-2 sm:px-6 px-3 border-b-4 border-b-purple-500 text-purple-600 font-semibold">
-          Recent transactions
+          {t("transaction.recent_transactions")}
         </button>
 
         <div className="flex items-center bg-white py-2 px-4 ms-6 rounded-xl my-1 gap-2 shadow-sm">
           <input
             type="text"
             name="search"
-            placeholder="Search transactions"
+            placeholder={t("transaction.search_transactions")}
             className="outline-none sm:w-64 w-24"
             onChange={onSearch}
           />
@@ -62,7 +64,7 @@ function RecentTransactions({
           }
           onClick={() => setIsAll(true)}
         >
-          All
+          {t("transaction.all")}
         </button>
         <button
           className={
@@ -73,7 +75,7 @@ function RecentTransactions({
           }
           onClick={() => setIsAll(false)}
         >
-          Custom date
+          {t("transaction.custom_date")}
         </button>
         {!isAll && (
           <Input
@@ -96,7 +98,9 @@ function RecentTransactions({
         />
       )}
       {!loading && transactions && transactions.length === 0 && (
-        <p className="text-center py-3 text-gray-600">No result!</p>
+        <p className="text-center py-3 text-gray-600">
+          {t("transaction.no_results")}
+        </p>
       )}
     </div>
   );
