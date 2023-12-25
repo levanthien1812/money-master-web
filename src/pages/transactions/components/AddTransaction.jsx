@@ -88,7 +88,6 @@ function AddTransaction({
       setPhoto("");
       setDate(new Date(transaction.date));
       setDescription(transaction.description || "");
-      
     } else {
       setWalletSelected(walletChosen);
       setCategorySelected(categories[0]);
@@ -361,7 +360,7 @@ function AddTransaction({
 
             {/* RIGHT SIDE INPUTS (OPTIONAL)*/}
             <div className="p-3 lg:w-1/2 sm:w-full">
-              {/* <SelectWithImage
+              <SelectWithImage
                 data={events}
                 label={"Event"}
                 selected={eventSelected}
@@ -370,7 +369,7 @@ function AddTransaction({
                 helperText={
                   !loadingEvents && events.length === 0 && "No event found!"
                 }
-              /> */}
+              />
               <ImageChoserPreview
                 image={photo}
                 setImage={setPhoto}

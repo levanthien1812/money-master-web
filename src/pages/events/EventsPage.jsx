@@ -1,10 +1,46 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../../assets/images/logo-money-master.png";
+import AddEvent from "./components/AddEvent";
+import EventsService from "../../services/events";
+import { toast } from "react-toastify";
+import Loading from "../../components/others/Loading";
+import Input from "../../components/elements/Input";
+import EventItem from "./components/EventItem";
+import { Calendar, momentLocalizer } from "react-big-calendar";
+import moment from "moment";
+import "react-big-calendar/lib/css/react-big-calendar.css";
+import "./components/bigCalendar.css";
+
+const localizer = momentLocalizer(moment);
 
 function EventsPage() {
   const [isAddingEvent, setIsAddingEvent] = useState(false);
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState(null);
 
-  console.log(isAddingEvent);
+  const fetchEvents = async () => {
+    try {
+      setLoading(true);
+      const responseData = await EventsService.getEvents();
+
+      if (responseData.status === "success") {
+        setEvents(responseData.data.events);
+      }
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchEvents();
+  }, []);
+
+  const handleSelectEvent = (event) => {
+    setSelectedEvent(event);
+  };
+
   return (
     <div className="lg:p-8 sm:p-14 p-3">
       <div className="sm:mb-8 mb-4 flex justify-between items-center">
@@ -21,6 +57,38 @@ function EventsPage() {
           Add event
         </button>
       </div>
+      <div className="mx-auto w-4/5">
+        {isAddingEvent && <AddEvent onClose={() => setIsAddingEvent(false)} />}
+        {loading && <Loading />}
+
+        {events.length > 0 && !loading && (
+          <>
+            <Calendar
+              localizer={localizer}
+              events={events.map((e) => {
+                return {
+                  ...e,
+                  title: e.name,
+                  start: new Date(e.date_begin),
+                  end: new Date(e.date_end),
+                };
+              })}
+              views={["month"]}
+              onSelectEvent={(event) => handleSelectEvent(event)}
+              startAccessor="start"
+              endAccessor="end"
+              style={{ height: 700 }}
+            />
+          </>
+        )}
+      </div>
+
+      {selectedEvent && (
+        <AddEvent
+          onClose={() => setSelectedEvent(null)}
+          event={selectedEvent}
+        />
+      )}
     </div>
   );
 }
