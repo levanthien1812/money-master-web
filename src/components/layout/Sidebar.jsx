@@ -91,7 +91,7 @@ function Sidebar({ onLogout }) {
         },
       ];
     }
-  }, [roles]);
+  }, [roles, t]);
 
   const handleClickWallets = () => {
     setIsWalletsShown(true);
