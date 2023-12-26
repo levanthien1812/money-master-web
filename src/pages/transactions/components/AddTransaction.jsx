@@ -88,6 +88,7 @@ function AddTransaction({
       setPhoto("");
       setDate(new Date(transaction.date));
       setDescription(transaction.description || "");
+      setEventSelected(events.find((e) => e.id === transaction.event_id));
     } else {
       setWalletSelected(walletChosen);
       setCategorySelected(categories[0]);
@@ -173,6 +174,10 @@ function AddTransaction({
           data = { ...data, is_image_cleared: 1 };
         }
 
+        if (eventSelected) {
+          data = { ...data, event_id: eventSelected.id };
+        }
+
         let responseData;
         if (!transaction || isCloning) {
           responseData = await TransactionsService.createTransaction(data);
@@ -227,6 +232,16 @@ function AddTransaction({
   const handleClone = () => {
     setIsCloning(true);
   };
+
+  const handleChangeEvent = () => {
+    setDate(new Date(eventSelected.date_begin));
+  };
+
+  useEffect(() => {
+    if (eventSelected) {
+      handleChangeEvent();
+    }
+  }, [eventSelected]);
 
   return (
     <>
@@ -347,6 +362,20 @@ function AddTransaction({
                 required
                 error={(errors && errors.amount) || null}
               />
+              {eventSelected &&
+                eventSelected.date_begin !== eventSelected.date_end && (
+                  <div className="flex items-center gap-2">
+                    <FontAwesomeIcon
+                      icon={faInfoCircle}
+                      className="text-blue-600"
+                    />
+                    <p className="text-blue-600 text-sm italic">
+                      Event duration:{" "}
+                      {format(new Date(eventSelected.date_begin), "dd/MM/yyyy")}{" "}
+                      - {format(new Date(eventSelected.date_end), "dd/MM/yyyy")}
+                    </p>
+                  </div>
+                )}
               <Input
                 label={"Date"}
                 type={"date"}
