@@ -36,4 +36,10 @@ export default class EventsService {
 
     return responseData.data;
   }
+
+  static async getTransactionsByEvent(id) {
+    const responseData = await instance.get("/events/" + id + "/transactions");
+
+    return responseData.data;
+  }
 }
