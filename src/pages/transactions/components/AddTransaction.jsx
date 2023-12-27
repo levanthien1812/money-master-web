@@ -20,6 +20,7 @@ function AddTransaction({
   setIsAdding,
   type,
   transaction = null,
+  event = null, 
   setIsDeleting,
   onAddingSuccess,
   month = new Date().getMonth(),
@@ -89,6 +90,14 @@ function AddTransaction({
       setDate(new Date(transaction.date));
       setDescription(transaction.description || "");
       setEventSelected(events.find((e) => e.id === transaction.event_id));
+    } else if (event) {
+      setWalletSelected(
+        wallets.length > 0 &&
+          wallets.find((wallet) => wallet.id === event.wallet_id)
+      );
+      setDate(new Date(event.date_begin));
+      setEventSelected(events.find((e) => e.id === event.id));
+      setCategorySelected(categories[0]);
     } else {
       setWalletSelected(walletChosen);
       setCategorySelected(categories[0]);

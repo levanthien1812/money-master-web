@@ -4,13 +4,19 @@ import { toast } from "react-toastify";
 import formatCurrency from "../../../utils/currencyFormatter";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { CATEGORY_TYPES } from "../../../config/constants";
+import AddTransaction from "../../transactions/components/AddTransaction";
+import TransactionItem from "./TransactionItem";
 
-function TransactionList({ eventId }) {
+function TransactionList({ event }) {
   const [transactions, setTransactions] = useState([]);
+  const [showButtons, setShowButtons] = useState(false);
+  const [addingType, setAddingType] = useState("");
+  const [isAdding, setIsAdding] = useState(false);
 
   const fetchTransactions = async () => {
     try {
-      const responseData = await EventsService.getTransactionsByEvent(eventId);
+      const responseData = await EventsService.getTransactionsByEvent(event.id);
 
       if (responseData.status === "success") {
         setTransactions(responseData.data.transactions);
@@ -24,41 +30,63 @@ function TransactionList({ eventId }) {
     fetchTransactions();
   }, []);
 
+  const handleModifySuccess = (action) => {
+    fetchTransactions();
+    toast.success("Transaction is " + action + "d successfully");
+  };
+
   return (
     <div>
       <div className="flex justify-between items-center">
         <p>Transactions</p>
-        <button className="w-5 h-5 flex justify-center items-center bg-purple-600 rounded-full">
-          <FontAwesomeIcon icon={faPlus} className="text-white text-sm" />
-        </button>
+        <div className="relative">
+          <button
+            className="w-5 h-5 flex justify-center items-center bg-purple-600 rounded-full"
+            onClick={() => setShowButtons((prev) => !prev)}
+          >
+            <FontAwesomeIcon icon={faPlus} className="text-white text-sm" />
+          </button>
+          {showButtons && (
+            <div className="absolute right-6 flex flex-col rounded-md shadow-md bg-white overflow-hidden">
+              <button
+                className="text-sm whitespace-nowrap px-3 border-b border-b-gray-100 hover:bg-purple-600 hover:text-white py-1 hover:font-bold"
+                onClick={() => {
+                  setAddingType(CATEGORY_TYPES.EXPENSES);
+                  setIsAdding(true);
+                }}
+              >
+                New expense
+              </button>
+              <button
+                className="text-sm whitespace-nowrap px-3 hover:bg-purple-600 hover:text-white py-1 hover:font-bold"
+                onClick={() => {
+                  setAddingType(CATEGORY_TYPES.INCOMES);
+                  setIsAdding(true);
+                }}
+              >
+                New income
+              </button>
+            </div>
+          )}
+        </div>
       </div>
       <div className="mt-3">
         {transactions.map((transaction) => (
-          <div
+          <TransactionItem
+            transaction={transaction}
             key={transaction.id}
-            className="flex rounded-md overflow-hidden shadow- shadow-md mb-2"
-          >
-            <div className="w-12 h-12 flex">
-              <img
-                src={transaction.category.image}
-                className="w-full h-full object-cover"
-                alt=""
-              />
-            </div>
-            <div className="px-2 flex flex-col justify-center">
-              <p className="text-sm">{transaction.title}</p>
-              <p className="text-sm font-bold text-orange-600">
-                {formatCurrency(transaction.amount)}
-              </p>
-            </div>
-            {transaction.image.length > 0 && (
-              <div>
-                <img src={transaction.image} alt="" />
-              </div>
-            )}
-          </div>
+            onModifySuccess={handleModifySuccess}
+          />
         ))}
       </div>
+      {isAdding && (
+        <AddTransaction
+          onAddingSuccess={handleModifySuccess}
+          type={addingType}
+          setIsAdding={setIsAdding}
+          event={event}
+        />
+      )}
     </div>
   );
 }

@@ -5,7 +5,6 @@ import EventsService from "../../services/events";
 import { toast } from "react-toastify";
 import Loading from "../../components/others/Loading";
 import Input from "../../components/elements/Input";
-import EventItem from "./components/EventItem";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
