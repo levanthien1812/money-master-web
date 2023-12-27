@@ -62,7 +62,7 @@ function AddEvent({ onClose, event = null }) {
     <Modal
       onClose={onClose}
       title={event ? "Event detail" : "Add new event"}
-      width={"2xl:w-1/3 md:w-2/5 sm:w-1/2 w-11/12"}
+      width={"md:w-2/5 sm:w-1/2 w-11/12"}
       onAccept={handleAddingEvent}
     >
       <div className={`grid ${event ? "grid-cols-2" : "grid-cols-1"} gap-6`}>
@@ -136,7 +136,7 @@ function AddEvent({ onClose, event = null }) {
             />
           </div>
         </div>
-        {event && <TransactionList eventId={event.id} />}
+        {event && <TransactionList event={event} />}
       </div>
     </Modal>
   );

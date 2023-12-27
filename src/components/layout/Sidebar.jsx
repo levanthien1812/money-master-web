@@ -9,6 +9,7 @@ import target from "../../assets/images/target.png";
 import expenses from "../../assets/images/spending.png";
 import avatar from "../../assets/images/profile.png";
 import users from "../../assets/images/teamwork.png";
+import calendar from "../../assets/images/calendar.png"
 import AccountPopup from "./AccountPopup";
 import Wallets from "../../pages/wallets/components/Wallets";
 import Profile from "../../pages/profile/components/Profile";
@@ -65,7 +66,7 @@ function Sidebar({ onLogout }) {
         {
           id: 6,
           name: t("sidebar.events"),
-          image: categories,
+          image: calendar,
           link: "/events",
         },
       ];
