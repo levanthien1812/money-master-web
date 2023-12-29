@@ -31,8 +31,14 @@ export default class EventsService {
     return responseData.data;
   }
 
-  static async deleteEvent(id) {
-    const responseData = await instance.delete("/events/" + id);
+  static async deleteEventWithTransactions(id) {
+    const responseData = await instance.delete("/events/" + id + "/with-transactions");
+
+    return responseData.data;
+  }
+
+  static async deleteEventWithoutTransactions(id) {
+    const responseData = await instance.delete("/events/" + id + "/without-transactions");
 
     return responseData.data;
   }

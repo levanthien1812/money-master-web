@@ -56,8 +56,8 @@ function EventsPage() {
           Add event
         </button>
       </div>
-      <div className="mx-auto w-4/5">
-        {isAddingEvent && <AddEvent onClose={() => setIsAddingEvent(false)} />}
+      <div className="mx-auto 2xl:w-4/5 xl:w-5/6">
+        {isAddingEvent && <AddEvent onClose={() => setIsAddingEvent(false)} onUpdateSuccess={fetchEvents}/>}
         {loading && <Loading />}
 
         {events.length > 0 && !loading && (
@@ -86,6 +86,7 @@ function EventsPage() {
         <AddEvent
           onClose={() => setSelectedEvent(null)}
           event={selectedEvent}
+          onUpdateSuccess={fetchEvents}
         />
       )}
     </div>
