@@ -10,6 +10,21 @@
 
 .rbc-event {
     background-color: rgb(168, 85, 247);
+    font-size: 15px;
+    border-radius: 30px;
+}
+
+.rbc-event.rbc-event-continues-after {
+    border-radius: 30px 0 0 30px;
+}
+
+.rbc-event.rbc-event-continues-prior {
+    border-radius: 0 30px 30px 0;
+}
+
+.rbc-event-content {
+    padding-left: 6px;
+    padding-right: 6px;
 }
 
 .rbc-event.rbc-selected {
