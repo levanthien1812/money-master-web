@@ -1,3 +1,8 @@
+.rbc-month-view {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
 .rbc-row-segment {
     padding-left: 4px;
     padding-right: 4px;
@@ -31,4 +36,26 @@
     font-size: 20px;
     font-weight: bold;
     color: rgb(168, 85, 247);
+}
+
+.rbc-header {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    color: rgb(234 179 8);
+    background-color: rgb(55 65 81);
+}
+
+.rbc-date-cell .rbc-button-link {
+    font-size: 24px;
+    color: rgb(192 132 252)
+}
+
+.rbc-date-cell.rbc-off-range .rbc-button-link {
+    font-size: 24px;
+    color: rgb(156 163 175);
+}
+
+.rbc-date-cell.rbc-now.rbc-current .rbc-button-link {
+    font-size: 24px;
+    color: rgb(147 51 234);
 }

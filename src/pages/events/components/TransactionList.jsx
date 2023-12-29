@@ -71,13 +71,17 @@ function TransactionList({ event }) {
         </div>
       </div>
       <div className="mt-3">
-        {transactions.map((transaction) => (
-          <TransactionItem
-            transaction={transaction}
-            key={transaction.id}
-            onModifySuccess={handleModifySuccess}
-          />
-        ))}
+        {transactions.length > 0 &&
+          transactions.map((transaction) => (
+            <TransactionItem
+              transaction={transaction}
+              key={transaction.id}
+              onModifySuccess={handleModifySuccess}
+            />
+          ))}
+        {transactions.length === 0 && (
+          <p className="text-gray-400 text-2xl text-center">No transactions!</p>
+        )}
       </div>
       {isAdding && (
         <AddTransaction
