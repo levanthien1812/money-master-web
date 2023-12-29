@@ -71,7 +71,7 @@ function AddEvent({ onClose, event = null, onUpdateSuccess }) {
   }, []);
 
   return (
-    <ModalWithNothing onClose={onClose} width={"md:w-2/5 sm:w-1/2 w-11/12"}>
+    <ModalWithNothing onClose={onClose} width={"2xl:w-2/5 md:w-3/5 sm:w-1/2 w-11/12"}>
       <div className="flex items-start justify-center p-5 border-b border-solid border-slate-200 rounded-t max-h-screen">
         <h3 className="text-2xl text-center">
           {event ? "Event detail" : "Add new event"}
