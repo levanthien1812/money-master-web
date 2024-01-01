@@ -15,12 +15,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchWallets } from "../../../stores/wallets";
 import EventsService from "../../../services/events";
 import { CATEGORY_TYPES, TRANSACTION_TYPE } from "../../../config/constants";
+import { useTranslation } from "react-i18next";
 
 function AddTransaction({
   setIsAdding,
   type,
   transaction = null,
-  event = null, 
+  event = null,
   setIsDeleting,
   onAddingSuccess,
   month = new Date().getMonth(),
@@ -51,6 +52,7 @@ function AddTransaction({
   const [isCloning, setIsCloning] = useState(false);
 
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (
@@ -262,10 +264,10 @@ function AddTransaction({
         <div className="flex items-start justify-center p-5 border-b border-solid border-slate-200 rounded-t max-h-screen">
           <h3 className="text-2xl text-center">
             {transaction && !isCloning
-              ? "Transaction detail"
-              : `Add ${
-                  TRANSACTION_TYPE.EXPENSE === type ? "expense" : "income"
-                }`}
+              ? t("transaction.transaction_detail")
+              : TRANSACTION_TYPE.EXPENSE === type
+              ? t("transaction.add_expense")
+              : t("transaction.add_income")}
           </h3>
         </div>
 
@@ -276,21 +278,21 @@ function AddTransaction({
             <div className="p-3 border-r border-gray-200 w-full lg:w-1/2">
               <SelectWithImage
                 data={wallets}
-                label={"Wallet"}
+                label={t("input.wallet")}
                 selected={walletSelected}
                 setSelected={setWalletSelected}
                 required
               />
               <SelectWithImage
                 data={categories}
-                label={"Category"}
+                label={t("input.category")}
                 selected={categorySelected}
                 setSelected={setCategorySelected}
                 required
                 loading={loadingCategories}
               />
               <Input
-                label={"Title"}
+                label={t("input.title")}
                 type={"text"}
                 name={"title"}
                 size="small"
@@ -305,7 +307,7 @@ function AddTransaction({
                 <>
                   {loadingPlan && (
                     <p className="text-sm text-blue-600 italic">
-                      Loading remainder of this month plan ...
+                      {t("info.loading_plan")}
                     </p>
                   )}
                   {!loadingPlan && (
@@ -330,8 +332,7 @@ function AddTransaction({
                                   : "text-blue-600"
                               } italic`}
                             >
-                              As you planned, the remaining of expenses for this
-                              category this month is{" "}
+                              {t("info.have_plan")}{" "}
                               <span className="font-bold">
                                 {formatCurrency(
                                   planData.amount - planData.actual
@@ -341,8 +342,7 @@ function AddTransaction({
                           )}
                           {planData.amount - planData.actual < 0 && (
                             <p className="text-sm text-red-600 italic">
-                              As you planned, your expenses for this category
-                              exceeds{" "}
+                              {t("info.exceed_plan")}{" "}
                               <span className="font-bold">
                                 {formatCurrency(
                                   (planData.amount - planData.actual) * -1
@@ -354,7 +354,7 @@ function AddTransaction({
                       )}
                       {!planData && (
                         <p className="text-sm text-blue-600 italic">
-                          You didn&apos;t set plan for this category this month
+                          {t("info.no_plan")}
                         </p>
                       )}
                     </>
@@ -362,7 +362,7 @@ function AddTransaction({
                 </>
               )}
               <Input
-                label={"Amount"}
+                label={t("input.amount")}
                 type={"text"}
                 name={"amount"}
                 size="small"
@@ -386,7 +386,7 @@ function AddTransaction({
                   </div>
                 )}
               <Input
-                label={"Date"}
+                label={t("input.date")}
                 type={"date"}
                 name={"date"}
                 size="small"
@@ -400,12 +400,12 @@ function AddTransaction({
             <div className="p-3 lg:w-1/2 sm:w-full">
               <SelectWithImage
                 data={events}
-                label={"Event"}
+                label={t("input.event")}
                 selected={eventSelected}
                 setSelected={setEventSelected}
                 loading={loadingEvents}
                 helperText={
-                  !loadingEvents && events.length === 0 && "No event found!"
+                  !loadingEvents && events.length === 0 && t("info.no_event")
                 }
               />
               <ImageChoserPreview
@@ -418,11 +418,13 @@ function AddTransaction({
 
               {/* DESCRIPTION */}
               <div>
-                <label htmlFor="description">Description</label>
+                <label htmlFor="description" className="text-sm">
+                  Description
+                </label>
                 <textarea
                   className="block border-gray-300 ring-inset ring-gray-300 focus:ring-purple-400 w-full outline-none shadow-sm rounded-md py-1.5 px-3 text-sm ring-1"
                   type={"text"}
-                  name={"description"}
+                  name={t("input.description")}
                   size="small"
                   rows={4}
                   id="description"
@@ -447,13 +449,13 @@ function AddTransaction({
                 className="text-red-600 active:bg-red-600 font-bold uppercase text-sm px-6 py-2 rounded-xl shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                 onClick={() => setIsDeleting(true)}
               >
-                Delete
+                {t("action.delete")}
               </button>
               <button
                 className="text-purple-600 active:bg-purple-600 font-bold uppercase text-sm px-6 py-2 rounded-xl shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                 onClick={handleClone}
               >
-                Clone
+                {t("action.clone")}
               </button>
             </div>
           )}
@@ -463,7 +465,7 @@ function AddTransaction({
               type="button"
               onClick={handleCancel}
             >
-              Cancle
+              {t("action.cancel")}
             </button>
             <button
               className="bg-purple-500 text-white active:bg-purple-600 font-bold uppercase text-sm px-6 py-2 rounded-xl shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 disabled:opacity-60"
@@ -472,10 +474,10 @@ function AddTransaction({
               disabled={processingSave}
             >
               {processingSave
-                ? "Processing..."
+                ? t("action.processing")
                 : !transaction || isCloning
-                ? "Add transaction"
-                : "Update"}
+                ? t("action.add_transaction")
+                : t("action.update")}
             </button>
           </div>
         </div>

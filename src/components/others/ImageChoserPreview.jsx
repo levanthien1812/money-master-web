@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FileUploader } from "react-drag-drop-files";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 function ImageChoserPreview({
   image,
@@ -11,6 +12,7 @@ function ImageChoserPreview({
   required,
 }) {
   const [preview, setPreview] = useState(defaultPreview);
+  const { t } = useTranslation();
 
   const handleFileChange = (file) => {
     // CLEAR ANY PHOTO STATE BEFORE
@@ -51,8 +53,9 @@ function ImageChoserPreview({
   return (
     <>
       <div className="mb-3">
-        <label htmlFor={"image"} className="flex items-center">
-          Image <span className="text-red-600 text-2xl">{required && "*"}</span>
+        <label htmlFor={"image"} className="flex items-center text-sm">
+          {t("input.image")}{" "}
+          <span className="text-red-600 text-2xl">{required && "*"}</span>
         </label>
 
         <div className="w-full overflow-hidden">
@@ -69,7 +72,7 @@ function ImageChoserPreview({
         </p>
 
         <p className="text-xs">
-          {image ? `File name: ${image.name}` : "No files uploaded yet"}
+          {image ? `File name: ${image.name}` : t("info.no_file")}
         </p>
       </div>
 

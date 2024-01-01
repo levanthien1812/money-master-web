@@ -25,6 +25,52 @@
     "all": "Tất cả",
     "custom_date": "Theo ngày",
     "no_transactions": "Không tìm thấy thu chi nào trong khoảng thời gian này",
-    "no_results": "Không có kết quả"
+    "no_results": "Không có kết quả",
+    "transaction_detail": "Chi tiết thu chi"
+  },
+  "input": {
+    "wallet": "Ví",
+    "category": "Danh mục",
+    "title": "Tiêu đề",
+    "date": "Ngày",
+    "amount": "Số tiền",
+    "event": "Sự kiện",
+    "image": "Hình ảnh",
+    "description": "Mô tả",
+    "name": "Tên",
+    "intended_amount": "Số tiền dự định chi",
+    "month": "Tháng",
+    "year": "Năm",
+    "goal_type": "Loại mục tiêu",
+    "expected_amount": "Số tiền mong muốn",
+    "begining_date": "Ngày bắt đầu",
+    "ending_date": "Ngày kết thúc",
+    "set_important": "Đặt làm quan trọng",
+    "wallet_get_money": "Ví rút tiền",
+    "wallet_receive_money": "Ví nhận tiền",
+    "note": "Ghi chú",
+    "type": "Loại",
+    "location": "Vị trí"
+  },
+  "action": {
+    "ok": "OK",
+    "cancel": "Huỷ",
+    "add_transaction": "Thêm chi tiêu",
+    "delete": "Xoá",
+    "clone": "Sao chép",
+    "add_event": "Thêm sự kiện",
+    "processing": "Đang xử lý...",
+    "update": "Cập nhật"
+  },
+  "info": {
+    "no_plan": "Bạn chưa thiết lập mục tiêu cho tháng này",
+    "have_plan": "Theo như kế hoạch, số tiền còn lại cho danh mục này trong tháng này là",
+    "exceed_plan": "Theo như kế hoạch, số tiền bạn đã chi cho danh mục này đã vượt ",
+    "total_expenses_last_month": "Tổng chi tháng trước là",
+    "current_month": "tháng này là",
+    "total_expenses_last_month_category": "Tổng chi cho danh mục này tháng trước là",
+    "loading_plan": "Đang tính số tiền còn lại của tháng này theo kế hoạch ...",
+    "no_event": "Không tìm thấy sự kiện!",
+    "no_file": "Chưa có file nào được tải lên"
   }
 }

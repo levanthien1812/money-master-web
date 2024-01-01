@@ -25,6 +25,52 @@
     "all": "All",
     "custom_date": "Custom date",
     "no_transactions": "You didn't make any transactions in this period!",
-    "no_results": "No results"
+    "no_results": "No results",
+    "transaction_detail": "Transaction detail"
+  },
+  "input": {
+    "wallet": "Wallet",
+    "category": "Category",
+    "title": "Title",
+    "date": "Date",
+    "amount": "Amount",
+    "event": "Event",
+    "image": "Image",
+    "description": "Description",
+    "name": "Name",
+    "intended_amount": "Intended amount",
+    "month": "Month",
+    "year": "Year",
+    "goal_type": "Goal type",
+    "expected_amount": "Expected amount",
+    "begining_date": "Begining date",
+    "ending_date": "Ending date",
+    "set_important": "Set as important",
+    "wallet_get_money": "Wallet to get money",
+    "wallet_receive_money": "Wallet to receive money",
+    "note": "Note",
+    "type": "Type",
+    "location": "Location"
+  },
+  "action": {
+    "ok": "OK",
+    "cancel": "Cancel",
+    "add_transaction": "Add transaction",
+    "delete": "Delete",
+    "clone": "Clone",
+    "add_event": "Add event",
+    "processing": "Processing...",
+    "update": "Update"
+  },
+  "info": {
+    "no_plan": "You didn't set plan for this category this month",
+    "have_plan": "As you planned, the remaining of expenses for this category this month is",
+    "exceed_plan": "As you planned, your expenses for this category exceeds",
+    "total_expenses_last_month": "Total expenses of all transactions last month is",
+    "current_month": "current month is",
+    "total_expenses_last_month_category": "Total expenses of all transactions belong to this category last month is",
+    "loading_plan": "Loading remainder of this month plan ...",
+    "no_event": "No event found!",
+    "no_file": "No files uploaded yet"
   }
 }
