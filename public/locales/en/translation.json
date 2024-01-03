@@ -81,7 +81,7 @@
     "adjust_budget": "Adjust budget",
     "budget_this_month": "Your budget for this month",
     "budget_left": "Budget left until the end of",
-    "budget_overspent": "You have overspent your budget of",
+    "budget_overspend": "You have overspent your budget of",
     "no_category_plans": "No category plan has been set for this month!",
     "plan": "Plan",
     "plans": "Plans",
@@ -100,9 +100,9 @@
   },
   "toast": {
     "update_plan_success": "Update plan successfully!",
-    "create_plan_success": "Thiết lập ngân sách thành công!",
-    "delete_cplan_success": "Xoá ngân sách danh mục thành công",
-    "delete_plan_success": "Xoá ngân sách thành công!"
+    "create_plan_success": "Create plan successfully!",
+    "delete_cplan_success": "Delete category plan successfully",
+    "delete_plan_success": "Delete plan successfully!"
   },
   "warning": {
     "delete_cplan": "Are you sure to delete this category plan? This action can no be undone!",
