@@ -13,6 +13,8 @@ import PlansService from "../../../services/plans";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { CATEGORY_TYPES, REPORT_TYPES } from "../../../config/constants";
+import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 
 function AddMonthPlan({ onClose, onAddingSuccess, _month, _year }) {
   const { wallets, walletChosen } = useSelector((state) => state.wallet);
@@ -35,6 +37,8 @@ function AddMonthPlan({ onClose, onAddingSuccess, _month, _year }) {
   const [loadingTotal, setLoadingTotal] = useState(false);
   const [processingSave, setProcessingSave] = useState(false);
 
+  const { t } = useTranslation();
+
   const getReport = async () => {
     try {
       setLoadingTotal(true);
@@ -45,7 +49,9 @@ function AddMonthPlan({ onClose, onAddingSuccess, _month, _year }) {
       });
 
       if (responseData.data.reports[month.id + ""]) {
-        setLastMonthValue(responseData.data.reports[month.id + ""][CATEGORY_TYPES.EXPENSES]);
+        setLastMonthValue(
+          responseData.data.reports[month.id + ""][CATEGORY_TYPES.EXPENSES]
+        );
       } else {
         setLastMonthValue(0);
       }
@@ -79,7 +85,7 @@ function AddMonthPlan({ onClose, onAddingSuccess, _month, _year }) {
 
     if (value.length > 0 && isNaN(parseInt(value))) {
       setErrors((prev) => {
-        return { ...prev, amount: "Invalid amount!" };
+        return { ...prev, amount: t("error.invalid_amount") };
       });
     } else {
       setFormattedAmount(cleanAmount.replace(/\B(?=(\d{3})+(?!\d))/g, ","));
@@ -95,7 +101,7 @@ function AddMonthPlan({ onClose, onAddingSuccess, _month, _year }) {
       if (!amount || amount === "0") {
         haveErrors = true;
         return setErrors((prev) => {
-          return { ...prev, amount: "Amount is required!" };
+          return { ...prev, amount: t("error.required_amount") };
         });
       }
 
@@ -113,7 +119,7 @@ function AddMonthPlan({ onClose, onAddingSuccess, _month, _year }) {
         if (responseData.status === "success") {
           onClose();
           onAddingSuccess();
-          toast.success("Create plan successfully!");
+          toast.success(t("toast.create_plan_success"));
         }
       }
     } catch (e) {
@@ -126,7 +132,7 @@ function AddMonthPlan({ onClose, onAddingSuccess, _month, _year }) {
     <Modal
       onAccept={handleAddPlan}
       onClose={onClose}
-      title={"Add month plan"}
+      title={t("plan.add_month_plan")}
       width={"lg:w-1/4 sm:w-1/2 w-11/12"}
       processing={processingSave}
     >
@@ -135,11 +141,11 @@ function AddMonthPlan({ onClose, onAddingSuccess, _month, _year }) {
           <FontAwesomeIcon icon={faInfoCircle} className="text-blue-600" />
           {!loadingTotal && (
             <p className="text-sm text-blue-600 italic">
-              Total expenses of all transactions last month is{" "}
+              {t("info.total_expenses_last_month")}{" "}
               <span className="font-bold">
                 {formatCurrency(lastMonthValue)}
               </span>
-              , current month is{" "}
+              , {t("info.current_month")}{" "}
               <span className="font-bold">
                 {formatCurrency(currentMonthValue)}
               </span>
@@ -152,14 +158,14 @@ function AddMonthPlan({ onClose, onAddingSuccess, _month, _year }) {
           )} */}
           {loadingTotal && (
             <p className="text-sm text-blue-600 italic">
-              Loading total expenses last month and current month ...
+              {t("info.loading_total_expenses")}
             </p>
           )}
         </div>
       )}
       <SelectWithImage
         data={wallets}
-        label={"Wallet"}
+        label={t("input.wallet")}
         selected={walletSelected}
         setSelected={setWalletSelected}
         required
@@ -167,7 +173,7 @@ function AddMonthPlan({ onClose, onAddingSuccess, _month, _year }) {
       <div className="flex gap-2">
         <div className="w-1/2">
           <Select
-            label={"Month"}
+            label={t("input.month")}
             required
             selected={month}
             setSelected={setMonth}
@@ -176,7 +182,7 @@ function AddMonthPlan({ onClose, onAddingSuccess, _month, _year }) {
         </div>
         <div className="w-1/2">
           <Select
-            label={"Year"}
+            label={t("input.year")}
             required
             selected={year}
             setSelected={setYear}
@@ -185,7 +191,7 @@ function AddMonthPlan({ onClose, onAddingSuccess, _month, _year }) {
         </div>
       </div>
       <Input
-        label={"Intended amount"}
+        label={t("input.intended_amount")}
         name={"amount"}
         type={"text"}
         required

@@ -3,6 +3,7 @@ import CategoryPlans from "./components/CategoryPlans";
 import MonthPlans from "./components/MonthPlans";
 import SelectWallet from "../wallets/components/SelectWallet";
 import logo from "../../assets/images/logo-money-master.png";
+import { useTranslation } from "react-i18next";
 
 function PlansPage() {
   const [viewBy, setViewBy] = useState("months");
@@ -10,6 +11,8 @@ function PlansPage() {
   const [yearGiven, setYearGiven] = useState(null);
   const [monthPlans, setMonthPlans] = useState(null);
   const [categoryPlans, setCategoryPlans] = useState(null);
+
+  const { t } = useTranslation();
 
   const btnStyle = (vb) => {
     if (viewBy === vb) return "bg-purple-600 text-white font-bold";
@@ -37,7 +40,7 @@ function PlansPage() {
           <div className="lg:w-16 lg:h-16 w-10 h-10">
             <img src={logo} alt="" className="w-full h-full object-cover" />
           </div>
-          <h2 className="sm:text-4xl text-3xl">Plans</h2>
+          <h2 className="sm:text-4xl text-3xl">{t("plan.plans")}</h2>
         </div>
 
         <div className="w-40">
@@ -53,7 +56,7 @@ function PlansPage() {
               }
               onClick={() => setViewBy("months")}
             >
-              By month
+              {t("plan.by_month")}
             </button>
             <button
               className={
@@ -62,7 +65,7 @@ function PlansPage() {
               }
               onClick={handleClickByCategoryPlans}
             >
-              By categories
+              {t("plan.by_categories")}
             </button>
           </div>
           <div className="">

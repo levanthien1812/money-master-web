@@ -71,6 +71,41 @@
     "total_expenses_last_month_category": "Total expenses of all transactions belong to this category last month is",
     "loading_plan": "Loading remainder of this month plan ...",
     "no_event": "No event found!",
-    "no_file": "No files uploaded yet"
+    "no_file": "No files uploaded yet",
+    "loading_total_expenses": "Loading total expenses last month and current month ..."
+  },
+  "plan": {
+    "by_month": "By month",
+    "by_categories": "By categories",
+    "see_category_plans": "See category plans",
+    "adjust_budget": "Adjust budget",
+    "budget_this_month": "Your budget for this month",
+    "budget_left": "Budget left until the end of",
+    "budget_overspent": "You have overspent your budget of",
+    "no_category_plans": "No category plan has been set for this month!",
+    "plan": "Plan",
+    "plans": "Plans",
+    "actual": "Actual",
+    "remaining": "Remaining",
+    "overspend": "Overspend",
+    "add_month_plan": "Add month plan",
+    "add_category_plan": "Add category plan",
+    "add_new": "Add new",
+    "create_plan": "Create plan",
+    "no_plans": "No plan has been set in the period!"
+  },
+  "error": {
+    "invalid_amount": "Invalid amount",
+    "required_amount": "Amount is required"
+  },
+  "toast": {
+    "update_plan_success": "Update plan successfully!",
+    "create_plan_success": "Thiết lập ngân sách thành công!",
+    "delete_cplan_success": "Xoá ngân sách danh mục thành công",
+    "delete_plan_success": "Xoá ngân sách thành công!"
+  },
+  "warning": {
+    "delete_cplan": "Are you sure to delete this category plan? This action can no be undone!",
+    "delete_plan": "Are you sure to delete this plan? This action can not be undone!"
   }
 }

@@ -6,6 +6,7 @@ import PlansService from "../../../services/plans";
 import { toast } from "react-toastify";
 import { motion } from "framer-motion";
 import getMonthName from "../../../utils/getMonthName";
+import { useTranslation } from "react-i18next";
 
 function MonthPlanItem({ monthPlan, onUpdateSuccess, onSeeCategoryPlans }) {
   const [isAdjusting, setIsAdjusting] = useState(false);
@@ -17,13 +18,15 @@ function MonthPlanItem({ monthPlan, onUpdateSuccess, onSeeCategoryPlans }) {
     onSeeCategoryPlans(monthPlan.month, monthPlan.year);
   };
 
+  const { t } = useTranslation();
+
   const handleDeletePlan = async () => {
     try {
       setIsSavingDelete(true);
       const responseData = await PlansService.deleteMonthPlan(monthPlan.id);
       if (responseData.status === "success") {
         setIsDeleting(false);
-        toast.success("Delete plan successfully!");
+        toast.success(t("toast.delete_plan_success"));
         onUpdateSuccess();
       } else {
         toast.error(responseData.error);
@@ -67,26 +70,26 @@ function MonthPlanItem({ monthPlan, onUpdateSuccess, onSeeCategoryPlans }) {
             className="py-1.5 px-4 rounded-md bg-purple-100 text-purple-600 text-sm hover:bg-purple-200 font-bold"
             onClick={handleClickSeeCategoryPlans}
           >
-            See category plans
+            {t("plan.see_category_plans")}
           </button>
           <button
             className="py-1.5 px-4 rounded-md bg-purple-100 text-purple-600 text-sm hover:bg-purple-200 font-bold"
             onClick={() => setIsAdjusting(true)}
           >
-            Adjust budget
+            {t("plan.adjust_budget")}
           </button>
           <button
             className="py-1.5 px-4 rounded-md bg-red-100 text-red-600 text-sm hover:bg-red-200 font-bold"
             onClick={() => setIsDeleting(true)}
           >
-            Delete
+            {t("action.delete")}
           </button>
         </div>
       </div>
       <div>
         <div className="mb-2 flex justify-between items-start">
           <div className="sm:text-lg text-sm w-1/2">
-            <p>Your budget for this month: </p>
+            <p>{t("plan.budget_this_month")}: </p>
             <p className="font-bold text-2xl text-green-600">
               {formatCurrency(monthPlan.amount)}
             </p>
@@ -94,8 +97,7 @@ function MonthPlanItem({ monthPlan, onUpdateSuccess, onSeeCategoryPlans }) {
           {percentage <= 100 && (
             <div className="text-sm text-end w-1/2">
               <p>
-                Budget left until the end of {getMonthName(monthPlan.month - 1)}
-                :{" "}
+                {t("plan.budget_left")} {getMonthName(monthPlan.month - 1)}:{" "}
               </p>
               <p className="font-bold text-xl">
                 {formatCurrency(monthPlan.amount - monthPlan.actual)}
@@ -104,7 +106,7 @@ function MonthPlanItem({ monthPlan, onUpdateSuccess, onSeeCategoryPlans }) {
           )}
           {percentage > 100 && (
             <div className="text-sm text-red-600 font-bold text-end w-1/2">
-              <p>You have overspent your budget of: </p>
+              <p>{t("plan.budget_overspend")}: </p>
               <p className="text-xl">
                 {formatCurrency((monthPlan.amount - monthPlan.actual) * -1)}
               </p>
@@ -145,9 +147,7 @@ function MonthPlanItem({ monthPlan, onUpdateSuccess, onSeeCategoryPlans }) {
 
       {isDeleting && (
         <ConfirmDeleteModal
-          message={
-            "Are you sure to delete this plan? This action can not be undone!"
-          }
+          message={t("warning.delete_plan")}
           onAccept={handleDeletePlan}
           onClose={() => setIsDeleting(false)}
           processing={isSavingDelete}

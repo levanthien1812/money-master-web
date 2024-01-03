@@ -2,6 +2,7 @@ import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { useTranslation } from "react-i18next";
 
 export default function Modal({
   title,
@@ -12,6 +13,8 @@ export default function Modal({
   action = "yesno",
   processing = false,
 }) {
+  const { t } = useTranslation();
+
   return createPortal(
     <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 outline-none focus:outline-none z-40">
       <div className={"relative my-6 mx-auto max-w-3xl z-50 " + width}>
@@ -53,7 +56,7 @@ export default function Modal({
                 type="button"
                 onClick={onClose}
               >
-                Cancle
+                {t("action.cancel")}
               </button>
             )}
             {action.includes("yes") && (
@@ -66,7 +69,7 @@ export default function Modal({
                 }}
                 disabled={processing}
               >
-                {processing ? "Processing..." : "OK"}
+                {processing ? t("action.processing") : t("action.ok")}
               </motion.button>
             )}
           </div>
