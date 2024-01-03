@@ -41,6 +41,7 @@ function AddTransaction({
   const [date, setDate] = useState(
     new Date(year, month - 1, new Date().getDate())
   );
+  const [location, setLocation] = useState("");
   const [description, setDescription] = useState("");
   const [errors, setErrors] = useState(null);
   const [planData, setPlanData] = useState(null);
@@ -90,6 +91,7 @@ function AddTransaction({
       );
       setPhoto("");
       setDate(new Date(transaction.date));
+      setLocation(transaction.location || "");
       setDescription(transaction.description || "");
       setEventSelected(events.find((e) => e.id === transaction.event_id));
     } else if (event) {
@@ -175,6 +177,7 @@ function AddTransaction({
           amount,
           date: format(new Date(date), "yyyy/MM/dd"),
           description,
+          location,
         };
 
         if (photo !== "") {
@@ -224,7 +227,7 @@ function AddTransaction({
     const { value } = event.target;
     const cleanAmount = value.replace(/[^0-9]/g, "");
 
-    if (parseInt(cleanAmount) > planData.amount - planData.actual) {
+    if (planData && parseInt(cleanAmount) > planData.amount - planData.actual) {
       setIsWarningOverspend(true);
     } else {
       setIsWarningOverspend(false);
@@ -407,6 +410,15 @@ function AddTransaction({
                 helperText={
                   !loadingEvents && events.length === 0 && t("info.no_event")
                 }
+              />
+              <Input
+                label={t("input.location")}
+                type={"text"}
+                name={"location"}
+                size="small"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+                error={(errors && errors.location) || null}
               />
               <ImageChoserPreview
                 image={photo}
