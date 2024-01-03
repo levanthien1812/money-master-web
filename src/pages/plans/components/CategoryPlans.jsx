@@ -9,6 +9,7 @@ import monthsGetter from "../../../utils/monthsGetter";
 import Loading from "../../../components/others/Loading";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 function CategoryPlans({ _month }) {
   const [isAddingPlan, setIsAddingPlan] = useState(false);
@@ -23,6 +24,8 @@ function CategoryPlans({ _month }) {
   const [years, setYears] = useState();
   const [plans, setPlans] = useState(null);
   const [loadingYears, setLoadingYears] = useState(false);
+
+  const { t } = useTranslation();
 
   const getYearsBetween = async () => {
     try {
@@ -124,9 +127,7 @@ function CategoryPlans({ _month }) {
               />
             ))}
           {!loading && plans && plans.length === 0 && (
-            <p className="text-lg">
-              No category plan has been set for this month!
-            </p>
+            <p className="text-lg">{t("plan.no_category_plans")}</p>
           )}
         </div>
         <div className="flex lg:justify-end justify-center">
@@ -135,7 +136,7 @@ function CategoryPlans({ _month }) {
             onClick={() => setIsAddingPlan(true)}
           >
             <FontAwesomeIcon icon={faPlusCircle} />
-            Add new
+            {t("plan.add_new")}
           </button>
         </div>
       </div>

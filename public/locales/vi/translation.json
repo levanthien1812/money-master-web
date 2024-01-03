@@ -50,7 +50,9 @@
     "wallet_receive_money": "Ví nhận tiền",
     "note": "Ghi chú",
     "type": "Loại",
-    "location": "Vị trí"
+    "location": "Vị trí",
+    "current_budget": "Current budget",
+    "new_budget": "New budget"
   },
   "action": {
     "ok": "OK",
@@ -71,6 +73,37 @@
     "total_expenses_last_month_category": "Tổng chi cho danh mục này tháng trước là",
     "loading_plan": "Đang tính số tiền còn lại của tháng này theo kế hoạch ...",
     "no_event": "Không tìm thấy sự kiện!",
-    "no_file": "Chưa có file nào được tải lên"
+    "no_file": "Chưa có file nào được tải lên",
+    "loading_total_expenses": "Đang tính tổng số tiền đã chi tháng trước và tháng này ..."
+  },
+  "plan": {
+    "by_month": "Theo tháng",
+    "by_categories": "Theo danh mục",
+    "see_category_plans": "Xem ngân sách danh mục",
+    "adjust_budget": "Điều chỉnh",
+    "budget_this_month": "Ngân sách cho tháng này",
+    "budget_left": "Ngân sách còn lại",
+    "budget_overspent": "Bạn đã chi tiêu vượt quá ngân sách",
+    "no_category_plans": "Không có ngân sách danh mục nào được thiết lập cho tháng này!",
+    "plan": "Dự tính",
+    "plans": "Ngân sách",
+    "actual": "Thực tế",
+    "remaining": "Còn lại",
+    "overspend": "Vượt mức",
+    "add_month_plan": "Thêm ngân sách tháng",
+    "add_category_plan": "Thêm ngân sách danh mục",
+    "add_new": "Thêm",
+    "create_plan": "Tạo ngân sách",
+    "no_plans": "Chưa có ngân sách nào được tạo trong khoảng thời gian này!"
+  },
+  "error": {
+    "invalid_amount": "Số tiền không hợp lệ",
+    "required_amount": "Số tiền bắt buộc!"
+  },
+  "toast": {
+    "update_plan_success": "Cập nhật ngân sách thành công!",
+    "create_plan_success": "Thiết lập ngân sách thành công!",
+    "delete_plan_success": "Delete plan successfully!",
+    "delete_cplan_success": "Delete category plan successfully"
   }
 }

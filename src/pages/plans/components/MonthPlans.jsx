@@ -6,6 +6,7 @@ import Select from "../../../components/elements/Select";
 import Loading from "../../../components/others/Loading";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 function MonthPlans({ onSeeCategoryPlans }) {
   const [isAddingPlan, setIsAddingPlan] = useState(false);
@@ -15,6 +16,8 @@ function MonthPlans({ onSeeCategoryPlans }) {
   const walletChosen = useSelector((state) => state.wallet.walletChosen);
   const [plans, setPlans] = useState(null);
   const [loadingYears, setLoadingYears] = useState(false);
+
+  const { t } = useTranslation();
 
   const getYearsBetween = async () => {
     try {
@@ -88,7 +91,7 @@ function MonthPlans({ onSeeCategoryPlans }) {
           className="rounded-lg bg-purple-600 text-white px-6 py-1.5 hover:bg-purple-700"
           onClick={() => setIsAddingPlan(true)}
         >
-          Create plan
+          {t("plan.create_plan")}
         </button>
       </div>
       <div>
@@ -109,7 +112,7 @@ function MonthPlans({ onSeeCategoryPlans }) {
           ))}
         {!loading && plans && plans.length === 0 && (
           <p className="text-2xl text-center text-gray-600 py-4">
-            No plan has been set in the period!
+            {t("plan.no_plans")}
           </p>
         )}
       </div>

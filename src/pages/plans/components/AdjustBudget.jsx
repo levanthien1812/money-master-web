@@ -8,12 +8,15 @@ import formatCurrency from "../../../utils/currencyFormatter";
 import PlansService from "../../../services/plans";
 import { toast } from "react-toastify";
 import getMonthName from "../../../utils/getMonthName";
+import { useTranslation } from "react-i18next";
 
 function AdjustBudget({ onClose, plan, onUpdateSuccess }) {
   const [amount, setAmount] = useState();
   const [formattedBudget, setFormattedBudget] = useState();
   const [errors, setErrors] = useState(null);
   const [processing, setProcessing] = useState(false);
+
+  const { t } = useTranslation();
 
   const handleBudgetChange = (event) => {
     handleAmountChange(
@@ -32,7 +35,7 @@ function AdjustBudget({ onClose, plan, onUpdateSuccess }) {
       if (!amount || amount === "0") {
         haveErrors = true;
         setProcessing(false);
-        setErrors({ amount: "Invalid amount" });
+        setErrors({ amount: t("error.invalid_amount") });
       }
 
       if (!haveErrors) {
@@ -52,7 +55,7 @@ function AdjustBudget({ onClose, plan, onUpdateSuccess }) {
 
         if (responseData.status === "success") {
           onClose();
-          toast.success("Update plan successfully!");
+          toast.success(t("toast.update_plan_success"));
           onUpdateSuccess();
         }
       }
@@ -64,7 +67,7 @@ function AdjustBudget({ onClose, plan, onUpdateSuccess }) {
 
   return (
     <Modal
-      title={"Adjust budget"}
+      title={t("plan.adjust_budget")}
       onClose={onClose}
       onAccept={handleAdjustBudget}
       width={"w-11/12 sm:w-fit"}
@@ -88,7 +91,7 @@ function AdjustBudget({ onClose, plan, onUpdateSuccess }) {
 
       <div className="flex justify-between items-center sm:gap-4 gap-2 sm:flex-row flex-col">
         <Input
-          label={"Current budget"}
+          label={t("input.current_budget")}
           name={"current_amount"}
           type={"text"}
           value={formatCurrency(plan.amount)}
@@ -103,7 +106,7 @@ function AdjustBudget({ onClose, plan, onUpdateSuccess }) {
           className="text-2xl text-purple-500 sm:hidden block"
         />
         <Input
-          label={"New budget"}
+          label={t("input.new_budget")}
           name={"amount"}
           type={"text"}
           onChange={handleBudgetChange}

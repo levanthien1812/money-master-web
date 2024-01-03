@@ -5,6 +5,7 @@ import ConfirmDeleteModal from "../../../components/modal/ConfirmDeleteModal";
 import PlansService from "../../../services/plans";
 import { toast } from "react-toastify";
 import AdjustBudget from "./AdjustBudget";
+import { t } from "i18next";
 
 function CategoryPlanItem({ categoryPlan, onUpdateSuccess }) {
   const [isHovering, setIsHovering] = useState(false);
@@ -38,10 +39,8 @@ function CategoryPlanItem({ categoryPlan, onUpdateSuccess }) {
 
       if (responseData.status === "success") {
         setIsDeleting(false);
-        toast.success("Delete category plan successfully!");
+        toast.success(t("plan.delete_cplan_success"));
         onUpdateSuccess();
-      } else {
-        toast.error("Some thing went wrong when delete category plan!");
       }
     } catch (e) {
       toast.error(e.response.data.message);
@@ -100,20 +99,20 @@ function CategoryPlanItem({ categoryPlan, onUpdateSuccess }) {
             className="absolute bg-white px-6 py-3 rounded-xl bottom-12 sm:right-36 right-16 shadow-md w-60"
           >
             <div className="flex justify-between mb-1">
-              <p>Plan: </p>
+              <p>{t("plan.plan")}: </p>
               <p className="font-bold">
                 {formatCurrency(categoryPlan.amount)}
               </p>{" "}
             </div>
             <div className="flex justify-between mb-1">
-              <p>Actual: </p>
+              <p>{t("plan.actual")}: </p>
 
               <p className="font-bold">{formatCurrency(categoryPlan.actual)}</p>
             </div>
             <hr className="h-0.5 bg-gray-300 mb-2" />
             {percentage <= 100 && (
               <div className="flex justify-between mb-1">
-                <p>Remaining: </p>
+                <p>{t("plan.remaining")}: </p>
 
                 <p className="font-bold text-purple-600">
                   {formatCurrency(categoryPlan.amount - categoryPlan.actual)}
@@ -122,7 +121,7 @@ function CategoryPlanItem({ categoryPlan, onUpdateSuccess }) {
             )}
             {percentage > 100 && (
               <div className="flex justify-between mb-1">
-                <p>Overspend: </p>
+                <p>{t("plan.overspend")}: </p>
 
                 <p className="font-bold text-red-600">
                   {formatCurrency(
@@ -156,9 +155,7 @@ function CategoryPlanItem({ categoryPlan, onUpdateSuccess }) {
       </div>
       {isDeleting && (
         <ConfirmDeleteModal
-          message={
-            "Are you sure to delete this category plan? This action can no be undone!"
-          }
+          message={t("warning.delete_cplan")}
           onAccept={handleDelete}
           onClose={() => setIsDeleting(false)}
           processing={isSavingDelete}

@@ -14,6 +14,7 @@ import PlansService from "../../../services/plans";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { CATEGORY_TYPES, REPORT_TYPES } from "../../../config/constants";
+import { useTranslation } from "react-i18next";
 
 function AddCategoryPlan({
   onClose,
@@ -44,6 +45,8 @@ function AddCategoryPlan({
   const [loadingTotal, setLoadingTotal] = useState(false);
   const [loadingCategories, setLoadingCategories] = useState(false);
   const [processingSave, setProcessingSave] = useState(false);
+
+  const { t } = useTranslation();
 
   const getCategories = async () => {
     try {
@@ -122,7 +125,7 @@ function AddCategoryPlan({
 
     if (value.length > 0 && isNaN(parseInt(value)) && parseInt(value) <= 0) {
       setErrors((prev) => {
-        return { ...prev, amount: "Invalid amount!" };
+        return { ...prev, amount: t("error.invalid_amount") };
       });
     } else {
       setFormattedAmount(cleanAmount.replace(/\B(?=(\d{3})+(?!\d))/g, ","));
@@ -138,7 +141,7 @@ function AddCategoryPlan({
       if (!amount || amount === "0") {
         haveErrors = true;
         setErrors((prev) => {
-          return { ...prev, amount: "Amount is required!" };
+          return { ...prev, amount: t("error.required_amount") };
         });
       }
 
@@ -156,7 +159,7 @@ function AddCategoryPlan({
 
         if (responseData.status === "success") {
           onClose();
-          toast.success("Create plan successfully!");
+          toast.success(t("toast.create_plan_success"));
           onUpdateSuccess();
         }
       }
@@ -170,7 +173,7 @@ function AddCategoryPlan({
     <Modal
       onAccept={handleAddPlan}
       onClose={onClose}
-      title={"Add category plan"}
+      title={t("plan.add_category_plan")}
       width={"lg:w-1/4 sm:w-1/2 w-11/12"}
       processing={processingSave}
     >
@@ -178,7 +181,7 @@ function AddCategoryPlan({
         <>
           {loadingTotal && (
             <p className="text-sm text-blue-600 italic">
-              Loading total expenses last month and current month ...
+              {t("info.loading_total_expenses")}
             </p>
           )}
           {!loadingTotal && (
@@ -189,12 +192,11 @@ function AddCategoryPlan({
                   className="text-blue-600"
                 />
                 <p className="text-sm text-blue-600 italic">
-                  Total expenses of all transactions belong to this category
-                  last month is{" "}
+                  {t("info.total_expenses_last_month_category")}{" "}
                   <span className="font-bold">
                     {formatCurrency(lastMonthValue)}
                   </span>
-                  , current month is{" "}
+                  , {t("info.current_month")}{" "}
                   <span className="font-bold">
                     {formatCurrency(currentMonthValue)}
                   </span>
@@ -206,21 +208,21 @@ function AddCategoryPlan({
       )}
       <SelectWithImage
         data={wallets}
-        label={"Wallet:"}
+        label={t("input.wallet")}
         selected={walletSelected}
         setSelected={setWalletSelected}
         required
       />
       <SelectWithImage
         data={categories}
-        label={"Category:"}
+        label={t("input.category")}
         selected={categoryChosen}
         setSelected={setCategoryChosen}
         required
         loading={loadingCategories}
       />
       <Input
-        label={"Intended amount"}
+        label={t("input.intended_amount")}
         name={"amount"}
         type={"text"}
         required
@@ -232,7 +234,7 @@ function AddCategoryPlan({
       <div className="flex gap-2">
         <div className="w-1/2">
           <Select
-            label={"Month"}
+            label={t("input.month")}
             required
             selected={month}
             setSelected={setMonth}
@@ -241,7 +243,7 @@ function AddCategoryPlan({
         </div>
         <div className="w-1/2">
           <Select
-            label={"Year"}
+            label={t("input.year")}
             required
             selected={year}
             setSelected={setYear}
