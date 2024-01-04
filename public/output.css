@@ -1674,6 +1674,11 @@ video {
   background-color: rgb(234 179 8 / var(--tw-bg-opacity));
 }
 
+.bg-yellow-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(202 138 4 / var(--tw-bg-opacity));
+}
+
 .bg-opacity-70 {
   --tw-bg-opacity: 0.7;
 }
@@ -1945,6 +1950,10 @@ video {
   line-height: 2.25rem;
 }
 
+.text-\[10px\] {
+  font-size: 10px;
+}
+
 .text-\[15px\] {
   font-size: 15px;
 }
@@ -1972,6 +1981,10 @@ video {
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
+}
+
+.text-\[12px\] {
+  font-size: 12px;
 }
 
 .font-bold {
@@ -3224,11 +3237,11 @@ video {
     width: 25%;
   }
 
-  .\32xl\:w-4\/5 {
-    width: 80%;
-  }
-
   .\32xl\:w-2\/5 {
     width: 40%;
+  }
+
+  .\32xl\:w-4\/5 {
+    width: 80%;
   }
 }

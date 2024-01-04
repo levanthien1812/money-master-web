@@ -60,10 +60,17 @@ function TransactionItem({ transaction, index, onModifySuccess }) {
         </div>
 
         <div className="grow">
-          <p className="text-md font-semibold">
-            {shorten(transaction.title, 40)}
-          </p>
-          <p className="text-sm text-gray-500">
+          <div className="flex items-center gap-3">
+            <p className="text-md font-semibold">
+              {shorten(transaction.title, 40)}
+            </p>
+            {transaction.event && (
+              <div className="text-[12px] font-bold rounded-full bg-yellow-500 px-2 text-white">
+                {transaction.event.name}
+              </div>
+            )}
+          </div>
+          <p className="text-sm text-gray-500 mt-1">
             {shorten(transaction.description, 50)}
           </p>
         </div>
