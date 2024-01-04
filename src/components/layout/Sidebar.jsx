@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import SidebarItem from "./SidebarItem";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
@@ -9,7 +9,7 @@ import target from "../../assets/images/target.png";
 import expenses from "../../assets/images/spending.png";
 import avatar from "../../assets/images/profile.png";
 import users from "../../assets/images/teamwork.png";
-import calendar from "../../assets/images/calendar.png"
+import calendar from "../../assets/images/calendar.png";
 import AccountPopup from "./AccountPopup";
 import Wallets from "../../pages/wallets/components/Wallets";
 import Profile from "../../pages/profile/components/Profile";
@@ -18,17 +18,20 @@ import "../../styles/sidebar.css";
 import Notifications from "../../pages/notifications/components/Notifications";
 import IncomeTaxInfo from "../../pages/personal-income-tax/components/IncomeTaxInfo";
 import { useTranslation } from "react-i18next";
+import { motion, useAnimation } from "framer-motion";
 
 function Sidebar({ onLogout }) {
   const [isWalletsShown, setIsWalletsShown] = useState(false);
   const [isProfileShown, setIsProfileShown] = useState(false);
   const [isNotificationsShown, setIsNotificationsShown] = useState(false);
   const [isIncomeTaxShown, setIsIncomeTaxShown] = useState(false);
+  const [ringing, setRinging] = useState(true);
 
   const { user, roles } = useSelector((state) => state.auth);
   const { notifications } = useSelector((state) => state.notification);
 
   const { t, i18n } = useTranslation();
+  const controls = useAnimation();
 
   const sidebarItems = useMemo(() => {
     if (roles.includes("user")) {
@@ -94,6 +97,30 @@ function Sidebar({ onLogout }) {
     }
   }, [roles, t]);
 
+  const handleBellClick = () => {
+    setRinging(false);
+    setIsNotificationsShown(!isNotificationsShown);
+  };
+
+  // Run the initial ringing animation when the component mounts
+  useEffect(() => {
+    const unreadNotifications = notifications.filter(
+      (notification) => notification.read_at === null
+    );
+
+    if (ringing && unreadNotifications.length > 0) {
+      controls.start({
+        scale: [1, 1.2, 1],
+        rotate: [0, 20, -20, 0],
+        transition: { duration: 1, repeat: Infinity },
+      });
+    } else {
+      // Reset the animation when ringing is set to false
+      controls.stop();
+      controls.set({ scale: 1, rotate: 0 });
+    }
+  }, [controls, ringing, notifications]);
+
   const handleClickWallets = () => {
     setIsWalletsShown(true);
   };
@@ -135,12 +162,15 @@ function Sidebar({ onLogout }) {
         </div>
       </div>
 
+      {/* Notifications */}
       <div className="lg:w-full lg:relative">
-        <button
-          className="bg-gray-200 rounded-md w-full py-1.5 px-3 hover:bg-gray-300 relative"
-          onClick={() => setIsNotificationsShown(!isNotificationsShown)}
+        <div
+          className="bg-gray-200 rounded-md w-full py-1.5 px-3 hover:bg-gray-300 relative flex justify-center"
+          onClick={handleBellClick}
         >
-          <FontAwesomeIcon icon={faBell} className="text-xl" />
+          <motion.button animate={controls} whileHover={{ scale: 1.1 }}>
+            <FontAwesomeIcon icon={faBell} className="text-xl" />
+          </motion.button>
           <span className="block bg-red-500 text-white text-sm px-2 rounded-full absolute -top-2 right-0">
             {
               notifications.filter(
@@ -148,7 +178,7 @@ function Sidebar({ onLogout }) {
               ).length
             }
           </span>
-        </button>
+        </div>
         {isNotificationsShown && <Notifications />}
       </div>
 
