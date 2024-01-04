@@ -59,11 +59,6 @@ function TransactionItem({ transaction, onModifySuccess }) {
               {formatCurrency(transaction.amount)}
             </p>
           </div>
-          {transaction.image.length > 0 && (
-            <div>
-              <img src={transaction.image} alt="" />
-            </div>
-          )}
         </div>
 
         {isViewingDetail && (
