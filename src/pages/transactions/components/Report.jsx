@@ -19,6 +19,10 @@ import getMonthName from "../../../utils/getMonthName";
 import { toast } from "react-toastify";
 import { CATEGORY_TYPES } from "../../../config/constants";
 import { useTranslation } from "react-i18next";
+import WarningExceed from "../../../components/warnings/WarningExceed";
+import WarningPlanExceed from "../../../components/warnings/WarningPlanExceed";
+import WarningPlanExceeded from "../../../components/warnings/WarningPlanExceeded";
+import WarningExceeded from "../../../components/warnings/WarningExceeded";
 
 function Report({
   month,
@@ -32,6 +36,10 @@ function Report({
   const [isAddingPlan, setIsAddingPlan] = useState(false);
   const walletChosen = useSelector((state) => state.wallet.walletChosen);
   const [loadingPlan, setLoadingPlan] = useState(false);
+  const [showWarningExceed, setShowWarningExceed] = useState(false);
+  const [showWarningPlanExceed, setShowWarningPLanExceed] = useState(false);
+  const [showWarningExceeded, setShowWarningExceeded] = useState(false);
+  const [showWarningPlanExceeded, setShowWarningPLanExceeded] = useState(false);
 
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -78,6 +86,34 @@ function Report({
   const handleClickViewReport = () => {
     navigate("/reports", { state: { month, year } });
   };
+
+  useEffect(() => {
+    if (percentageReport >= 90 && percentageReport <= 100) {
+      setShowWarningExceed(true);
+    } else {
+      setShowWarningExceed(false);
+    }
+
+    if (percentageReport > 100) {
+      setShowWarningExceeded(true);
+    } else {
+      setShowWarningExceeded(false);
+    }
+  }, [percentageReport]);
+
+  useEffect(() => {
+    if (percentagePlan >= 90 && percentagePlan <= 100) {
+      setShowWarningPLanExceed(true);
+    } else {
+      setShowWarningPLanExceed(false);
+    }
+
+    if (percentagePlan > 100) {
+      setShowWarningPLanExceeded(true);
+    } else {
+      setShowWarningPLanExceeded(false);
+    }
+  }, [percentagePlan]);
 
   return (
     <div
@@ -161,31 +197,43 @@ function Report({
                 <p className="text-2xl font-bold">{percentageReport + "%"}</p>
               </CircularProgressbarWithChildren>
             </div>
-            {report[CATEGORY_TYPES.INCOMES] - report[CATEGORY_TYPES.EXPENSES] >=
-              0 && (
-              <p className="text-xl">
-                {t("transaction.remainder")}:{" "}
-                <span className="font-semibold text-purple-600 text-2xl">
-                  {formatCurrency(
-                    report[CATEGORY_TYPES.INCOMES] -
-                      report[CATEGORY_TYPES.EXPENSES]
-                  )}
-                </span>
-              </p>
-            )}
-            {report[CATEGORY_TYPES.INCOMES] - report[CATEGORY_TYPES.EXPENSES] <
-              0 && (
-              <p className="text-xl">
-                {t("transaction.exceeding")}:{" "}
-                <span className="font-semibold text-red-600 text-2xl">
-                  {formatCurrency(
-                    (report[CATEGORY_TYPES.INCOMES] -
-                      report[CATEGORY_TYPES.EXPENSES]) *
-                      -1
-                  )}
-                </span>
-              </p>
-            )}
+            <div className="relative">
+              {report[CATEGORY_TYPES.INCOMES] -
+                report[CATEGORY_TYPES.EXPENSES] >=
+                0 && (
+                <p className="text-xl">
+                  {t("transaction.remainder")}:{" "}
+                  <span className="font-semibold text-purple-600 text-2xl">
+                    {formatCurrency(
+                      report[CATEGORY_TYPES.INCOMES] -
+                        report[CATEGORY_TYPES.EXPENSES]
+                    )}
+                  </span>
+                </p>
+              )}
+              {report[CATEGORY_TYPES.INCOMES] -
+                report[CATEGORY_TYPES.EXPENSES] <
+                0 && (
+                <p className="text-xl">
+                  {t("transaction.exceeding")}:{" "}
+                  <span className="font-semibold text-red-600 text-2xl">
+                    {formatCurrency(
+                      (report[CATEGORY_TYPES.INCOMES] -
+                        report[CATEGORY_TYPES.EXPENSES]) *
+                        -1
+                    )}
+                  </span>
+                </p>
+              )}
+              {showWarningExceed && (
+                <WarningExceed onClose={() => setShowWarningExceed(false)} />
+              )}
+              {showWarningExceeded && (
+                <WarningExceeded
+                  onClose={() => setShowWarningExceeded(false)}
+                />
+              )}
+            </div>
           </div>
 
           <div className="text-center flex flex-col items-center">
@@ -207,7 +255,7 @@ function Report({
                     </p>
                   </div>
                   {percentagePlan <= 100 && (
-                    <div className="flex flex-col justify-center items-end text-md w-1/2 text-end">
+                    <div className="flex flex-col justify-center items-end text-md w-1/2 text-end relative">
                       <p className="">
                         Budget left until the end of{" "}
                         {getMonthName(plan.month - 1)}:{" "}
@@ -218,16 +266,24 @@ function Report({
                           plan.amount - report[CATEGORY_TYPES.EXPENSES]
                         )}
                       </p>
+                      {showWarningPlanExceed && (
+                        <WarningPlanExceed
+                          onClose={() => setShowWarningPLanExceed(false)}
+                        />
+                      )}
                     </div>
                   )}
                   {percentagePlan > 100 && (
-                    <div className="flex flex-col justify-center items-end text-md w-1/2 text-red font-bold text-end">
+                    <div className="flex flex-col justify-center items-end text-md w-1/2 text-red font-bold text-end relative">
                       <p className="">You have overspent your budget of: </p>
                       <p className="text-xl">
                         {formatCurrency(
                           (plan.amount - report[CATEGORY_TYPES.EXPENSES]) * -1
                         )}
                       </p>
+                      <WarningPlanExceeded
+                        onClose={() => setShowWarningPLanExceeded(false)}
+                      />
                     </div>
                   )}
                 </div>
