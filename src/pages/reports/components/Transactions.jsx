@@ -3,6 +3,7 @@ import Loading from "../../../components/others/Loading";
 import TransactionsByCategory from "./TransactionsByCategory";
 import TransactionsByTime from "./TransactionsByTime";
 import { REPORT_TYPES } from "../../../config/constants";
+import { useTranslation } from "react-i18next";
 
 function Transactions({
   reports,
@@ -13,6 +14,8 @@ function Transactions({
   totalAmount,
   reportType,
 }) {
+  const { t } = useTranslation();
+
   return (
     <>
       {loading && <Loading />}
@@ -34,7 +37,7 @@ function Transactions({
         )}
       {!loading && reports && Object.keys(reports).length === 0 && (
         <p className="text-2xl text-center text-gray-600 py-4">
-          No transaction has been made in this period!
+          {t("report.no_transactions")}
         </p>
       )}
     </>

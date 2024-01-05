@@ -102,10 +102,34 @@
     "update_plan_success": "Update plan successfully!",
     "create_plan_success": "Create plan successfully!",
     "delete_cplan_success": "Delete category plan successfully",
-    "delete_plan_success": "Delete plan successfully!"
+    "delete_plan_success": "Delete plan successfully!",
+    "export_excel_fail": "Something went wrong when export excel!"
   },
   "warning": {
     "delete_cplan": "Are you sure to delete this category plan? This action can no be undone!",
     "delete_plan": "Are you sure to delete this plan? This action can not be undone!"
+  },
+  "report": {
+    "reports": "Reports",
+    "month": "Month",
+    "year": "Year",
+    "total": "Total",
+    "incomes": "Incomes",
+    "expenses": "Expenses",
+    "total_incomes": "Total incomes",
+    "total_expenses": "Total expenses",
+    "by_days": "By days",
+    "by_months": "By months",
+    "by_categories": "By categories",
+    "sort_by": "Sort by",
+    "order": "Order",
+    "date": "Date",
+    "desc": "Descendent",
+    "asc": "Ascendent",
+    "category_name": "Category Name",
+    "amount": "Amount",
+    "export_excel": "Export as excel",
+    "no_transactions": "No transaction has been made in this period!",
+    "exporting": "Exporting..."
   }
 }

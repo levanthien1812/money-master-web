@@ -104,6 +104,34 @@
     "update_plan_success": "Cập nhật ngân sách thành công!",
     "create_plan_success": "Thiết lập ngân sách thành công!",
     "delete_plan_success": "Delete plan successfully!",
-    "delete_cplan_success": "Delete category plan successfully"
+    "delete_cplan_success": "Delete category plan successfully",
+    "export_excel_fail": "Có lỗi xảy ra khi xuất file excel!"
+  },
+  "warning": {
+    "delete_cplan": "Bạn có chắc chắn muốn xoá ngân sách danh mục này? Thao tác ngày không thể hoàn tác!",
+    "delete_plan": "Bạn có chắc chắn muốn xoá ngân sách tháng này? Thao tác ngày không thể hoàn tác!"
+  },
+  "report": {
+    "reports": "Báo cáo",
+    "month": "Tháng",
+    "year": "Năm",
+    "total": "Thu chi",
+    "incomes": "Thu",
+    "expenses": "Chi",
+    "total_incomes": "Tổng thu",
+    "total_expenses": "Tổng chi",
+    "by_days": "Theo ngày",
+    "by_months": "Theo tháng",
+    "by_categories": "Theo danh mục",
+    "sort_by": "Sắp xếp theo",
+    "order": "Thứ tự",
+    "date": "Ngày",
+    "desc": "Giảm",
+    "asc": "Tăng",
+    "category_name": "Tên danh mục",
+    "amount": "Số tiền",
+    "export_excel": "Xuất file excel",
+    "no_transactions": "Không có thu chi nào trong khoảng thời gian này!",
+    "exporting": "Đang xuất..."
   }
 }
