@@ -1,20 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import TransactionsByCategoryItem from "./TransactionsByCategoryItem";
 import Select from "../../../components/elements/Select";
 import { PERIODS } from "../../../config/constants";
-
-const sortOptions = [
-  { id: 1, name: "Category name" },
-  { id: 2, name: "Amount" },
-];
-
-const sortOrderOptions = [
-  { id: 1, name: "Descendent" },
-  { id: 2, name: "Ascendent" },
-];
+import { useTranslation } from "react-i18next";
 
 function TransactionsByCategory({ reports, month, year, totalAmount, period }) {
+  const { t } = useTranslation();
+
+  const sortOptions = useMemo(
+    () => [
+      { id: 1, name: t("report.category_name") },
+      { id: 2, name: t("report.amount") },
+    ],
+    [t]
+  );
+
+  const sortOrderOptions = useMemo(
+    () => [
+      { id: 1, name: t("report.desc") },
+      { id: 2, name: t("report.asc") },
+    ],
+    [t]
+  );
+
   const walletChosen = useSelector((state) => state.wallet.walletChosen);
   const [sortBy, setSortBy] = useState(sortOptions[0]);
   const [sortOrder, setSortOrder] = useState(sortOrderOptions[0]);
@@ -34,7 +43,7 @@ function TransactionsByCategory({ reports, month, year, totalAmount, period }) {
     });
 
     setSortedReports(tempReports);
-  }, [sortBy, sortOrder]);
+  }, [sortBy, sortOrder, t]);
 
   return (
     <>
@@ -44,7 +53,7 @@ function TransactionsByCategory({ reports, month, year, totalAmount, period }) {
             selected={sortBy}
             setSelected={setSortBy}
             data={sortOptions}
-            label={"Sort by"}
+            label={t("report.sort_by")}
           />
         </div>
         <div>
@@ -52,7 +61,7 @@ function TransactionsByCategory({ reports, month, year, totalAmount, period }) {
             selected={sortOrder}
             setSelected={setSortOrder}
             data={sortOrderOptions}
-            label={"Order"}
+            label={t("report.order")}
           />
         </div>
       </div>

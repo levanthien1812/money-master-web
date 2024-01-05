@@ -1,21 +1,37 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import TransactionByTimeItem from "./TransactionsByTimeItem";
 import Select from "../../../components/elements/Select";
 import { PERIODS, TRANSACTION_TYPE } from "../../../config/constants";
-
-const sortOptions = [
-  { id: 1, name: "Date/Month" },
-  { id: 2, name: "Expenses" },
-  { id: 3, name: "Incomes" },
-];
-
-const sortOrderOptions = [
-  { id: 1, name: "Descendent" },
-  { id: 2, name: "Ascendent" },
-];
+import { useTranslation } from "react-i18next";
 
 function TransactionsByTime({ reports, month, year, period }) {
+  const { t } = useTranslation();
+
+  const sortOptions = useMemo(() => {
+    return [
+      {
+        id: 1,
+        name:
+          period === PERIODS.MONTH
+            ? t("report.date")
+            : period === PERIODS.YEAR
+            ? t("report.month")
+            : "",
+      },
+      { id: 2, name: t("report.expenses") },
+      { id: 3, name: t("report.incomes") },
+    ];
+  }, [period, t]);
+
+  const sortOrderOptions = useMemo(
+    () => [
+      { id: 1, name: t("report.desc") },
+      { id: 2, name: t("report.asc") },
+    ],
+    [t]
+  );
+
   const walletChosen = useSelector((state) => state.wallet.walletChosen);
   const [sortBy, setSortBy] = useState(sortOptions[0]);
   const [sortOrder, setSortOrder] = useState(sortOrderOptions[0]);
@@ -30,7 +46,8 @@ function TransactionsByTime({ reports, month, year, period }) {
           return sortOrder.id === 1 ? b.key - a.key : a.key - b.key;
         });
     } else {
-      const type = sortBy.id === 2 ? TRANSACTION_TYPE.EXPENSE : TRANSACTION_TYPE.INCOME;
+      const type =
+        sortBy.id === 2 ? TRANSACTION_TYPE.EXPENSE : TRANSACTION_TYPE.INCOME;
       tempReports = Object.entries(reports)
         .map(([day, values]) => ({ key: day, ...values }))
         .sort((a, b) => {
@@ -39,7 +56,7 @@ function TransactionsByTime({ reports, month, year, period }) {
     }
 
     setSortedReports(tempReports);
-  }, [sortBy, sortOrder]);
+  }, [sortBy, sortOrder, t]);
 
   return (
     <div>
@@ -49,7 +66,7 @@ function TransactionsByTime({ reports, month, year, period }) {
             selected={sortBy}
             setSelected={setSortBy}
             data={sortOptions}
-            label={"Sort by"}
+            label={t("report.sort_by")}
           />
         </div>
         <div>
@@ -57,7 +74,7 @@ function TransactionsByTime({ reports, month, year, period }) {
             selected={sortOrder}
             setSelected={setSortOrder}
             data={sortOrderOptions}
-            label={"Order"}
+            label={t("report.order")}
           />
         </div>
       </div>

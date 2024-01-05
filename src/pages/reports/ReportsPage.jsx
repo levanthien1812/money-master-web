@@ -21,9 +21,11 @@ import {
   TRANSACTION_TYPE,
 } from "../../config/constants";
 import logo from "../../assets/images/logo-money-master.png";
+import { useTranslation } from "react-i18next";
 
 function ReportsPage() {
   const location = useLocation();
+  const { t } = useTranslation();
 
   const [month, setMonth] = useState(
     monthsGetter().find(
@@ -149,7 +151,7 @@ function ReportsPage() {
 
       window.URL.revokeObjectURL(url);
     } catch (e) {
-      toast.error("Something went wrong when export excel!");
+      toast.error(t("toast.export_excel_fail"));
     }
     setIsExporting(false);
   };
@@ -198,7 +200,7 @@ function ReportsPage() {
   useEffect(() => {
     if (reportType === REPORT_TYPES.DAY_MONTH) {
       const expensesDataset = {
-        label: "Total expenses",
+        label: t("report.total_expenses"),
         data:
           filledReports &&
           Object.values(filledReports).map((report) =>
@@ -214,7 +216,7 @@ function ReportsPage() {
       };
 
       const incomesDataset = {
-        label: "Total incomes",
+        label: t("report.total_incomes"),
         data:
           filledReports &&
           Object.values(filledReports).map(
@@ -249,7 +251,7 @@ function ReportsPage() {
         )
       );
     }
-  }, [transactionType, filledReports]);
+  }, [transactionType, filledReports, t]);
 
   return (
     <div className="lg:p-8 sm:p-14 p-3">
@@ -259,7 +261,7 @@ function ReportsPage() {
           <div className="lg:w-16 lg:h-16 w-10 h-10">
             <img src={logo} alt="" className="w-full h-full object-cover" />
           </div>
-          <h2 className="sm:text-4xl text-3xl">Reports</h2>
+          <h2 className="sm:text-4xl text-3xl">{t("report.reports")}</h2>
         </div>
         <div className="w-40">
           <SelectWallet />
@@ -310,13 +312,13 @@ function ReportsPage() {
                 onClick={() => setPeriod(PERIODS.MONTH)}
                 className={periodStyle(PERIODS.MONTH)}
               >
-                Month
+                {t("report.month")}
               </button>
               <button
                 onClick={() => setPeriod(PERIODS.YEAR)}
                 className={periodStyle(PERIODS.YEAR)}
               >
-                Year
+                {t("report.year")}
               </button>
             </div>
             <div className="flex gap-2">
@@ -324,19 +326,19 @@ function ReportsPage() {
                 onClick={() => setTransactionType(TRANSACTION_TYPE.TOTAL)}
                 className={transactionTypeStyle(TRANSACTION_TYPE.TOTAL)}
               >
-                Total
+                {t("report.total")}
               </button>
               <button
                 onClick={() => setTransactionType(TRANSACTION_TYPE.INCOME)}
                 className={transactionTypeStyle(TRANSACTION_TYPE.INCOME)}
               >
-                Incomes
+                {t("report.incomes")}
               </button>
               <button
                 onClick={() => setTransactionType(TRANSACTION_TYPE.EXPENSE)}
                 className={transactionTypeStyle(TRANSACTION_TYPE.EXPENSE)}
               >
-                Expenses
+                {t("report.expenses")}
               </button>
             </div>
           </div>
@@ -348,13 +350,15 @@ function ReportsPage() {
               className={reportTypeStyle(REPORT_TYPES.DAY_MONTH)}
               onClick={() => setReportType(REPORT_TYPES.DAY_MONTH)}
             >
-              {period === PERIODS.MONTH ? "By days" : "By months"}
+              {period === PERIODS.MONTH
+                ? t("report.by_days")
+                : t("report.by_months")}
             </button>
             <button
               className={reportTypeStyle(REPORT_TYPES.CATEGORY)}
               onClick={() => setReportType(REPORT_TYPES.CATEGORY)}
             >
-              By categories
+              {t("report.by_categories")}
             </button>
           </div>
           <Transactions
@@ -379,7 +383,9 @@ function ReportsPage() {
               disabled={!reports || (reports && reports.length === 0)}
             >
               <FontAwesomeIcon icon={faFileExcel} />{" "}
-              <p>{isExporting ? "Exporting..." : "Export as excel"}</p>
+              <p>
+                {isExporting ? t("report.exporting") : t("report.export_excel")}
+              </p>
             </motion.button>
           )}
         </div>
