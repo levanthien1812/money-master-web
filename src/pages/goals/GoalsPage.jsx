@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { fetchWallets } from "../../stores/wallets";
 import { GOAL_STATUS } from "../../config/constants";
 import logo from "../../assets/images/logo-money-master.png";
+import { useTranslation } from "react-i18next";
 
 function GoalsPage() {
   const [isAddingGoal, setIsAddingGoal] = useState(false);
@@ -19,6 +20,7 @@ function GoalsPage() {
   const [countAll, setCountAll] = useState();
 
   const dispatch = useDispatch();
+  const {t} = useTranslation()
 
   const getGoals = async (params) => {
     try {
@@ -59,14 +61,14 @@ function GoalsPage() {
           <div className="lg:w-16 lg:h-16 w-10 h-10">
             <img src={logo} alt="" className="w-full h-full object-cover" />
           </div>
-          <h2 className="sm:text-4xl text-3xl">Goals & Savings</h2>
+          <h2 className="sm:text-4xl text-3xl">{t('goal.goals')}</h2>
         </div>
         {countAll !== 0 && (
           <button
             className="sm:py-2 sm:px-12 py-1 px-4 text-center rounded-xl font-semibold bg-purple-500 text-white hover:bg-purple-600"
             onClick={() => setIsAddingGoal(true)}
           >
-            Add goal
+            {t('goal.add_goal')}
           </button>
         )}
       </div>

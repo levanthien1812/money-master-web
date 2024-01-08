@@ -48,11 +48,14 @@
     "set_important": "Set as important",
     "wallet_get_money": "Wallet to get money",
     "wallet_receive_money": "Wallet to receive money",
+    "goal_receive_money": "Goal to receive money",
     "note": "Note",
     "type": "Type",
     "location": "Location",
     "current_budget": "Current budget",
-    "new_budget": "New budget"
+    "new_budget": "New budget",
+    "from": "From",
+    "to": "To"
   },
   "action": {
     "ok": "OK",
@@ -98,18 +101,30 @@
   },
   "error": {
     "invalid_amount": "Invalid amount",
-    "required_amount": "Amount is required"
+    "required_amount": "Amount is required",
+    "amount_less_balance": "Amount must be less than wallet balance!",
+    "amount_less_goal_contributions": "Amount must be less than current goal's total contributions amount!",
+    "date_from_today": "Date must be from today",
+    "require_name": "Name is required!",
+    "ending_after_beginning": "Ending date must be after the begining date!"
   },
   "toast": {
     "update_plan_success": "Update plan successfully!",
     "create_plan_success": "Create plan successfully!",
     "delete_cplan_success": "Delete category plan successfully",
     "delete_plan_success": "Delete plan successfully!",
-    "export_excel_fail": "Something went wrong when export excel!"
+    "export_excel_fail": "Something went wrong when export excel!",
+    "add_addition_success": "Add addition successfully!",
+    "add_withdrawal_success": "Add withdrawal successfully!",
+    "create_goal_success": "Create goal successfully!",
+    "update_goal_success": "Update goal successfully!",
+    "return_wallet_success": "Return to wallet successfully!",
+    "transfer_goal_success": "Transfer to goal successfully"
   },
   "warning": {
     "delete_cplan": "Are you sure to delete this category plan? This action can no be undone!",
-    "delete_plan": "Are you sure to delete this plan? This action can not be undone!"
+    "delete_plan": "Are you sure to delete this plan? This action can not be undone!",
+    "delete_goal": "Are you sure to delete this goal? This action can not be undone!"
   },
   "report": {
     "reports": "Reports",
@@ -133,5 +148,53 @@
     "export_excel": "Export as excel",
     "no_transactions": "No transaction has been made in this period!",
     "exporting": "Exporting..."
+  },
+  "goal": {
+    "not_started": "Not started",
+    "in_progress": "In progress",
+    "finished": "Finished",
+    "not_completed": "Not completed",
+    "goals": "Goals",
+    "add_goal": "Add goal",
+    "start_in": "Start in",
+    "days": "days",
+    "days_left": "days left",
+    "days_ago": "days ago",
+    "of": "of",
+    "withdraw": "Withdraw",
+    "add_to_goal": "Add to goal",
+    "see_additions": "See additions",
+    "no_goals": "No goals found",
+    "additions": "Additions",
+    "withdrawals": "Withdrawals",
+    "add_addition": "Add addition",
+    "add_withdrawal": "Add withdrawal",
+    "from": "From",
+    "no_additions": "No additions found",
+    "no_withdrawals": "No withdrawals found",
+    "additions_withdrawals": "Goal additions & withdrawals",
+    "set_up_goal": "Set up a goal",
+    "no_wallet": "You have no suitable wallets to make additions to this goal!",
+    "balance": "Balance",
+    "current_contributions": "Current total contributions amount",
+    "congrats": "Congratulations!",
+    "achieved_goal": "You have archived your goal",
+    "begining_date": "Begining date",
+    "target_amount": "Target amount",
+    "due_date": "Due date",
+    "transfer_surplus": "Transfer surplus",
+    "vacations": "Vacations",
+    "savings": "Savings",
+    "emergency": "Emergency",
+    "buy_things": "Buy new things",
+    "debt_reduction": "Debt reduction",
+    "loan_reduction": "Loan reduction",
+    "saving_goals": "Saving goals",
+    "debt_reduction_goals": "Debt reduction goals",
+    "introduction": "Setting a financial goal is the first step towards turning your dreams into reality. Define your goal today and start your journey towards financial success!",
+    "return_wallet": "Returns to a wallet",
+    "transfer_goal": "Transfer to another goal",
+    "total_contributions": "Total contributions",
+    "surplus": "Surplus"
   }
 }

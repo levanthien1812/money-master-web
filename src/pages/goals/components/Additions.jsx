@@ -6,12 +6,15 @@ import formatCurrency from "../../../utils/currencyFormatter";
 import Loading from "../../../components/others/Loading";
 import { format } from "date-fns";
 import goalImage from "../../../assets/images/goal.png";
+import { useTranslation } from "react-i18next";
 
 function Additions({ onClose, goal }) {
   const [additions, setAdditions] = useState([]);
   const [shownAdditions, setShownAdditions] = useState([]);
   const [loadingAdditions, setLoadingAdditions] = useState(false);
   const [type, setType] = useState("additions");
+
+  const { t } = useTranslation();
 
   const getAdditions = async () => {
     setLoadingAdditions(true);
@@ -50,7 +53,7 @@ function Additions({ onClose, goal }) {
     <Modal
       onClose={onClose}
       onAccept={onClose}
-      title={"Goal additions & withdrawals"}
+      title={t("goal.additions_withdrawals")}
       width={"xl:w-1/3 md:w-2/5 sm:w-1/2 w-11/12"}
       action="yes"
     >
@@ -62,7 +65,7 @@ function Additions({ onClose, goal }) {
             }
             onClick={() => setType("additions")}
           >
-            Additions
+            {t("goal.additions")}
           </button>
           <button
             className={
@@ -70,7 +73,7 @@ function Additions({ onClose, goal }) {
             }
             onClick={() => setType("withdrawals")}
           >
-            Withdrawals
+            {t("goal.withdrawals")}
           </button>
         </div>
         {!loadingAdditions && shownAdditions.length > 0 && (
@@ -79,10 +82,10 @@ function Additions({ onClose, goal }) {
               <tr>
                 <th className="text-start">ID</th>
                 <th className="text-start">
-                  {type === "additions" ? "From" : "To"}
+                  {type === "additions" ? t("input.from") : t("input.to")}
                 </th>
-                <th className="text-start">Amount</th>
-                <th className="text-start">Date</th>
+                <th className="text-start">{t("input.amount")}</th>
+                <th className="text-start">{t("input.date")}</th>
               </tr>
             </thead>
             <tbody>
@@ -128,8 +131,8 @@ function Additions({ onClose, goal }) {
         {!loadingAdditions && shownAdditions.length === 0 && (
           <p className="text-center text-xl text-gray-500">
             {type === "additions"
-              ? "No additions found!"
-              : "No withdrawals found!"}
+              ? t("goal.no_additions")
+              : t("goal.no_withdrawals")}
           </p>
         )}
         {loadingAdditions && <Loading />}

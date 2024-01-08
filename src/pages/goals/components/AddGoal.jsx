@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import formatCurrency from "../../../utils/currencyFormatter";
 import { GOAL_STATUS } from "../../../config/constants";
+import { useTranslation } from "react-i18next";
 
 function AddGoal({ goal = null, status, onClose, onUpdateSuccess }) {
   const types = [
@@ -35,13 +36,15 @@ function AddGoal({ goal = null, status, onClose, onUpdateSuccess }) {
   const [errors, setErrors] = useState(null);
   const [isSavingGoal, setIsSavingGoal] = useState(false);
 
+  const { t } = useTranslation();
+
   const handleDateBeginChange = (e) => {
     const date = e.target.value;
     setDateBegin(e.target.value);
 
     if (new Date(date).setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0)) {
       setErrors((prev) => {
-        return { ...prev, dateBegin: "Date must be from today!" };
+        return { ...prev, dateBegin: t("error.date_from_today") };
       });
     } else {
       setErrors((prev) => {
@@ -60,7 +63,7 @@ function AddGoal({ goal = null, status, onClose, onUpdateSuccess }) {
       if (name.length === 0) {
         haveErrors = true;
         setErrors((prev) => {
-          return { ...prev, name: "Name is required!" };
+          return { ...prev, name: t("error.required_name") };
         });
         haveErrors = true;
       }
@@ -68,7 +71,7 @@ function AddGoal({ goal = null, status, onClose, onUpdateSuccess }) {
       if (formattedAmount.length === 0) {
         haveErrors = true;
         setErrors((prev) => {
-          return { ...prev, amount: "Amount is required!" };
+          return { ...prev, amount: t("error.required_amount") };
         });
         haveErrors = true;
       }
@@ -82,7 +85,7 @@ function AddGoal({ goal = null, status, onClose, onUpdateSuccess }) {
           description: description,
           type: type.value,
           is_important: isImportant ? 1 : 0,
-          status: status
+          status: status,
         };
 
         if (image !== "") {
@@ -101,7 +104,11 @@ function AddGoal({ goal = null, status, onClose, onUpdateSuccess }) {
         }
 
         if (responseData.status === "success") {
-          toast.success((!goal ? "Create" : "Update") + "goal successfully!");
+          toast.success(
+            !goal
+              ? t("toast.create_goal_success")
+              : t("goal.update_goal_success")
+          );
           onClose();
           onUpdateSuccess(null, status);
         }
@@ -121,7 +128,7 @@ function AddGoal({ goal = null, status, onClose, onUpdateSuccess }) {
       setErrors((prev) => {
         return {
           ...prev,
-          dateEnd: "Ending date must be after the begining date!",
+          dateEnd: t("error.ending_after_beginning"),
         };
       });
     } else {
@@ -150,21 +157,21 @@ function AddGoal({ goal = null, status, onClose, onUpdateSuccess }) {
 
   return (
     <Modal
-      title={"Set up a goal"}
+      title={t("goal.set_up_goal")}
       width={"xl:w-1/3 md:w-2/5 sm:w-1/2 w-11/12"}
       onAccept={handleAddGoal}
       onClose={onClose}
       processing={isSavingGoal}
     >
       <Select
-        label={"Goal type"}
+        label={t("input.goal_type")}
         required
         selected={type}
         setSelected={setType}
         data={types}
       />
       <Input
-        label={"Name"}
+        label={t("input.name")}
         name={"name"}
         type={"text"}
         onChange={(e) => setName(e.target.value)}
@@ -177,7 +184,7 @@ function AddGoal({ goal = null, status, onClose, onUpdateSuccess }) {
         <div className="flex items-center gap-2">
           <FontAwesomeIcon icon={faInfoCircle} className="text-blue-600" />
           <p className="text-sm text-blue-600 italic">
-            Current total contributions amount:{" "}
+            {t("goal.current_contributions")}:{" "}
             <span className="font-bold">
               {formatCurrency(goal.total_contributions)}
             </span>
@@ -185,7 +192,7 @@ function AddGoal({ goal = null, status, onClose, onUpdateSuccess }) {
         </div>
       )}
       <Input
-        label={"Expected amount"}
+        label={t("input.expected_amount")}
         name={"amount"}
         type={"text"}
         onChange={(e) =>
@@ -202,7 +209,7 @@ function AddGoal({ goal = null, status, onClose, onUpdateSuccess }) {
         error={errors && errors.amount}
       />
       <Input
-        label={"Begining Date"}
+        label={t("input.begining_date")}
         name={"date_begin"}
         type={"date"}
         onChange={handleDateBeginChange}
@@ -213,7 +220,7 @@ function AddGoal({ goal = null, status, onClose, onUpdateSuccess }) {
         disable={goal && status !== GOAL_STATUS.NOT_STARTED}
       />
       <Input
-        label={"Ending Date"}
+        label={t("input.ending_date")}
         name={"date_end"}
         type={"date"}
         onChange={(e) => setDateEnd(e.target.value)}
@@ -223,7 +230,9 @@ function AddGoal({ goal = null, status, onClose, onUpdateSuccess }) {
         error={errors && errors.date_end}
       />
       <div className="mb-3">
-        <label htmlFor="description">Description</label>
+        <label htmlFor="description" className="text-sm">
+          {t("input.description")}
+        </label>
         <textarea
           className="block border-gray-300 ring-inset ring-gray-300 focus:ring-purple-400 w-full outline-none shadow-sm rounded-md py-1.5 px-3 text-sm ring-1"
           type={"text"}
@@ -250,7 +259,7 @@ function AddGoal({ goal = null, status, onClose, onUpdateSuccess }) {
           checked={isImportant}
           onChange={(event) => setIsImportant(event.target.checked)}
         />
-        <label htmlFor="important">Set as important</label>
+        <label htmlFor="important">{t("input.set_important")}</label>
       </div>
     </Modal>
   );

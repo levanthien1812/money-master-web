@@ -48,11 +48,14 @@
     "set_important": "Đặt làm quan trọng",
     "wallet_get_money": "Ví rút tiền",
     "wallet_receive_money": "Ví nhận tiền",
+    "goal_receive_money": "Mục tiêu nhận tiền",
     "note": "Ghi chú",
     "type": "Loại",
     "location": "Vị trí",
     "current_budget": "Ngân sách hiện tại",
-    "new_budget": "Ngân sách mới"
+    "new_budget": "Ngân sách mới",
+    "from": "Từ",
+    "to": "Đến"
   },
   "action": {
     "ok": "OK",
@@ -98,18 +101,30 @@
   },
   "error": {
     "invalid_amount": "Số tiền không hợp lệ",
-    "required_amount": "Số tiền bắt buộc!"
+    "required_amount": "Số tiền bắt buộc!",
+    "amount_less_balance": "Số tiền phải nhỏ hơn số dư của ví!",
+    "amount_less_goal_contributions": "Số tiền phải nhỏ hơn tổng tiền có được hiện tại của mục tiêu!",
+    "date_from_today": "Chọn ngày phải bắt đầu từ hôm nay!",
+    "require_name": "Tên bắt buộc!",
+    "ending_after_beginning": "Ngày kết thúc phải ở sau ngày bắt đầu!"
   },
   "toast": {
     "update_plan_success": "Cập nhật ngân sách thành công!",
     "create_plan_success": "Thiết lập ngân sách thành công!",
-    "delete_plan_success": "Delete plan successfully!",
+    "delete_plan_success": "Xoá ngân sách thành công!",
     "delete_cplan_success": "Delete category plan successfully",
-    "export_excel_fail": "Có lỗi xảy ra khi xuất file excel!"
+    "export_excel_fail": "Có lỗi xảy ra khi xuất file excel!",
+    "add_addition_success": "Thêm tiền thành công!",
+    "add_withdrawal_success": "Rút tiền thành công!",
+    "create_goal_success": "Tạo mục tiêu thành công!",
+    "update_goal_success": "Cập nhật mục tiêu thành công!",
+    "return_wallet_success": "Chuyển về ví thành công!",
+    "transfer_goal_success": "Chuyển đến mục tiêu khác thành công!"
   },
   "warning": {
     "delete_cplan": "Bạn có chắc chắn muốn xoá ngân sách danh mục này? Thao tác ngày không thể hoàn tác!",
-    "delete_plan": "Bạn có chắc chắn muốn xoá ngân sách tháng này? Thao tác ngày không thể hoàn tác!"
+    "delete_plan": "Bạn có chắc chắn muốn xoá ngân sách tháng này? Thao tác ngày không thể hoàn tác!",
+    "delete_goal": "Bạn có chắc chắn muốn xoá mục tiêu này? Thao tác ngày không thể hoàn tác!"
   },
   "report": {
     "reports": "Báo cáo",
@@ -133,5 +148,53 @@
     "export_excel": "Xuất file excel",
     "no_transactions": "Không có thu chi nào trong khoảng thời gian này!",
     "exporting": "Đang xuất..."
+  },
+  "goal": {
+    "not_started": "Chưa bắt đầu",
+    "in_progress": "Đang tiến hành",
+    "finished": "Đã hoàn thành",
+    "not_completed": "Chưa hoàn thành",
+    "goals": "Mục tiêu",
+    "add_goal": "Thêm mục tiêu",
+    "start_in": "Bắt đầu trong",
+    "days": "ngày",
+    "days_left": "ngày còn lại",
+    "days_ago": "ngày trước",
+    "of": "trên",
+    "withdraw": "Rút tiền",
+    "add_to_goal": "Thêm tiền",
+    "see_additions": "Xem lịch sử",
+    "no_goals": "Không tìm thấy mục tiêu nào",
+    "additions": "Thêm tiền",
+    "withdrawals": "Rút tiền",
+    "add_addition": "Thêm tiền",
+    "add_withdrawal": "Rút tiền",
+    "from": "Từ",
+    "no_additions": "Không tìm thấy thêm tiền nào",
+    "no_withdrawals": "Không tìm thấy rút tiền nào",
+    "additions_withdrawals": "Thêm tiền & rút tiền",
+    "set_up_goal": "Thiết lập mục tiêu",
+    "no_wallet": "Không tìm thấy ví nào có thể thêm tiền vào mục tiêu này!",
+    "balance": "Số dư",
+    "current_contributions": "Số tiền hiện tại đạt được",
+    "congrats": "Chúc mừng!",
+    "achieved_goal": "Bạn đã hoàn thành mục tiêu!",
+    "begining_date": "Ngày bắt đầu",
+    "target_amount": "Số tiền mong muốn",
+    "due_date": "Ngày hết thúc",
+    "transfer_surplus": "Chuyển tiền dư",
+    "vacations": "Du lịch",
+    "savings": "Tiết kiệm",
+    "emergency": "Trường hợp khẩn cấp",
+    "buy_things": "Mua đồ mới",
+    "debt_reduction": "Trả nợ",
+    "loan_reduction": "Trả khoản vay",
+    "saving_goals": "Mục tiêu tiết kiệm",
+    "debt_reduction_goals": "Mục tiêu trả nợ",
+    "introduction": "Thiết lập mục tiêu tài chính là bước khởi đầu để biến ước mơ của bạn trở thành hiện thực. Hãy thiết lập các mục tiêu của mình ngay hôm nay và bắt đầu hành trình chinh phục các mục tiêu tài chính!",
+    "return_wallet": "Trả về ví",
+    "transfer_goal": "Chuyển đến một mục tiêu khác",
+    "total_contributions": "Tổng tiền đạt được",
+    "surplus": "Tiền dư"
   }
 }
