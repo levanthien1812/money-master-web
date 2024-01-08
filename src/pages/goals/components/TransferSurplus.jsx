@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import GoalService from "../../../services/goals";
 import goalImage from "../../../assets/images/goal.png";
 import Loading from "../../../components/others/Loading";
+import { useTranslation } from "react-i18next";
 
 function TransferSurplus({ goal, onClose, amount, onUpdateSuccess }) {
   const [type, setType] = useState(null);
@@ -15,6 +16,8 @@ function TransferSurplus({ goal, onClose, amount, onUpdateSuccess }) {
   const [transferableGoals, setTransferableGoals] = useState([]);
   const [selectedGoal, setSelectedGoal] = useState(null);
   const [loadingGoals, setLoadingGoals] = useState(false);
+
+  const { t } = useTranslation();
 
   const getTransferableGoals = async () => {
     try {
@@ -54,7 +57,7 @@ function TransferSurplus({ goal, onClose, amount, onUpdateSuccess }) {
 
       if (responseData.status === "success") {
         onUpdateSuccess();
-        toast.success("Return to wallet successfully!");
+        toast.success(t("toast.return_wallet_success"));
         onClose();
       }
     } catch (e) {
@@ -70,7 +73,7 @@ function TransferSurplus({ goal, onClose, amount, onUpdateSuccess }) {
 
       if (responseData.status === "success") {
         onUpdateSuccess();
-        toast.success("Transfer to goal successfully!");
+        toast.success(t("goal.transfer_goal_success"));
         onClose();
       }
     } catch (e) {
@@ -95,7 +98,7 @@ function TransferSurplus({ goal, onClose, amount, onUpdateSuccess }) {
 
   return (
     <Modal
-      title={"Transfer surplus"}
+      title={t("goal.transfer_surplus")}
       onAccept={handleAccept}
       onClose={onClose}
       action={type ? "yesno" : "no"}
@@ -103,7 +106,7 @@ function TransferSurplus({ goal, onClose, amount, onUpdateSuccess }) {
     >
       <div className="flex flex-col justify-center items-center">
         <p className="text-xl mb-4">
-          Surplus:{" "}
+          {t("goal.surplus")}:{" "}
           <span className="font-bold text-purple-600">
             {formatCurrency(amount)}
           </span>
@@ -114,14 +117,14 @@ function TransferSurplus({ goal, onClose, amount, onUpdateSuccess }) {
               className="w-1/2 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
               onClick={() => setType("return")}
             >
-              Returns to a wallet
+              {t("goal.return_wallet")}
             </button>
             <button
               className="w-1/2 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed"
               onClick={() => setType("transfer")}
               disabled={transferableGoals.length === 0}
             >
-              Transfer to another goal
+              {t("goal.transfer_goal")}
             </button>
           </div>
         )}
@@ -129,7 +132,7 @@ function TransferSurplus({ goal, onClose, amount, onUpdateSuccess }) {
           <div className="w-4/5">
             <SelectWithImage
               data={wallets}
-              label={"Wallet to receive money"}
+              label={t("input.wallet_receive_money")}
               selected={selectedWallet}
               setSelected={setSelectedWallet}
               required
@@ -149,13 +152,13 @@ function TransferSurplus({ goal, onClose, amount, onUpdateSuccess }) {
               <>
                 <SelectWithImage
                   data={transferableGoals}
-                  label={"Goal to receive money"}
+                  label={t("input.goal_receive_money")}
                   selected={selectedGoal}
                   setSelected={setSelectedGoal}
                   required
                 />
                 <p className="text-green-600 text-sm text-center">
-                  Total contributions:{" "}
+                  {t("goal.total_contributions")}:{" "}
                   <span className="font-bold">
                     {formatCurrency(selectedGoal?.total_contributions)}
                   </span>

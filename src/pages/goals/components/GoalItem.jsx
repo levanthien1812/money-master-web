@@ -17,6 +17,7 @@ import GoalService from "../../../services/goals";
 import { shorten } from "../../../utils/stringFormatter";
 import goalImage from "../../../assets/images/goal.png";
 import { GOAL_STATUS } from "../../../config/constants";
+import { useTranslation } from "react-i18next";
 
 function GoalItem({ goal, status, onUpdateSuccess }) {
   const [isUpdating, setIsUpdating] = useState(false);
@@ -26,6 +27,8 @@ function GoalItem({ goal, status, onUpdateSuccess }) {
   const [isTransferingSurplus, setIsTransferingSurplus] = useState(false);
   const [isConfirmDelete, setIsConfirmDelete] = useState(false);
   const [isSavingDelete, setIsSavingDelete] = useState(false);
+
+  const { t } = useTranslation();
 
   const handleDelete = async () => {
     try {
@@ -104,12 +107,16 @@ function GoalItem({ goal, status, onUpdateSuccess }) {
                           (1000 * 3600 * 24)
                       )}
                     </span>{" "}
-                    <span className="text-xs font-bold">days left</span>
+                    <span className="text-xs font-bold">
+                      {t("goal.days_left")}
+                    </span>
                   </>
                 )}
                 {status === GOAL_STATUS.NOT_STARTED && (
                   <>
-                    <span className="text-xs font-bold">Start in</span>{" "}
+                    <span className="text-xs font-bold">
+                      {t("goal.start_in")}
+                    </span>{" "}
                     <span className="font-bold text-purple-600">
                       {Math.round(
                         (new Date(goal.date_begin).getTime() -
@@ -117,12 +124,15 @@ function GoalItem({ goal, status, onUpdateSuccess }) {
                           (1000 * 3600 * 24)
                       )}
                     </span>{" "}
-                    <span className="text-xs font-bold">days</span>
+                    <span className="text-xs font-bold">{t("goal.days")}</span>
                   </>
                 )}
-                {(status === GOAL_STATUS.FINISH || status === GOAL_STATUS.NOT_COMPLETED) && (
+                {(status === GOAL_STATUS.FINISH ||
+                  status === GOAL_STATUS.NOT_COMPLETED) && (
                   <>
-                    <span className="text-xs font-bold">Finished </span>{" "}
+                    <span className="text-xs font-bold">
+                      {t("goal.finished")}{" "}
+                    </span>{" "}
                     <span className="font-bold text-purple-600">
                       {Math.round(
                         (new Date(goal.date_begin).getTime() -
@@ -130,7 +140,9 @@ function GoalItem({ goal, status, onUpdateSuccess }) {
                           (1000 * 3600 * 24)
                       ) * -1}
                     </span>{" "}
-                    <span className="text-xs font-bold">days ago</span>
+                    <span className="text-xs font-bold">
+                      {t("goal.days_ago")}
+                    </span>
                   </>
                 )}
               </p>
@@ -139,7 +151,7 @@ function GoalItem({ goal, status, onUpdateSuccess }) {
                   className=" text-purple-600 whitespace-nowrap rounded-md text-sm uppercase py-1 hover:underline"
                   onClick={() => setIsViewingAdditions(true)}
                 >
-                  See additions
+                  {t("goal.see_additions")}
                   <FontAwesomeIcon
                     icon={faChevronRight}
                     className="text-purple-600 ms-2"
@@ -162,19 +174,19 @@ function GoalItem({ goal, status, onUpdateSuccess }) {
             {status === GOAL_STATUS.NOT_STARTED && (
               <>
                 <p className="text-sm mb-3">
-                  Target amount:{" "}
+                  {t("goaltarget_amount")}:{" "}
                   <span className="text-md bg-purple-100 text-purple-600 py-1 px-3 rounded-md font-bold">
                     {formatCurrency(goal.amount)}
                   </span>
                 </p>
                 <p className="text-sm mb-3">
-                  Begining date:{" "}
+                  {t("goal.begining_date")}:{" "}
                   <span className="text-md bg-purple-100 text-purple-600 py-1 px-3 rounded-md font-bold">
                     {format(new Date(goal.date_begin), "dd/MM/yyyy")}
                   </span>
                 </p>
                 <p className="text-sm mb-5">
-                  Due date:{" "}
+                  {t("goal.due_date")}:{" "}
                   <span className="text-md bg-purple-100 text-purple-600 py-1 px-3 rounded-md font-bold">
                     {format(new Date(goal.date_end), "dd/MM/yyyy")}
                   </span>
@@ -187,37 +199,38 @@ function GoalItem({ goal, status, onUpdateSuccess }) {
               className="bg-red-200 text-red-500 rounded-md whitespace-nowrap text-sm sm:px-4 px-2 py-1 hover:font-bold"
               onClick={() => setIsConfirmDelete(true)}
             >
-              Delete
+              {t("action.delete")}
             </button>
             <button
               className="bg-purple-200 text-purple-500 rounded-md whitespace-nowrap text-sm sm:px-4 px-2 py-1 hover:font-bold"
               onClick={() => setIsUpdating(true)}
             >
-              Update
+              {t("action.update")}
             </button>
             {status !== GOAL_STATUS.NOT_STARTED && (
               <button
                 className="bg-purple-200 text-purple-500 rounded-md whitespace-nowrap text-sm sm:px-4 px-2 py-1 hover:font-bold"
                 onClick={() => setIsAddingWithdrawal(true)}
               >
-                Withdraw
+                {t("goal.withdraw")}
               </button>
             )}
-            {(status === GOAL_STATUS.IN_PROGRESS || status === GOAL_STATUS.FINISH) && (
+            {(status === GOAL_STATUS.IN_PROGRESS ||
+              status === GOAL_STATUS.FINISH) && (
               <button
                 className="bg-purple-600 text-white rounded-md whitespace-nowrap text-sm sm:px-4 px-2 py-1 hover:bg-purple-700"
                 onClick={() => setIsAddingAddition(true)}
               >
-                Add to goal
+                {t("goal.add_to_goal")}
               </button>
             )}
-            {status === GOAL_STATUS.NOT_COMPLETED &&
+            {status === GOAL_STATUS.FINISH &&
               goal.total_contributions > goal.amount && (
                 <button
                   className="bg-purple-600 text-white rounded-md whitespace-nowrap text-sm px-4 py-1 hover:bg-purple-700"
                   onClick={() => setIsTransferingSurplus(true)}
                 >
-                  Transfer surplus
+                  {t("goal.transfer_surplus")}
                 </button>
               )}
           </div>
@@ -265,9 +278,7 @@ function GoalItem({ goal, status, onUpdateSuccess }) {
       )}
       {isConfirmDelete && (
         <ConfirmDeleteModal
-          message={
-            "Are you sure to delete this goal? This action can not be undone!"
-          }
+          message={t("warning.delete_goal")}
           onAccept={handleDelete}
           onClose={() => setIsConfirmDelete(false)}
           processing={isSavingDelete}

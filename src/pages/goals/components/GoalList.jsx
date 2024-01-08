@@ -2,8 +2,11 @@ import React from "react";
 import GoalItem from "./GoalItem";
 import Loading from "../../../components/others/Loading";
 import { GOAL_STATUS } from "../../../config/constants";
+import { useTranslation } from "react-i18next";
 
 function GoalList({ goals, status, setStatus, onUpdateSuccess, loading }) {
+  const { t } = useTranslation();
+
   const statusType = (_status) => {
     return (
       "py-2 px-2 sm:px-8 border-b-4 sm:text-md text-sm whitespace-nowrap " +
@@ -17,17 +20,29 @@ function GoalList({ goals, status, setStatus, onUpdateSuccess, loading }) {
     <div>
       <div className="mb-4">
         <div className="flex border-b border-b-purple-200 lg:justify-start justify-center">
-          <button className={statusType(GOAL_STATUS.NOT_STARTED)} onClick={() => setStatus(GOAL_STATUS.NOT_STARTED)}>
-            Not started
+          <button
+            className={statusType(GOAL_STATUS.NOT_STARTED)}
+            onClick={() => setStatus(GOAL_STATUS.NOT_STARTED)}
+          >
+            {t("goal.not_started")}
           </button>
-          <button className={statusType(GOAL_STATUS.IN_PROGRESS)} onClick={() => setStatus(GOAL_STATUS.IN_PROGRESS)}>
-            In progress
+          <button
+            className={statusType(GOAL_STATUS.IN_PROGRESS)}
+            onClick={() => setStatus(GOAL_STATUS.IN_PROGRESS)}
+          >
+            {t("goal.in_progress")}
           </button>
-          <button className={statusType(GOAL_STATUS.FINISH)} onClick={() => setStatus(GOAL_STATUS.FINISH)}>
-            Finished
+          <button
+            className={statusType(GOAL_STATUS.FINISH)}
+            onClick={() => setStatus(GOAL_STATUS.FINISH)}
+          >
+            {t("goal.finished")}
           </button>
-          <button className={statusType(GOAL_STATUS.NOT_COMPLETED)} onClick={() => setStatus(GOAL_STATUS.NOT_COMPLETED)}>
-            Not completed
+          <button
+            className={statusType(GOAL_STATUS.NOT_COMPLETED)}
+            onClick={() => setStatus(GOAL_STATUS.NOT_COMPLETED)}
+          >
+            {t("goal.not_completed")}
           </button>
         </div>
       </div>
@@ -46,7 +61,7 @@ function GoalList({ goals, status, setStatus, onUpdateSuccess, loading }) {
         )}
         {!loading && goals.length === 0 && (
           <p className="text-center text-xl mt-8 text-gray-500">
-            No goals found!
+            {t("goal.no_goals")}
           </p>
         )}
         {loading && <Loading />}

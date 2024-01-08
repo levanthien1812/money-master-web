@@ -7,6 +7,7 @@ import handleAmountChange from "../../../utils/handleAmountChange";
 import SelectWithImage from "../../../components/elements/SelectWithImage";
 import formatCurrency from "../../../utils/currencyFormatter";
 import GoalService from "../../../services/goals";
+import { useTranslation } from "react-i18next";
 
 function AddAddition({ type, onClose, goal, onUpdateSuccess }) {
   const { wallets, walletChosen } = useSelector((state) => state.wallet);
@@ -18,6 +19,8 @@ function AddAddition({ type, onClose, goal, onUpdateSuccess }) {
   const [errors, setErrors] = useState(null);
   const [isSavingAddition, setIsSavingAddition] = useState(false);
 
+  const { t } = useTranslation();
+
   const handleAddAddition = async () => {
     try {
       let haveErrors = false;
@@ -27,7 +30,7 @@ function AddAddition({ type, onClose, goal, onUpdateSuccess }) {
       if (formattedAmount.length === 0) {
         haveErrors = true;
         setErrors((prev) => {
-          return { ...prev, amount: "Invalid amount!" };
+          return { ...prev, amount: t("error.invalid_amount") };
         });
       }
 
@@ -36,7 +39,7 @@ function AddAddition({ type, onClose, goal, onUpdateSuccess }) {
         setErrors((prev) => {
           return {
             ...prev,
-            amount: "Amount must be less than wallet balance!",
+            amount: t("error.amount_less_balance"),
           };
         });
       }
@@ -46,8 +49,7 @@ function AddAddition({ type, onClose, goal, onUpdateSuccess }) {
         setErrors((prev) => {
           return {
             ...prev,
-            amount:
-              "Amount must be less than current goal's total contributions amount!",
+            amount: t("error.amount_less_goal_contributions"),
           };
         });
       }
@@ -67,8 +69,8 @@ function AddAddition({ type, onClose, goal, onUpdateSuccess }) {
         if (responseData.status === "success") {
           toast.success(
             type === "addition"
-              ? "Add addition successfully!"
-              : "Add withdrawal successfully!"
+              ? t("toast.add_addition_success")
+              : t("toast.add_withdrawal_success")
           );
 
           onClose();
@@ -99,7 +101,9 @@ function AddAddition({ type, onClose, goal, onUpdateSuccess }) {
   return (
     <Modal
       width={"xl:w-1/4 md:w-2/5 sm:w-1/2 w-11/12"}
-      title={type === "addition" ? "Add addition" : "Add withdrawal"}
+      title={
+        type === "addition" ? t("goal.add_addition") : t("goal.add_withdrawal")
+      }
       onClose={onClose}
       onAccept={handleAddAddition}
       processing={isSavingAddition}
@@ -110,19 +114,19 @@ function AddAddition({ type, onClose, goal, onUpdateSuccess }) {
             data={filteredWallets}
             label={
               type === "addition"
-                ? "Wallet to get money"
-                : "Wallet to receive money"
+                ? t("input.wallet_get_money")
+                : t("input.wallet_receive_money")
             }
             selected={wallet}
             setSelected={setWallet}
             required
           />
           <p className="text-green-600 text-sm text-end">
-            Balance:{" "}
+            {t("goal.balance")}:{" "}
             <span className="font-bold">{formatCurrency(wallet.balance)}</span>
           </p>
           <Input
-            label={"Amount"}
+            label={t("input.amount")}
             name={"amount"}
             type={"text"}
             onChange={(e) =>
@@ -139,7 +143,7 @@ function AddAddition({ type, onClose, goal, onUpdateSuccess }) {
             error={errors && errors.amount}
           />
           <Input
-            label={"Note"}
+            label={t("input.note")}
             name={"name"}
             type={"text"}
             onChange={(e) => setNote(e.target.value)}
@@ -150,9 +154,7 @@ function AddAddition({ type, onClose, goal, onUpdateSuccess }) {
         </div>
       )}
       {filteredWallets.length === 0 && (
-        <p className="text-center ">
-          You have no suitable wallets to make additions to this goal!
-        </p>
+        <p className="text-center ">{t("no_wallet")}</p>
       )}
     </Modal>
   );

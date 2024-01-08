@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import emergency from "../../../assets/images/emergency.png";
 import holidays1 from "../../../assets/images/holidays1.png";
 import loan from "../../../assets/images/loan.png";
@@ -7,57 +7,69 @@ import moneySaving from "../../../assets/images/money-saving.png";
 import relief from "../../../assets/images/relief.png";
 import savings from "../../../assets/images/savings.png";
 import phone from "../../../assets/images/phone.png";
-
-const savingsItems = [
-  {
-    id: 1,
-    name: "Vacations",
-    image: holidays1,
-  },
-  {
-    id: 2,
-    name: "Savings",
-    image: savings,
-  },
-  {
-    id: 3,
-    name: "Emergency",
-    image: emergency,
-  },
-  {
-    id: 4,
-    name: "Buy new thing",
-    image: phone,
-  },
-];
-
-const debtReductionItems = [
-  {
-    id: 1,
-    name: "Debt reduction",
-    image: relief,
-  },
-  {
-    id: 2,
-    name: "Loan reduction",
-    image: loan,
-  },
-];
-
-const goals = [
-  {
-    id: 1,
-    name: "Saving Goals",
-    items: savingsItems,
-  },
-  {
-    id: 2,
-    name: "Debt Reduction Goals",
-    items: debtReductionItems,
-  },
-];
+import { useTranslation } from "react-i18next";
 
 function Introduction({ setIsAddingGoal }) {
+  const { t } = useTranslation();
+
+  const savingsItems = useMemo(
+    () => [
+      {
+        id: 1,
+        name: t("goal.vacations"),
+        image: holidays1,
+      },
+      {
+        id: 2,
+        name: t("goal.savings"),
+        image: savings,
+      },
+      {
+        id: 3,
+        name: t("goal.emergency"),
+        image: emergency,
+      },
+      {
+        id: 4,
+        name: t("goal.buy_things"),
+        image: phone,
+      },
+    ],
+    []
+  );
+
+  const debtReductionItems = useMemo(
+    () => [
+      {
+        id: 1,
+        name: t("goal.debt_reduction"),
+        image: relief,
+      },
+      {
+        id: 2,
+        name: t("goal.loan_reduction"),
+        image: loan,
+      },
+    ],
+    []
+  );
+
+  const goals = useMemo(
+    () => [
+      {
+        id: 1,
+        name: t("goal.saving_goals"),
+        items: savingsItems,
+      },
+      {
+        id: 2,
+        name: t("goal.debt_reduction_goals"),
+        items: debtReductionItems,
+      },
+    ],
+    []
+  );
+
   return (
     <div className="flex justify-center py-8">
       <div className="sm:p-8 p-3 bg-white rounded-lg shadow-md xl:w-2/3 sm:w-11/12 w-full relative z-10">
@@ -67,9 +79,7 @@ function Introduction({ setIsAddingGoal }) {
               <img src={idea} alt="" className="h-8" />
             </div>
             <p className=" text-purple-600 p-1 px-2 text-md font-extrabold">
-              Setting a financial goal is the first step towards turning your
-              dreams into reality. Define your goal today and start your journey
-              towards financial success!
+              {t("goal.introduction")}
             </p>
           </div>
           <div className="grid sm:gap-6 gap-2 mb-6 md:grid-cols-2 grid-cols-1">
@@ -102,7 +112,7 @@ function Introduction({ setIsAddingGoal }) {
               className="bg-purple-500 py-3 px-12 text-white text-md font-bold rounded-md hover:bg-purple-600"
               onClick={() => setIsAddingGoal(true)}
             >
-              Set up your goal
+              {t("goal.set_up_goal")}
             </button>
           </div>
         </div>

@@ -1,8 +1,10 @@
 import React from "react";
 import Modal from "../../../components/modal/Modal";
 import congrats from "../../../assets/images/congrats.png";
+import { useTranslation } from "react-i18next";
 
 function Congratulation({ onClose }) {
+  const { t } = useTranslation();
   return (
     <Modal
       title={"Congratulations"}
@@ -14,10 +16,10 @@ function Congratulation({ onClose }) {
         <img src={congrats} alt="" className="h-40" />
 
         <p className="mt-4 text-2xl font-bold text-purple-500">
-          Congratulations!
+          {t("goal.congrats")}
         </p>
         <p className="mt-4 text-xl font-bold text-purple-500">
-          You have archived your goal!
+          {t("goal.achieved_goal")}
         </p>
       </div>
     </Modal>
