@@ -51,8 +51,8 @@
     "note": "Ghi chú",
     "type": "Loại",
     "location": "Vị trí",
-    "current_budget": "Current budget",
-    "new_budget": "New budget"
+    "current_budget": "Ngân sách hiện tại",
+    "new_budget": "Ngân sách mới"
   },
   "action": {
     "ok": "OK",
