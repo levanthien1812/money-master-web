@@ -50,7 +50,9 @@
     "wallet_receive_money": "Wallet to receive money",
     "note": "Note",
     "type": "Type",
-    "location": "Location"
+    "location": "Location",
+    "current_budget": "Current budget",
+    "new_budget": "New budget"
   },
   "action": {
     "ok": "OK",

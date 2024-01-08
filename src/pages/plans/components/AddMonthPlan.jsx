@@ -72,7 +72,7 @@ function AddMonthPlan({ onClose, onAddingSuccess, _month, _year }) {
   useEffect(() => {
     setLoadingTotal(true);
     if (walletSelected) getReport();
-  }, [year, month, walletSelected]);
+  }, [year, walletSelected]);
 
   const handleAmountChange = (event) => {
     setErrors((prev) => {

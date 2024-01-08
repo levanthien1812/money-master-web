@@ -34,6 +34,7 @@ function Layout() {
       "remind-add-transactions-event",
       "remind-overspend-category-plan-event",
       "remind-overspent-category-plan-event",
+      "remind-overspend-month-plan-event",
     ];
 
     events.forEach((event) => {
