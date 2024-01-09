@@ -9,6 +9,7 @@ import AddCategoryPlan from "../../plans/components/AddCategoryPlan";
 import AdjustBudget from "../../plans/components/AdjustBudget";
 import { toast } from "react-toastify";
 import { CATEGORY_TYPES } from "../../../config/constants";
+import { useTranslation } from "react-i18next";
 
 function UserCategoryItem({ category, onUpdateSuccess }) {
   const [isHover, setIsHover] = useState(false);
@@ -17,6 +18,7 @@ function UserCategoryItem({ category, onUpdateSuccess }) {
   const [isAddingPlan, setIsAddingPlan] = useState(false);
   const [isAdjustingPlan, setIsAdjustingPlan] = useState(false);
   const [isSavingDelete, setIsSavingDelete] = useState(false);
+  const { t } = useTranslation();
 
   const handleDeleteCategory = async () => {
     try {
@@ -73,8 +75,8 @@ function UserCategoryItem({ category, onUpdateSuccess }) {
               }}
             >
               {!category.plan
-                ? "Set plan this month"
-                : "Adjust plan this month"}
+                ? t("category.set_plan")
+                : t("category.adjust_plan")}
             </button>
           </motion.div>
         )}
@@ -103,9 +105,7 @@ function UserCategoryItem({ category, onUpdateSuccess }) {
       )}
       {isDeletingCategory && (
         <ConfirmDeleteModal
-          message={
-            "Deleting this category will also delete all transactions belongs to it! Are you sure to delete this category?"
-          }
+          message={t("warning.delete_category")}
           onAccept={handleDeleteCategory}
           onClose={() => setisDeletingCategory(false)}
           processing={isSavingDelete}

@@ -5,6 +5,7 @@ import Select from "../../../components/elements/Select";
 import ImageChoserPreview from "../../../components/others/ImageChoserPreview";
 import CategoriesService from "../../../services/categories";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 const types = [
   { id: 1, name: "incomes", value: 1 },
@@ -17,6 +18,7 @@ function AddCategories({ onClose, onAddSuccess, category = null }) {
   const [type, setType] = useState(types[0]);
   const [errors, setErrors] = useState(null);
   const [processing, setProcessing] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (category) {
@@ -34,14 +36,14 @@ function AddCategories({ onClose, onAddSuccess, category = null }) {
       if (name.length === 0) {
         haveErrors = true;
         setErrors((prev) => {
-          return { ...prev, name: "Name is required!" };
+          return { ...prev, name: t("error.requried_name") };
         });
       }
 
       if (!category && !image) {
         haveErrors = true;
         setErrors((prev) => {
-          return { ...prev, image: "Image is required!" };
+          return { ...prev, image: t("error.required_image") };
         });
       }
 
@@ -74,7 +76,9 @@ function AddCategories({ onClose, onAddSuccess, category = null }) {
 
   return (
     <Modal
-      title={category ? "Update category" : "Add new category"}
+      title={
+        category ? t("category.update_category") : t("category.add_category")
+      }
       onClose={onClose}
       onAccept={saveCategory}
       width={"lg:w-1/4 sm:w-3/5 md:1/2 w-11/12"}
@@ -82,7 +86,7 @@ function AddCategories({ onClose, onAddSuccess, category = null }) {
     >
       <div className="">
         <Input
-          label={"Name"}
+          label={t("input.name")}
           type={"text"}
           name={"title"}
           size="small"
@@ -93,7 +97,7 @@ function AddCategories({ onClose, onAddSuccess, category = null }) {
         />
 
         <Select
-          label={"Type"}
+          label={t("input.type")}
           selected={type}
           setSelected={setType}
           data={types}

@@ -6,6 +6,7 @@ import AddCategories from "./components/AddCategories";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import logo from "../../assets/images/logo-money-master.png";
+import { useTranslation } from "react-i18next";
 
 function CategoriesPage() {
   const [defaultCategories, setDefaultCategories] = useState([]);
@@ -14,6 +15,7 @@ function CategoriesPage() {
   const [loadingDefault, setLoadingDefault] = useState(false);
   const [loadingUser, setLoadingUser] = useState(false);
   const walletChosen = useSelector((state) => state.wallet.walletChosen);
+  const { t } = useTranslation();
 
   const getCategories = async (isDefault = true) => {
     try {
@@ -57,7 +59,7 @@ function CategoriesPage() {
     getAllCategories();
 
     if (action) {
-      toast.success("Category is " + action + "d successfully");
+      toast.success(t("toast." + action + "_category_success"));
     }
   };
 
@@ -69,7 +71,7 @@ function CategoriesPage() {
           <div className="lg:w-16 lg:h-16 w-10 h-10">
             <img src={logo} alt="" className="w-full h-full object-cover" />
           </div>
-          <h2 className="sm:text-4xl text-3xl">Categories</h2>
+          <h2 className="sm:text-4xl text-3xl">{t("category.categories")}</h2>
         </div>
         <div
           className="flex border-2 border-purple-500 rounded-2xl relative"
@@ -80,7 +82,7 @@ function CategoriesPage() {
             id="add-expense-btn"
             onClick={() => setisAddingCategory(true)}
           >
-            Create new category
+            {t("category.create_category")}
           </button>
         </div>
       </div>

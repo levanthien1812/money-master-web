@@ -55,7 +55,11 @@
     "current_budget": "Current budget",
     "new_budget": "New budget",
     "from": "From",
-    "to": "To"
+    "to": "To",
+    "email": "Email",
+    "current_password": "Current password",
+    "new_password": "New password",
+    "password_confirmation": "Password confirmation"
   },
   "action": {
     "ok": "OK",
@@ -101,12 +105,17 @@
   },
   "error": {
     "invalid_amount": "Invalid amount",
-    "required_amount": "Amount is required",
+    "required_amount": "Amount is required!",
     "amount_less_balance": "Amount must be less than wallet balance!",
     "amount_less_goal_contributions": "Amount must be less than current goal's total contributions amount!",
     "date_from_today": "Date must be from today",
     "require_name": "Name is required!",
-    "ending_after_beginning": "Ending date must be after the begining date!"
+    "ending_after_beginning": "Ending date must be after the begining date!",
+    "required_image": "Image is required!",
+    "must_image": "Must be an image!",
+    "required_current_password": "Current password is required!",
+    "length_password": "Password must be at least 8 and as most 32 characters!",
+    "wrong_confirmation_password": "New password confirmation does not match"
   },
   "toast": {
     "update_plan_success": "Update plan successfully!",
@@ -119,12 +128,18 @@
     "create_goal_success": "Create goal successfully!",
     "update_goal_success": "Update goal successfully!",
     "return_wallet_success": "Return to wallet successfully!",
-    "transfer_goal_success": "Transfer to goal successfully"
+    "transfer_goal_success": "Transfer to goal successfully",
+    "create_category_success": "Create category successfully",
+    "update_category_success": "Update category successfully",
+    "update_user_success": "Update user successfully!",
+    "update_password_success": "Update password successfully! Please login again."
   },
   "warning": {
     "delete_cplan": "Are you sure to delete this category plan? This action can no be undone!",
     "delete_plan": "Are you sure to delete this plan? This action can not be undone!",
-    "delete_goal": "Are you sure to delete this goal? This action can not be undone!"
+    "delete_goal": "Are you sure to delete this goal? This action can not be undone!",
+    "delete_category": "Deleting this category will also delete all transactions belongs to it! Are you sure to delete this category?",
+    "delete_account": "Do you really want to DELETE your account? All of your data will be deleted too. This action can not be undone. Think carefully before you click the delete button!"
   },
   "report": {
     "reports": "Reports",
@@ -196,5 +211,31 @@
     "transfer_goal": "Transfer to another goal",
     "total_contributions": "Total contributions",
     "surplus": "Surplus"
+  },
+  "category": {
+    "categories": "Categories",
+    "default_categories": "Default categories",
+    "expenses": "Expenses",
+    "incomes": "Incomes",
+    "your_categories": "Your categories",
+    "no_categories": "You didn't create any category!",
+    "create_category": "Create new category",
+    "set_plan": "Set plan this month",
+    "adjust_plan": "Adjust plan this month",
+    "add_category": "Add new category",
+    "update_category": "Update category"
+  },
+  "profile": {
+    "profile": "Profile",
+    "user": "User",
+    "admin": "Admin",
+    "update_password": "Update password",
+    "updating_password": "Updating password...",
+    "delete_account": "Delete account",
+    "warning_update_success": "Warning: you will be logged out immediately after updating successfully!",
+    "back": "Back"
+  },
+  "modal": {
+    "confirm_deletion": "Confirm deletion"
   }
 }

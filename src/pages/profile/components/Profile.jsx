@@ -12,6 +12,7 @@ import EmailVerification from "../../auth/components/EmailVerification";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../../stores/auth";
 import UpdatePassword from "./UpdatePassword";
+import { useTranslation } from "react-i18next";
 
 function Profile({ onClose }) {
   const { user, roles } = useSelector((state) => state.auth);
@@ -29,6 +30,7 @@ function Profile({ onClose }) {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const handleFileChange = (file) => {
     // CLEAR ANY PHOTO STATE BEFORE
@@ -47,7 +49,7 @@ function Profile({ onClose }) {
       if (!imageExtensions.includes(fileExtension)) {
         setPreview(null);
         setErrors((prev) => {
-          return { ...prev, image: "Must be an image!" };
+          return { ...prev, image: t("category.must_image") };
         });
         return;
       }
@@ -95,7 +97,7 @@ function Profile({ onClose }) {
       const responseData = await UsersServices.updateUser(data);
 
       if (responseData.status === "success") {
-        toast.success("Update user successfully!");
+        toast.success(t("toast.update_user_success"));
         setIsVerifyEmail(false);
         dispatch(authActions.update(responseData.data.user));
       } else {
@@ -114,14 +116,14 @@ function Profile({ onClose }) {
     if (email.length === 0) {
       haveErrors = true;
       setErrors((prev) => {
-        return { ...prev, email: "Email is required" };
+        return { ...prev, email: t("error.required_email") };
       });
     }
 
     if (name.length === 0) {
       haveErrors = true;
       setErrors((prev) => {
-        return { ...prev, name: "Name is required" };
+        return { ...prev, name: t("error.require_name") };
       });
     }
 
@@ -161,7 +163,7 @@ function Profile({ onClose }) {
 
   return (
     <Modal
-      title={"Profile"}
+      title={t("profile.profile")}
       onClose={onClose}
       width={
         isUpdatingPassword
@@ -209,7 +211,7 @@ function Profile({ onClose }) {
           </div>
 
           <Input
-            label={"Name"}
+            label={t("input.name")}
             type={"text"}
             name={"name"}
             value={name}
@@ -218,7 +220,7 @@ function Profile({ onClose }) {
             size="small"
           />
           <Input
-            label={"Email"}
+            label={t("input.email")}
             type={"email"}
             name={"email"}
             value={email}
@@ -237,7 +239,7 @@ function Profile({ onClose }) {
                 className="text-sm bg-gray-200 rounded-full py-1 px-3 hover:bg-blue-500 hover:text-white border border-blue-500"
                 onClick={() => setIsUpdatingPassword(true)}
               >
-                Update password
+                {t("profile.update_password")}
               </button>
             )}
             {roles.includes("user") && (
@@ -245,7 +247,7 @@ function Profile({ onClose }) {
                 className="text-sm bg-red-500 rounded-full py-1 px-3 hover:bg-red-600 text-white"
                 onClick={() => setIsConfirmDelete(true)}
               >
-                Delete account
+                {t("profile.delete_account")}
               </button>
             )}
           </div>
@@ -255,9 +257,7 @@ function Profile({ onClose }) {
         )}
         {isConfirmDelete && (
           <ConfirmDeleteModal
-            message={
-              "Do you really want to DELETE your account? All of your data will be deleted too. This action can not be undone. Think carefully before you click the delete button!"
-            }
+            message={t("warning.delete_account")}
             onAccept={handleDeleteUser}
             onClose={() => setIsConfirmDelete(false)}
           />
