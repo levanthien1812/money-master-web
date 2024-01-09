@@ -3,11 +3,13 @@ import React, { useState } from "react";
 import AddCategoryPlan from "../../plans/components/AddCategoryPlan";
 import AdjustBudget from "../../plans/components/AdjustBudget";
 import { CATEGORY_TYPES } from "../../../config/constants";
+import { useTranslation } from "react-i18next";
 
 function DefaultCategoryItem({ category, onUpdateSuccess }) {
   const [isHover, setIsHover] = useState(false);
   const [isAddingPlan, setIsAddingPlan] = useState(false);
   const [isAdjustingPlan, setIsAdjustingPlan] = useState(false);
+  const { t } = useTranslation();
 
   return (
     <>
@@ -46,8 +48,8 @@ function DefaultCategoryItem({ category, onUpdateSuccess }) {
               }}
             >
               {!category.plan
-                ? "Set plan this month"
-                : "Adjust plan this month"}
+                ? t("category.set_plan")
+                : t("category.adjust_plan")}
             </button>
           </motion.div>
         )}

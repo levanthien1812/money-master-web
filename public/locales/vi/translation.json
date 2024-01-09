@@ -55,7 +55,11 @@
     "current_budget": "Ngân sách hiện tại",
     "new_budget": "Ngân sách mới",
     "from": "Từ",
-    "to": "Đến"
+    "to": "Đến",
+    "email": "Email",
+    "current_password": "Mật khẩu hiên tại",
+    "new_password": "Mật khẩu mới",
+    "password_confirmation": "Mật khẩu xác nhận"
   },
   "action": {
     "ok": "OK",
@@ -106,7 +110,12 @@
     "amount_less_goal_contributions": "Số tiền phải nhỏ hơn tổng tiền có được hiện tại của mục tiêu!",
     "date_from_today": "Chọn ngày phải bắt đầu từ hôm nay!",
     "require_name": "Tên bắt buộc!",
-    "ending_after_beginning": "Ngày kết thúc phải ở sau ngày bắt đầu!"
+    "ending_after_beginning": "Ngày kết thúc phải ở sau ngày bắt đầu!",
+    "required_image": "Image is required!",
+    "must_image": "Vui lòng chọn file ảnh!",
+    "required_current_password": "Mật khẩu hiện tại bắt buộc!",
+    "length_password": "Mật khẩu phải từ 8 đến 32 ký tự!",
+    "wrong_confirmation_password": "Mật khẩu xác nhận cho mật khẩu mới không đúng"
   },
   "toast": {
     "update_plan_success": "Cập nhật ngân sách thành công!",
@@ -119,12 +128,18 @@
     "create_goal_success": "Tạo mục tiêu thành công!",
     "update_goal_success": "Cập nhật mục tiêu thành công!",
     "return_wallet_success": "Chuyển về ví thành công!",
-    "transfer_goal_success": "Chuyển đến mục tiêu khác thành công!"
+    "transfer_goal_success": "Chuyển đến mục tiêu khác thành công!",
+    "create_category_success": "Create category successfully",
+    "update_category_success": "Update category successfully",
+    "update_user_success": "Update user successfully!",
+    "update_password_success": "Update password successfully! Please login again."
   },
   "warning": {
     "delete_cplan": "Bạn có chắc chắn muốn xoá ngân sách danh mục này? Thao tác ngày không thể hoàn tác!",
     "delete_plan": "Bạn có chắc chắn muốn xoá ngân sách tháng này? Thao tác ngày không thể hoàn tác!",
-    "delete_goal": "Bạn có chắc chắn muốn xoá mục tiêu này? Thao tác ngày không thể hoàn tác!"
+    "delete_goal": "Bạn có chắc chắn muốn xoá mục tiêu này? Thao tác ngày không thể hoàn tác!",
+    "delete_category": "Xoá danh mục này cũng sẽ xoá luôn các thu chi liên quan đến danh mục này. Bạn có chắc chắn muốn xoá?",
+    "delete_account": "Bạn có chắc chắn muốn xoá tài khoản này? Tất cả dữ liệu của bạn sẽ bị xoá. Thao tác này không thể hoàn tác. Hãy suy nghĩ kỹ trước khi nhấn nút OK!"
   },
   "report": {
     "reports": "Báo cáo",
@@ -196,5 +211,31 @@
     "transfer_goal": "Chuyển đến một mục tiêu khác",
     "total_contributions": "Tổng tiền đạt được",
     "surplus": "Tiền dư"
+  },
+  "category": {
+    "categories": "Danh mục",
+    "default_categories": "Danh mục mặc định",
+    "expenses": "Chi",
+    "incomes": "Thu",
+    "your_categories": "Danh mục của bạn",
+    "no_categories": "Chưa có danh mục nào được tạo!",
+    "create_category": "Tạo danh mục mới",
+    "set_plan": "Tạo ngân sách tháng này",
+    "adjust_plan": "Điều chỉnh ngân sách tháng này",
+    "add_category": "Thêm danh mục mới",
+    "update_category": "Cập nhật danh mục"
+  },
+  "profile": {
+    "profile": "Thông tin cá nhân",
+    "user": "Người dùng",
+    "admin": "Quản trị viên",
+    "update_password": "Đổi mật khẩu",
+    "updating_password": "Đang cập nhật...",
+    "delete_account": "Xoá tài khoản",
+    "warning_update_success": "Cảnh báo! Bạn sẽ bị đăng xuất ngay lập tức sau khi cập nhật mật khẩu thành công!",
+    "back": "Trở lại"
+  },
+  "modal": {
+    "confirm_deletion": "Xác nhận xoá"
   }
 }

@@ -165,7 +165,7 @@ function GoalItem({ goal, status, onUpdateSuccess }) {
                 <span className="text-xl bg-purple-100 text-purple-600 py-1 px-3 rounded-md font-bold">
                   {formatCurrency(goal.total_contributions)}
                 </span>{" "}
-                of{" "}
+                {t("goal.of")}{" "}
                 <span className="text-purple-600 font-bold">
                   {formatCurrency(goal.amount)}
                 </span>
