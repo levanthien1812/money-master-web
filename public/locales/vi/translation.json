@@ -8,7 +8,13 @@
     "goals": "Mục tiêu",
     "users": "Người dùng",
     "dashboard": "Bảng điều khiển",
-    "events": "Sự kiện"
+    "events": "Sự kiện",
+    "view_profile": "Xem profile",
+    "your_wallets": "Ví của bạn",
+    "personal_income_tax": "Thuế thu nhập cá nhân",
+    "language": "Ngôn ngữ: Tiếng Việt",
+    "logout": "Đăng xuất",
+    "help": "Trợ giúp"
   },
   "transaction": {
     "transactions": "Thu chi",
@@ -59,7 +65,8 @@
     "email": "Email",
     "current_password": "Mật khẩu hiên tại",
     "new_password": "Mật khẩu mới",
-    "password_confirmation": "Mật khẩu xác nhận"
+    "password_confirmation": "Mật khẩu xác nhận",
+    "set_default_wallet": "Đặt làm ví mặc định"
   },
   "action": {
     "ok": "OK",
@@ -69,7 +76,8 @@
     "clone": "Sao chép",
     "add_event": "Thêm sự kiện",
     "processing": "Đang xử lý...",
-    "update": "Cập nhật"
+    "update": "Cập nhật",
+    "clear": "Xoá"
   },
   "info": {
     "no_plan": "Bạn chưa thiết lập mục tiêu cho tháng này",
@@ -81,7 +89,8 @@
     "loading_plan": "Đang tính số tiền còn lại của tháng này theo kế hoạch ...",
     "no_event": "Không tìm thấy sự kiện!",
     "no_file": "Chưa có file nào được tải lên",
-    "loading_total_expenses": "Đang tính tổng số tiền đã chi tháng trước và tháng này ..."
+    "loading_total_expenses": "Đang tính tổng số tiền đã chi tháng trước và tháng này ...",
+    "upload_drop_file": "Tải lên hoặc thả file ở đây"
   },
   "plan": {
     "by_month": "Theo tháng",
@@ -115,13 +124,14 @@
     "must_image": "Vui lòng chọn file ảnh!",
     "required_current_password": "Mật khẩu hiện tại bắt buộc!",
     "length_password": "Mật khẩu phải từ 8 đến 32 ký tự!",
-    "wrong_confirmation_password": "Mật khẩu xác nhận cho mật khẩu mới không đúng"
+    "wrong_confirmation_password": "Mật khẩu xác nhận cho mật khẩu mới không đúng",
+    "required_title": "Tiêu đề bắt buộc!"
   },
   "toast": {
     "update_plan_success": "Cập nhật ngân sách thành công!",
     "create_plan_success": "Thiết lập ngân sách thành công!",
     "delete_plan_success": "Xoá ngân sách thành công!",
-    "delete_cplan_success": "Delete category plan successfully",
+    "delete_cplan_success": "Delete category plan thành công",
     "export_excel_fail": "Có lỗi xảy ra khi xuất file excel!",
     "add_addition_success": "Thêm tiền thành công!",
     "add_withdrawal_success": "Rút tiền thành công!",
@@ -129,17 +139,27 @@
     "update_goal_success": "Cập nhật mục tiêu thành công!",
     "return_wallet_success": "Chuyển về ví thành công!",
     "transfer_goal_success": "Chuyển đến mục tiêu khác thành công!",
-    "create_category_success": "Create category successfully",
-    "update_category_success": "Update category successfully",
-    "update_user_success": "Update user successfully!",
-    "update_password_success": "Update password successfully! Please login again."
+    "create_category_success": "Tạo danh mục thành công",
+    "update_category_success": "Cập nhật danh mục thành công",
+    "update_user_success": "Cập nhật thông tin thành công!",
+    "update_password_success": "Cập nhật mật khẩu thành công. Vui lòng đăng nhập lại!",
+    "create_event_success": "Tạo sự kiện thành công!",
+    "update_event_success": "Cập nhật sự kiện thành công!",
+    "delete_event_success": "Xoá sự kiện thành công!",
+    "create_wallet_success": "Tạo ví thành công!",
+    "update_wallet_success": "Cập nhật ví thành công!",
+    "delete_wallet_success": "Xoá ví thành công!"
   },
   "warning": {
     "delete_cplan": "Bạn có chắc chắn muốn xoá ngân sách danh mục này? Thao tác ngày không thể hoàn tác!",
     "delete_plan": "Bạn có chắc chắn muốn xoá ngân sách tháng này? Thao tác ngày không thể hoàn tác!",
     "delete_goal": "Bạn có chắc chắn muốn xoá mục tiêu này? Thao tác ngày không thể hoàn tác!",
     "delete_category": "Xoá danh mục này cũng sẽ xoá luôn các thu chi liên quan đến danh mục này. Bạn có chắc chắn muốn xoá?",
-    "delete_account": "Bạn có chắc chắn muốn xoá tài khoản này? Tất cả dữ liệu của bạn sẽ bị xoá. Thao tác này không thể hoàn tác. Hãy suy nghĩ kỹ trước khi nhấn nút OK!"
+    "delete_account": "Bạn có chắc chắn muốn xoá tài khoản này? Tất cả dữ liệu của bạn sẽ bị xoá. Thao tác này không thể hoàn tác. Hãy suy nghĩ kỹ trước khi nhấn nút OK!",
+    "delete_event": "Bạn có chắc chắn muốn xoá hết tất cả thu chi liên quan đến event này không?",
+    "delete_transaction": "Bạn có chắc chắn muốn xoá thu chi này? Thao tác này không thể hoàn tác!",
+    "delete_wallet": "Bạn có chắc chắn muốn xoá ví này? Tất cả những thu chi liên quan đến nó cũng sẽ bị xoá!",
+    "delete_default_wallet": "Bạn không thể xoá ví mặc định! Vui lòng đặt mặc định cho ví khác rồi quay lại xoá ví này!"
   },
   "report": {
     "reports": "Báo cáo",
@@ -237,5 +257,35 @@
   },
   "modal": {
     "confirm_deletion": "Xác nhận xoá"
+  },
+  "event": {
+    "events": "Sự kiện",
+    "add_event": "Thêm sự kiện",
+    "add_new_event": "Thêm sự kiện mới",
+    "transactions": "Danh sách thu chi",
+    "new_expense": "Thêm thu",
+    "new_income": "Thêm chi",
+    "event_detail": "Chi tiết sự kiện",
+    "delete_transactions": "Xoá tất cả thu chi",
+    "remove_event": "Xoá sự kiện trong thu chi",
+    "no_transaction": "Không có thu chi nào!"
+  },
+  "noti": {
+    "notifications": "Thông báo",
+    "all": "Tất cả",
+    "unread": "Chưa đọc",
+    "mark_all_read": "Đánh dấu tất cả là đã đọc",
+    "mark_read": "Đánh dấu là đã đọc",
+    "no_notification": "Bạn không có thông báo nào!",
+    "no_unread_notification": "Bạn không có thông báo nào chưa đọc!"
+  },
+  "wallet": {
+    "your_wallets": "Ví của bạn",
+    "balance": "Số dư",
+    "update_wallet": "Cập nhật ví",
+    "add_wallet": "Thêm ví",
+    "add_new_wallet": "Add new wallet",
+    "setup_default_wallet": "Set up your default wallet",
+    "default": "Mặc định"
   }
 }

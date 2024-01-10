@@ -7,12 +7,14 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { CATEGORY_TYPES } from "../../../config/constants";
 import AddTransaction from "../../transactions/components/AddTransaction";
 import TransactionItem from "./TransactionItem";
+import { useTranslation } from "react-i18next";
 
 function TransactionList({ event }) {
   const [transactions, setTransactions] = useState([]);
   const [showButtons, setShowButtons] = useState(false);
   const [addingType, setAddingType] = useState("");
   const [isAdding, setIsAdding] = useState(false);
+  const { t } = useTranslation();
 
   const fetchTransactions = async () => {
     try {
@@ -38,7 +40,7 @@ function TransactionList({ event }) {
   return (
     <div>
       <div className="flex justify-between items-center">
-        <p>Transactions</p>
+        <p>{t("event.transactions")}</p>
         <div className="relative">
           <button
             className="w-5 h-5 flex justify-center items-center bg-purple-600 rounded-full"
@@ -55,7 +57,7 @@ function TransactionList({ event }) {
                   setIsAdding(true);
                 }}
               >
-                New expense
+                {t("event.new_expense")}
               </button>
               <button
                 className="text-sm whitespace-nowrap px-3 hover:bg-purple-600 hover:text-white py-1 hover:font-bold"
@@ -64,7 +66,7 @@ function TransactionList({ event }) {
                   setIsAdding(true);
                 }}
               >
-                New income
+                {t("event.add_income")}
               </button>
             </div>
           )}
@@ -80,7 +82,9 @@ function TransactionList({ event }) {
             />
           ))}
         {transactions.length === 0 && (
-          <p className="text-gray-400 text-2xl text-center">No transactions!</p>
+          <p className="text-gray-400 text-2xl text-center">
+            {t("event.no_transaction")}
+          </p>
         )}
       </div>
       {isAdding && (

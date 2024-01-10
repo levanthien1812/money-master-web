@@ -8,7 +8,13 @@
     "goals": "Goals",
     "users": "Users",
     "dashboard": "Dashboard",
-    "events": "Events"
+    "events": "Events",
+    "view_profile": "View profile",
+    "your_wallets": "Your wallets",
+    "personal_income_tax": "Personal income tax",
+    "language": "Language: English",
+    "logout": "Logout",
+    "help": "Help"
   },
   "transaction": {
     "transactions": "Transactions",
@@ -59,7 +65,8 @@
     "email": "Email",
     "current_password": "Current password",
     "new_password": "New password",
-    "password_confirmation": "Password confirmation"
+    "password_confirmation": "Password confirmation",
+    "set_default_wallet": "Set as default wallet"
   },
   "action": {
     "ok": "OK",
@@ -69,7 +76,8 @@
     "clone": "Clone",
     "add_event": "Add event",
     "processing": "Processing...",
-    "update": "Update"
+    "update": "Update",
+    "clear": "Clear"
   },
   "info": {
     "no_plan": "You didn't set plan for this category this month",
@@ -81,7 +89,8 @@
     "loading_plan": "Loading remainder of this month plan ...",
     "no_event": "No event found!",
     "no_file": "No files uploaded yet",
-    "loading_total_expenses": "Loading total expenses last month and current month ..."
+    "loading_total_expenses": "Loading total expenses last month and current month ...",
+    "upload_drop_file": "Upload or drop a file right here"
   },
   "plan": {
     "by_month": "By month",
@@ -115,7 +124,8 @@
     "must_image": "Must be an image!",
     "required_current_password": "Current password is required!",
     "length_password": "Password must be at least 8 and as most 32 characters!",
-    "wrong_confirmation_password": "New password confirmation does not match"
+    "wrong_confirmation_password": "New password confirmation does not match",
+    "required_title": "Title is required!"
   },
   "toast": {
     "update_plan_success": "Update plan successfully!",
@@ -132,14 +142,24 @@
     "create_category_success": "Create category successfully",
     "update_category_success": "Update category successfully",
     "update_user_success": "Update user successfully!",
-    "update_password_success": "Update password successfully! Please login again."
+    "update_password_success": "Update password successfully! Please login again.",
+    "create_event_success": "Create event successfully!",
+    "update_event_success": "Update event successfully!",
+    "delete_event_success": "Delete event successfully!",
+    "create_wallet_success": "Create wallet successfully!",
+    "update_wallet_success": "Update wallet successfully!",
+    "delete_wallet_success": "Delete wallet successfully!"
   },
   "warning": {
     "delete_cplan": "Are you sure to delete this category plan? This action can no be undone!",
     "delete_plan": "Are you sure to delete this plan? This action can not be undone!",
     "delete_goal": "Are you sure to delete this goal? This action can not be undone!",
     "delete_category": "Deleting this category will also delete all transactions belongs to it! Are you sure to delete this category?",
-    "delete_account": "Do you really want to DELETE your account? All of your data will be deleted too. This action can not be undone. Think carefully before you click the delete button!"
+    "delete_account": "Do you really want to DELETE your account? All of your data will be deleted too. This action can not be undone. Think carefully before you click the delete button!",
+    "delete_event": "Do you want to delete all transactions belong to this event?",
+    "delete_transaction": "Are you sure to delete this transaction? This action can not be undone!",
+    "delete_wallet": "Are you sure to delete this wallet? This will also delete ALL TRANSACTIONS and PLANS related to it! ",
+    "delete_default_wallet": "You can not delete default wallet! Please change default wallet to another wallet."
   },
   "report": {
     "reports": "Reports",
@@ -237,5 +257,35 @@
   },
   "modal": {
     "confirm_deletion": "Confirm deletion"
+  },
+  "event": {
+    "events": "Events",
+    "add_event": "Add event",
+    "add_new_event": "Add new event",
+    "transactions": "Transactions",
+    "new_expense": "New expense",
+    "new_income": "New income",
+    "event_detail": "Event detail",
+    "delete_transactions": "Delete all transactions",
+    "remove_event": "Remove event from transactions",
+    "no_transaction": "No transactions!"
+  },
+  "noti": {
+    "notifications": "Notifications",
+    "all": "All",
+    "unread": "Unread",
+    "mark_all_read": "Mark all as read",
+    "mark_read": "Mark as read",
+    "no_notification": "You have no notifications!",
+    "no_unread_notification": "You have no unread notifications!"
+  },
+  "wallet": {
+    "your_wallets": "Your wallets",
+    "balance": "Balance",
+    "update_wallet": "Update wallet",
+    "add_wallet": "Add wallet",
+    "add_new_wallet": "Add new wallet",
+    "setup_default_wallet": "Set up your default wallet",
+    "default": "Default"
   }
 }

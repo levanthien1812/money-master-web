@@ -6,7 +6,7 @@ import LoginPage from "./pages/auth/LoginPage";
 import ResetPasswordPage from "./pages/auth/ResetPasswordPage";
 import ProtectedRoute from "./components/routes/ProtectedRoute";
 import GuessRoute from "./components/routes/GuessRoute";
-import IncomesExpensePage from "./pages/transactions/IncomesExpensePage";
+import TransactionsPage from "./pages/transactions/TransactionsPage";
 import ReportsPage from "./pages/reports/ReportsPage";
 import CategoriesPage from "./pages/categories/CategoriesPage";
 import PlansPage from "./pages/plans/PlansPage";
@@ -56,7 +56,7 @@ function App() {
               children: [
                 {
                   path: "/",
-                  element: <IncomesExpensePage />,
+                  element: <TransactionsPage />,
                 },
                 {
                   path: "/reports",
@@ -64,7 +64,7 @@ function App() {
                 },
                 {
                   path: "/transactions",
-                  element: <IncomesExpensePage />,
+                  element: <TransactionsPage />,
                 },
                 {
                   path: "/categories",

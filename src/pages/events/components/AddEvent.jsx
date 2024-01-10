@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import TransactionList from "./TransactionList";
 import ModalWithNothing from "../../../components/modal/ModalWithNothing";
 import ChooseDeleteOption from "./ChooseDeleteOption";
+import { useTranslation } from "react-i18next";
 
 function AddEvent({ onClose, event = null, onUpdateSuccess }) {
   const { wallets, walletChosen } = useSelector((state) => state.wallet);
@@ -23,6 +24,7 @@ function AddEvent({ onClose, event = null, onUpdateSuccess }) {
   const [errors, setErrors] = useState();
   const [isDeleting, setIsDeleting] = useState(false);
   const [processingSave, setProcessingSave] = useState(false);
+  const { t } = useTranslation();
 
   const handleAddingEvent = async () => {
     try {
@@ -46,7 +48,9 @@ function AddEvent({ onClose, event = null, onUpdateSuccess }) {
 
       if (responseData.status === "success") {
         toast.success(
-          !event ? "Create event successfully!" : "Update event successfully!"
+          !event
+            ? t("toast.create_event_success")
+            : t("toast.update_event_success")
         );
         onUpdateSuccess();
         onClose();
@@ -71,7 +75,10 @@ function AddEvent({ onClose, event = null, onUpdateSuccess }) {
   }, []);
 
   return (
-    <ModalWithNothing onClose={onClose} width={"2xl:w-2/5 md:w-3/5 sm:w-1/2 w-11/12"}>
+    <ModalWithNothing
+      onClose={onClose}
+      width={"2xl:w-2/5 md:w-3/5 sm:w-1/2 w-11/12"}
+    >
       <div className="flex items-start justify-center p-5 border-b border-solid border-slate-200 rounded-t max-h-screen">
         <h3 className="text-2xl text-center">
           {event ? "Event detail" : "Add new event"}
@@ -88,13 +95,13 @@ function AddEvent({ onClose, event = null, onUpdateSuccess }) {
               <div className="">
                 <SelectWithImage
                   data={wallets}
-                  label={"Wallet"}
+                  label={t("input.wallet")}
                   selected={walletSelected}
                   setSelected={setWalletSelected}
                   required
                 />
                 <Input
-                  label={"Name"}
+                  label={t("input.name")}
                   name={"name"}
                   type={"text"}
                   required
@@ -103,7 +110,7 @@ function AddEvent({ onClose, event = null, onUpdateSuccess }) {
                   onChange={(e) => setName(e.target.value)}
                 />
                 <Input
-                  label={"Date begin"}
+                  label={t("input.begining_date")}
                   type={"date"}
                   name={"date_begin"}
                   size="small"
@@ -115,7 +122,7 @@ function AddEvent({ onClose, event = null, onUpdateSuccess }) {
                   required
                 />
                 <Input
-                  label={"Date end"}
+                  label={t("input.ending_date")}
                   type={"date"}
                   name={"date_end"}
                   size="small"
@@ -126,7 +133,7 @@ function AddEvent({ onClose, event = null, onUpdateSuccess }) {
               </div>
               <div className="">
                 <Input
-                  label={"Location"}
+                  label={t("input.location")}
                   name={"location"}
                   type={"text"}
                   size="small"
@@ -134,7 +141,7 @@ function AddEvent({ onClose, event = null, onUpdateSuccess }) {
                   onChange={(e) => setLocation(e.target.value)}
                 />
                 <div>
-                  <label htmlFor="description">Description</label>
+                  <label htmlFor="description">{t("input.description")}</label>
                   <textarea
                     className="block border-gray-300 ring-inset ring-gray-300 focus:ring-purple-400 w-full outline-none shadow-sm rounded-md py-1.5 px-3 text-sm ring-1"
                     type={"text"}
@@ -170,7 +177,7 @@ function AddEvent({ onClose, event = null, onUpdateSuccess }) {
               className="text-red-600 active:bg-red-600 font-bold uppercase text-sm px-6 py-2 rounded-xl shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
               onClick={() => setIsDeleting(true)}
             >
-              Delete
+              {t("action.delete")}
             </button>
           </div>
         )}
@@ -180,7 +187,7 @@ function AddEvent({ onClose, event = null, onUpdateSuccess }) {
             type="button"
             onClick={onClose}
           >
-            Cancle
+            {t("action.cancel")}
           </button>
           <button
             className="bg-purple-500 text-white active:bg-purple-600 font-bold uppercase text-sm px-6 py-2 rounded-xl shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 disabled:opacity-60"
@@ -188,7 +195,11 @@ function AddEvent({ onClose, event = null, onUpdateSuccess }) {
             onClick={handleAddingEvent}
             disabled={processingSave}
           >
-            {processingSave ? "Processing..." : !event ? "Add event" : "Update"}
+            {processingSave
+              ? t("action.processing")
+              : !event
+              ? t("action.add_event")
+              : t("action.update")}
           </button>
         </div>
       </div>

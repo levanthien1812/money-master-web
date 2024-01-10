@@ -5,11 +5,13 @@ import NotificationsService from "../../../services/notifications";
 import { useDispatch } from "react-redux";
 import { notificationsActions } from "../../../stores/notifications";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 function NotificationItem({ notification }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [IsHover, setIsHover] = useState(false);
+  const { t } = useTranslation();
 
   const handleNavigate = () => {
     handleMarkAsRead();
@@ -65,7 +67,7 @@ function NotificationItem({ notification }) {
             className="text-purple-500 hover:underline hover:text-purple-600 text-sm "
             onClick={handleMarkAsRead}
           >
-            Mark as read
+            {t("noti.mark_read")}
           </button>
         )}
         {IsHover && (
@@ -73,7 +75,7 @@ function NotificationItem({ notification }) {
             className="text-red-500 hover:underline hover:text-red-600 text-sm "
             onClick={handleDelete}
           >
-            Delete
+            {t("action.delete")}
           </button>
         )}
         <p

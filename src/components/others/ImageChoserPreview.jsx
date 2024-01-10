@@ -31,7 +31,7 @@ function ImageChoserPreview({
       if (!imageExtensions.includes(fileExtension)) {
         setPreview(null);
         setErrors((prev) => {
-          return { ...prev, image: "Must be an image!" };
+          return { ...prev, image: t("error.must_image") };
         });
         return;
       }
@@ -64,6 +64,7 @@ function ImageChoserPreview({
             handleChange={handleFileChange}
             name="image"
             types={["JPG", "JPEG", "PNG", "GIF"]}
+            label={t("info.upload_drop_file")}
           />
         </div>
 
@@ -84,7 +85,7 @@ function ImageChoserPreview({
               className="bg-slate-300 text-slate-600 text-xs uppercase px-2 rounded-full py-1 bg-opacity-70 hover:bg-opacity-80 hover:font-bold"
               onClick={handleClearImage}
             >
-              Clear
+              {t("action.clear")}
             </motion.button>
           </div>
           <img

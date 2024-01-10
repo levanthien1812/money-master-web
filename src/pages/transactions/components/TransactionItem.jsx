@@ -65,7 +65,7 @@ function TransactionItem({ transaction, index, onModifySuccess }) {
               {shorten(transaction.title, 40)}
             </p>
             {transaction.event && (
-              <div className="text-[12px] font-bold rounded-full bg-yellow-500 px-2 text-white">
+              <div className="text-[12px] font-bold rounded-full bg-yellow-500 px-2 text-white text-center">
                 {transaction.event.name}
               </div>
             )}
