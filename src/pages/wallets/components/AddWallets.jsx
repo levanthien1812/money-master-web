@@ -7,6 +7,7 @@ import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { fetchWallets, walletActions } from "../../../stores/wallets";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 function AddWallet({ onClose, onAddSuccess, wallet = null, isNew = null }) {
   const [name, setName] = useState("");
@@ -18,18 +19,19 @@ function AddWallet({ onClose, onAddSuccess, wallet = null, isNew = null }) {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (wallet) {
       setName(wallet.name);
-      setTitle("Update wallet");
+      setTitle(t("wallet.update_wallet"));
       setIsDefault(wallet.default);
     } else {
       if (isNew) {
-        setTitle("Set up your default wallet");
+        setTitle(t("wallet.setup_default_wallet"));
         setIsDefault(true);
       } else {
-        setTitle("Add new wallet");
+        setTitle(t("wallet.add_new_wallet"));
       }
     }
   }, [isNew, wallet]);
@@ -42,14 +44,14 @@ function AddWallet({ onClose, onAddSuccess, wallet = null, isNew = null }) {
       if (name.length === 0) {
         haveErrors = true;
         setErrors((prev) => {
-          return { ...prev, name: "Name is required!" };
+          return { ...prev, name: t("error.require_name") };
         });
       }
 
       if (!wallet && !image) {
         haveErrors = true;
         setErrors((prev) => {
-          return { ...prev, image: "Image is required!" };
+          return { ...prev, image: t("error.required_image") };
         });
       }
 
@@ -97,7 +99,7 @@ function AddWallet({ onClose, onAddSuccess, wallet = null, isNew = null }) {
     >
       <div className="">
         <Input
-          label={"Name"}
+          label={t("input.name")}
           type={"text"}
           name={"title"}
           size="small"
@@ -112,9 +114,7 @@ function AddWallet({ onClose, onAddSuccess, wallet = null, isNew = null }) {
           setImage={setImage}
           errors={errors}
           setErrors={setErrors}
-          defaultPreview={
-            wallet && wallet.image
-          }
+          defaultPreview={wallet && wallet.image}
           required
         />
 
@@ -127,7 +127,7 @@ function AddWallet({ onClose, onAddSuccess, wallet = null, isNew = null }) {
             onChange={(event) => setIsDefault(event.target.checked)}
             disabled={isNew}
           />
-          <label htmlFor="default">Set as default wallet</label>
+          <label htmlFor="default">{t("input.set_default.wallet")}</label>
         </div>
       </div>
     </Modal>

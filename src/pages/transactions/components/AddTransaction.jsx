@@ -157,14 +157,14 @@ function AddTransaction({
       if (!title || title.length === 0) {
         haveErrors = true;
         setErrors((prev) => {
-          return { ...prev, title: "Title is required!" };
+          return { ...prev, title: t("error.required_title") };
         });
       }
 
       if (!amount || amount <= 0) {
         haveErrors = true;
         setErrors((prev) => {
-          return { ...prev, amount: "Amount is invalid!" };
+          return { ...prev, amount: t("error.invalid_amount") };
         });
       }
 
@@ -235,7 +235,7 @@ function AddTransaction({
 
     if (value.length > 0 && isNaN(parseInt(value))) {
       setErrors((prev) => {
-        return { ...prev, amount: "Invalid amount!" };
+        return { ...prev, amount: t("error.invalid_amount") };
       });
     } else {
       setFormattedAmount(cleanAmount.replace(/\B(?=(\d{3})+(?!\d))/g, ","));

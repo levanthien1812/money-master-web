@@ -21,7 +21,7 @@ function AccountPopup({
   onClickLanguage,
 }) {
   const roles = useSelector((state) => state.auth.roles);
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
 
   return (
     <Popover className={"flex justify-center"}>
@@ -39,7 +39,7 @@ function AccountPopup({
               icon={faUser}
               className="text-xl me-2 text-blue-400 w-8"
             />
-            View profile
+            {t("sidebar.view_profile")}
           </Popover.Button>
           {roles.includes("user") && (
             <>
@@ -51,7 +51,7 @@ function AccountPopup({
                   icon={faWallet}
                   className="text-xl me-2 text-blue-400  w-8"
                 />
-                Your wallets
+                {t("sidebar.your_wallets")}
               </Popover.Button>
               <Popover.Button
                 className="bg-blue-100 py-2 px-3 rounded-md whitespace-nowrap hover:bg-blue-200 hover:font-semibold text-left"
@@ -61,7 +61,7 @@ function AccountPopup({
                   icon={faMoneyBill}
                   className="text-xl me-2 text-blue-400  w-8"
                 />
-                Personal Income Tax
+                {t("sidebar.personal_income_tax")}
               </Popover.Button>
             </>
           )}
@@ -73,7 +73,7 @@ function AccountPopup({
               icon={faLanguage}
               className="text-xl me-2 text-blue-400  w-8"
             />
-            Language: {i18n.language === "vi" ? "Tiếng Việt" : "English"}
+            {t("sidebar.language")}
             <FontAwesomeIcon
               icon={faRotate}
               className="text-xl ms-2 text-blue-400"
@@ -87,7 +87,7 @@ function AccountPopup({
               icon={faRightFromBracket}
               className="text-xl me-2 text-blue-400  w-8"
             />
-            Log out
+            {t("sidebar.logout")}
           </Popover.Button>
         </div>
       </Popover.Panel>

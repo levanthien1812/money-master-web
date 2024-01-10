@@ -8,25 +8,30 @@ import { toast } from "react-toastify";
 import WalletItem from "./WalletItem";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchWallets } from "../../../stores/wallets";
+import { useTranslation } from "react-i18next";
 
 function Wallets({ onClose }) {
   const [loading, setLoading] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
+  const { t } = useTranslation();
 
   const dispatch = useDispatch();
   const wallets = useSelector((state) => state.wallet.wallets);
 
   const handleAddSuccess = (action) => {
-    toast.success("Wallet " + action + " successfully!");
+    toast.success(t(action + "_wallet_success"));
     setLoading(true);
     dispatch(fetchWallets());
     setLoading(false);
   };
 
   return (
-    <ModalWithNothing onClose={onClose} width={"xl:w-1/4 md:w-1/3 sm:w-1/2 w-11/12"}>
+    <ModalWithNothing
+      onClose={onClose}
+      width={"xl:w-1/4 md:w-1/3 sm:w-1/2 w-11/12"}
+    >
       <div className="flex items-start justify-center sm:p-5 py-3 border-b border-solid border-slate-200 rounded-t max-h-screen">
-        <h3 className="text-2xl text-center">Your wallets</h3>
+        <h3 className="text-2xl text-center">{t("wallet.your_wallets")}</h3>
       </div>
       <div className="relative sm:px-6 px-3 py-4 flex-auto">
         <div className="mb-3">
@@ -56,7 +61,7 @@ function Wallets({ onClose }) {
           type="button"
           onClick={onClose}
         >
-          Cancle
+          {t("action.cancel")}
         </button>
       </div>
       {isAdding && (

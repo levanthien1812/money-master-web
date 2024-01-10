@@ -12,7 +12,7 @@ import { CATEGORY_TYPES } from "../../config/constants";
 import logo from "../../assets/images/logo-money-master.png";
 import { useTranslation } from "react-i18next";
 
-function IncomesExpensePage() {
+function TransactionsPage() {
   const [transactions, setTransactions] = useState(null);
   const [report, setReport] = useState(null);
   const [month, setMonth] = useState(new Date().getMonth() + 1);
@@ -193,4 +193,4 @@ function IncomesExpensePage() {
   );
 }
 
-export default IncomesExpensePage;
+export default TransactionsPage;

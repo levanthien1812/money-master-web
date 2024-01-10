@@ -5,6 +5,7 @@ import Select from "../../../components/elements/Select";
 import NotificationsService from "../../../services/notifications";
 import { notificationsActions } from "../../../stores/notifications";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 const options = [
   {
@@ -25,6 +26,7 @@ function Notifications() {
   const [selectedOption, setSelectedOption] = useState(options[0]);
   const [filteredNotifications, setFilteredNotifications] =
     useState(notifications);
+  const { t } = useTranslation();
 
   const handleMarkAllAsRead = async () => {
     try {
@@ -51,7 +53,7 @@ function Notifications() {
   return (
     <div className="lg:w-[400px] md:w-3/5 w-full absolute lg:left-40 md:left-4 left-0 lg:top-0 md:top-28 top-24 bg-white p-4 rounded-2xl shadow-lg">
       <div className="flex justify-between">
-        <p className="text-2xl mb-3">Notifications</p>
+        <p className="text-2xl mb-3">{t("noti.notifications")}</p>
         <div>
           <Select
             data={options}
@@ -70,7 +72,7 @@ function Notifications() {
               className="text-sm text-purple-600 hover:font-bold hover:bg-purple-100 hover:rounded-lg px-2"
               onClick={handleMarkAllAsRead}
             >
-              Mark all as read
+              {t("noti.mark_all_read")}
             </button>
           </div>
 
@@ -87,8 +89,8 @@ function Notifications() {
       {filteredNotifications.length === 0 && (
         <p className="text-center text-3xl px-3 mt-3">
           {selectedOption.id === 1
-            ? "You have no notifications"
-            : "You have no unread notifications"}
+            ? t("noti.no_notification")
+            : t("noti.no_unread_notification")}
         </p>
       )}
     </div>
