@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FileUploader } from "react-drag-drop-files";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
@@ -9,6 +9,7 @@ function ImageChoserPreview({
   errors,
   setErrors,
   defaultPreview = "",
+  clearPreview = false,
   required,
 }) {
   const [preview, setPreview] = useState(defaultPreview);
@@ -44,6 +45,12 @@ function ImageChoserPreview({
       return () => URL.revokeObjectURL(objectUrl);
     }
   };
+
+  useEffect(() => {
+    if (clearPreview) {
+      setPreview(null);
+    }
+  }, [clearPreview]);
 
   const handleClearImage = () => {
     setImage(null);

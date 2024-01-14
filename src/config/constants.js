@@ -30,3 +30,5 @@ export const PERIODS = {
     MONTH: 1,
     YEAR: 2
 }
+
+export const SAMPLE_IMAGES_URL = process.env.REACT_APP_API_HOST + "images/samples/"

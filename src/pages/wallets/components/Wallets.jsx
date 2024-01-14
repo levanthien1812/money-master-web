@@ -19,7 +19,7 @@ function Wallets({ onClose }) {
   const wallets = useSelector((state) => state.wallet.wallets);
 
   const handleAddSuccess = (action) => {
-    toast.success(t(action + "_wallet_success"));
+    toast.success(t("toast." + action + "_wallet_success"));
     setLoading(true);
     dispatch(fetchWallets());
     setLoading(false);
