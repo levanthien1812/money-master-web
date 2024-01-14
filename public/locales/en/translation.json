@@ -286,6 +286,7 @@
     "add_wallet": "Add wallet",
     "add_new_wallet": "Add new wallet",
     "setup_default_wallet": "Set up your default wallet",
-    "default": "Default"
+    "default": "Default",
+    "choose_below": "Or choose from below:"
   }
 }
