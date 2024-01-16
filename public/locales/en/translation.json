@@ -268,7 +268,10 @@
     "event_detail": "Event detail",
     "delete_transactions": "Delete all transactions",
     "remove_event": "Remove event from transactions",
-    "no_transaction": "No transactions!"
+    "no_transaction": "No transactions!",
+    "today": "Hôm nay",
+    "back": "Trước",
+    "next": "Sau"
   },
   "noti": {
     "notifications": "Notifications",
