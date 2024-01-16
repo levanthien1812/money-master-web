@@ -138,7 +138,7 @@ function TransferSurplus({ goal, onClose, amount, onUpdateSuccess }) {
               required
             />
             <p className="text-green-600 text-sm text-center">
-              Balance:{" "}
+              {t('goal.balance')}:{" "}
               <span className="font-bold">
                 {formatCurrency(selectedWallet.balance)}
               </span>
