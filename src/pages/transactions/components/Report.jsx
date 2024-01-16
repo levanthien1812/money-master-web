@@ -249,7 +249,7 @@ function Report({
               <div className="mb-3 bg-purple-200 rounded-xl py-2 px-4">
                 <div className="mb-2 flex justify-between items-end">
                   <div className="flex flex-col justify-center items-start text-md w-1/2 text-start">
-                    <p className="">Your budget for this month: </p>
+                    <p className="">{t("plan.budget_this_month")}</p>
                     <p className="font-bold text-xl">
                       {formatCurrency(plan.amount)}
                     </p>
@@ -257,8 +257,7 @@ function Report({
                   {percentagePlan <= 100 && (
                     <div className="flex flex-col justify-center items-end text-md w-1/2 text-end relative">
                       <p className="">
-                        Budget left until the end of{" "}
-                        {getMonthName(plan.month - 1)}:{" "}
+                        {t("plan.budget_left")} {getMonthName(plan.month - 1)}:{" "}
                       </p>
 
                       <p className="font-bold text-xl">
@@ -275,7 +274,7 @@ function Report({
                   )}
                   {percentagePlan > 100 && (
                     <div className="flex flex-col justify-center items-end text-md w-1/2 text-red font-bold text-end relative">
-                      <p className="">You have overspent your budget of: </p>
+                      <p className="">{t("plan.budget_overspent")} </p>
                       <p className="text-xl">
                         {formatCurrency(
                           (plan.amount - report[CATEGORY_TYPES.EXPENSES]) * -1

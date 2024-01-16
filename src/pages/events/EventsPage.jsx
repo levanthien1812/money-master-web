@@ -18,7 +18,7 @@ function EventsPage() {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
-  const {t} = useTranslation()
+  const { t } = useTranslation();
 
   const fetchEvents = async () => {
     try {
@@ -49,17 +49,22 @@ function EventsPage() {
           <div className="lg:w-16 lg:h-16 w-10 h-10">
             <img src={logo} alt="" className="w-full h-full object-cover" />
           </div>
-          <h2 className="sm:text-4xl text-3xl">{t('event.events')}</h2>
+          <h2 className="sm:text-4xl text-3xl">{t("event.events")}</h2>
         </div>
         <button
           className="sm:py-2 sm:px-12 py-1 px-4 text-center rounded-xl font-semibold bg-purple-500 text-white hover:bg-purple-600"
           onClick={() => setIsAddingEvent(true)}
         >
-          {t('event.add_event')}
+          {t("event.add_event")}
         </button>
       </div>
       <div className="mx-auto 2xl:w-4/5 xl:w-5/6">
-        {isAddingEvent && <AddEvent onClose={() => setIsAddingEvent(false)} onUpdateSuccess={fetchEvents}/>}
+        {isAddingEvent && (
+          <AddEvent
+            onClose={() => setIsAddingEvent(false)}
+            onUpdateSuccess={fetchEvents}
+          />
+        )}
         {loading && <Loading />}
 
         {events.length > 0 && !loading && (
@@ -79,6 +84,11 @@ function EventsPage() {
               startAccessor="start"
               endAccessor="end"
               style={{ height: 700 }}
+              messages={{
+                today: t("event.today"),
+                previous: t("event.back"),
+                next: t("event.next"),
+              }}
             />
           </>
         )}

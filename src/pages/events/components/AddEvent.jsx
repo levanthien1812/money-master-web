@@ -81,7 +81,7 @@ function AddEvent({ onClose, event = null, onUpdateSuccess }) {
     >
       <div className="flex items-start justify-center p-5 border-b border-solid border-slate-200 rounded-t max-h-screen">
         <h3 className="text-2xl text-center">
-          {event ? "Event detail" : "Add new event"}
+          {event ? t("event.event_detail") : t("event.add_new_event")}
         </h3>
       </div>
       <div className="relative sm:px-6 px-3 py-4 flex-auto">

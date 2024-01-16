@@ -268,7 +268,10 @@
     "event_detail": "Chi tiết sự kiện",
     "delete_transactions": "Xoá tất cả thu chi",
     "remove_event": "Xoá sự kiện trong thu chi",
-    "no_transaction": "Không có thu chi nào!"
+    "no_transaction": "Không có thu chi nào!",
+    "today": "Today",
+    "back": "Back",
+    "next": "Next"
   },
   "noti": {
     "notifications": "Thông báo",
@@ -286,6 +289,7 @@
     "add_wallet": "Thêm ví",
     "add_new_wallet": "Add new wallet",
     "setup_default_wallet": "Set up your default wallet",
-    "default": "Mặc định"
+    "default": "Mặc định",
+    "choose_below": "Hoặc chọn hình dưới đây:"
   }
 }
