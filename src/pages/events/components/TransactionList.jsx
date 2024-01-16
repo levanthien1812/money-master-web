@@ -66,7 +66,7 @@ function TransactionList({ event }) {
                   setIsAdding(true);
                 }}
               >
-                {t("event.add_income")}
+                {t("transaction.add_income")}
               </button>
             </div>
           )}

@@ -38,7 +38,7 @@ function GoalItem({ goal, status, onUpdateSuccess }) {
       if (responseData.status === "success") {
         toast.success("Delete goal successfully!");
         setIsConfirmDelete(false);
-        onUpdateSuccess();
+        onUpdateSuccess({ status });
       }
     } catch (e) {
       toast.error(e.response.data.message);
@@ -174,7 +174,7 @@ function GoalItem({ goal, status, onUpdateSuccess }) {
             {status === GOAL_STATUS.NOT_STARTED && (
               <>
                 <p className="text-sm mb-3">
-                  {t("goaltarget_amount")}:{" "}
+                  {t("goal.target_amount")}:{" "}
                   <span className="text-md bg-purple-100 text-purple-600 py-1 px-3 rounded-md font-bold">
                     {formatCurrency(goal.amount)}
                   </span>

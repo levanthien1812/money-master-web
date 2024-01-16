@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Modal from "../../../components/modal/Modal";
 import Select from "../../../components/elements/Select";
 import Input from "../../../components/elements/Input";
@@ -14,14 +14,18 @@ import { GOAL_STATUS } from "../../../config/constants";
 import { useTranslation } from "react-i18next";
 
 function AddGoal({ goal = null, status, onClose, onUpdateSuccess }) {
-  const types = [
-    { id: 1, name: "Saving goals", value: 1 },
-    {
-      id: 2,
-      name: "Debt Reduction goals",
-      value: 2,
-    },
-  ];
+  const types = useMemo(
+    () => [
+      { id: 1, name: "Saving goals", value: 1 },
+      {
+        id: 2,
+        name: "Debt Reduction goals",
+        value: 2,
+      },
+    ],
+    []
+  );
+
   const [type, setType] = useState(types[0]);
   const [name, setName] = useState("");
   const [amount, setAmount] = useState(0);
@@ -107,7 +111,7 @@ function AddGoal({ goal = null, status, onClose, onUpdateSuccess }) {
           toast.success(
             !goal
               ? t("toast.create_goal_success")
-              : t("goal.update_goal_success")
+              : t("toast.update_goal_success")
           );
           onClose();
           onUpdateSuccess(null, status);
@@ -158,7 +162,7 @@ function AddGoal({ goal = null, status, onClose, onUpdateSuccess }) {
   return (
     <Modal
       title={t("goal.set_up_goal")}
-      width={"xl:w-1/3 md:w-2/5 sm:w-1/2 w-11/12"}
+      width={"xl:w-1/4 md:w-2/5 sm:w-1/2 w-11/12"}
       onAccept={handleAddGoal}
       onClose={onClose}
       processing={isSavingGoal}
