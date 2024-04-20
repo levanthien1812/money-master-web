@@ -1,4 +1,5 @@
 import instance from "../config/axiosConfig";
+import { isSuccessRes } from "../utils/http";
 
 export default class PlansService {
   static async createMonthPlan(data) {
@@ -29,12 +30,20 @@ export default class PlansService {
     return response.data;
   }
 
-  static async getCategoryPlans(params) {
-    const response = await instance.get("/plans/category", {
-      params,
-    });
+  static async getCategoryPlans(params, signal) {
+    const response = await instance.get(
+      "/plans/category",
+      {
+        params,
+      },
+      { signal: signal }
+    );
 
-    return response.data;
+    if (isSuccessRes(response.status)) {
+      return response.data.data.plans[0];
+    }
+
+    return null;
   }
 
   static async getCategoryPlansYears(params) {

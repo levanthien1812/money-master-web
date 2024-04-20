@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import CategoriesService from "../../services/categories";
 import DefaultCategories from "./components/DefaultCategories";
 import UserCategories from "./components/UserCategories";
@@ -7,56 +7,40 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import logo from "../../assets/images/logo-money-master.png";
 import { useTranslation } from "react-i18next";
+import { GetCategoriesQuery } from "../../queries/categories";
 
 function CategoriesPage() {
-  const [defaultCategories, setDefaultCategories] = useState([]);
-  const [userCategories, setUserCategories] = useState([]);
   const [isAddingCategory, setisAddingCategory] = useState(false);
-  const [loadingDefault, setLoadingDefault] = useState(false);
-  const [loadingUser, setLoadingUser] = useState(false);
   const walletChosen = useSelector((state) => state.wallet.walletChosen);
   const { t } = useTranslation();
 
-  const getCategories = async (isDefault = true) => {
-    try {
-      const data = await CategoriesService.getCategories({
-        default: isDefault,
-        month: new Date().getMonth() + 1,
-        year: new Date().getFullYear(),
-        wallet_id: walletChosen.id,
-        with_plan: true,
-      });
-
-      isDefault
-        ? setDefaultCategories(data.data.categories)
-        : setUserCategories(data.data.categories);
-    } catch (e) {
-      toast.error(e.response.data.message);
-    }
-  };
-
-  const getAllCategories = async () => {
-    setLoadingDefault(true);
-    setLoadingUser(true);
-
-    await getCategories(true);
-    setLoadingDefault(false);
-
-    await getCategories(false);
-    setLoadingUser(false);
-  };
-
-  useEffect(() => {
-    setLoadingDefault(true);
-    setLoadingUser(true);
-    if (walletChosen) {
-      getAllCategories();
-    }
+  const sharedParams = useMemo(() => {
+    return {
+      month: new Date().getMonth() + 1,
+      year: new Date().getFullYear(),
+      wallet_id: walletChosen?.id,
+      with_plan: true,
+    };
   }, [walletChosen]);
+
+  const { categories: defaultCategories, loadingCategories: loadingDefault } =
+    GetCategoriesQuery({
+      ...sharedParams,
+      default: true,
+    });
+
+  const {
+    categories: userCategories,
+    loadingCategories: loadingUser,
+    refetchCategories: refetchUser,
+  } = GetCategoriesQuery({
+    ...sharedParams,
+    default: false,
+  });
 
   const handleUpdateSuccess = async (action) => {
     setisAddingCategory(false);
-    getAllCategories();
+    refetchUser();
 
     if (action) {
       toast.success(t("toast." + action + "_category_success"));
@@ -96,13 +80,11 @@ function CategoriesPage() {
         />
 
         {/* USER'S CATEGORIES */}
-        {userCategories && (
-          <UserCategories
-            categories={userCategories}
-            onUpdateSuccess={handleUpdateSuccess}
-            loading={loadingUser}
-          />
-        )}
+        <UserCategories
+          categories={userCategories}
+          onUpdateSuccess={handleUpdateSuccess}
+          loading={loadingUser}
+        />
       </div>
 
       {isAddingCategory && (

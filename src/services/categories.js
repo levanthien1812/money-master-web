@@ -1,12 +1,21 @@
 import instance from "../config/axiosConfig";
+import { isSuccessRes } from "../utils/http";
 
 export default class CategoriesService {
-  static async getCategories(params) {
-    const responseData = await instance.get("/categories", {
-      params,
-    });
+  static async getCategories(params, signal) {
+    const response = await instance.get(
+      "/categories",
+      {
+        params,
+      },
+      { signal: signal }
+    );
 
-    return responseData.data;
+    if (isSuccessRes(response.status)) {
+      return response.data.data.categories;
+    }
+
+    return [];
   }
 
   static async getDefaultCategories(params) {

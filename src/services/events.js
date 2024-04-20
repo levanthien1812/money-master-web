@@ -1,10 +1,15 @@
 import instance from "../config/axiosConfig";
+import { isSuccessRes } from "../utils/http";
 
 export default class EventsService {
-  static async getEvents() {
-    const responseData = await instance.get("/events");
+  static async getEvents({ signal }) {
+    const response = await instance.get("/events", { signal });
 
-    return responseData.data;
+    if (isSuccessRes(response.status)) {
+      return response.data.data.events;
+    }
+
+    return [];
   }
 
   static async createEvent(data) {
@@ -32,13 +37,17 @@ export default class EventsService {
   }
 
   static async deleteEventWithTransactions(id) {
-    const responseData = await instance.delete("/events/" + id + "/with-transactions");
+    const responseData = await instance.delete(
+      "/events/" + id + "/with-transactions"
+    );
 
     return responseData.data;
   }
 
   static async deleteEventWithoutTransactions(id) {
-    const responseData = await instance.delete("/events/" + id + "/without-transactions");
+    const responseData = await instance.delete(
+      "/events/" + id + "/without-transactions"
+    );
 
     return responseData.data;
   }

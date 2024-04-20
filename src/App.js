@@ -20,6 +20,9 @@ import AuthorizedRoute from "./components/routes/AuthorizedRoute";
 import NotFound from "./pages/others/NotFound";
 import GoalsPage from "./pages/goals/GoalsPage";
 import EventsPage from "./pages/events/EventsPage";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
 
 function App() {
   const router = createBrowserRouter([
@@ -114,8 +117,10 @@ function App() {
 
   return (
     <Provider store={store}>
-      <ToastContainer position="top-center" autoClose="4000" />
-      <RouterProvider router={router} />
+      <QueryClientProvider client={queryClient}>
+        <ToastContainer position="top-center" autoClose="4000" />
+        <RouterProvider router={router} />
+      </QueryClientProvider>
     </Provider>
   );
 }

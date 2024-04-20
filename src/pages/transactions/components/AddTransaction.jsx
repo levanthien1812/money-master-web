@@ -16,6 +16,10 @@ import { fetchWallets } from "../../../stores/wallets";
 import EventsService from "../../../services/events";
 import { CATEGORY_TYPES, TRANSACTION_TYPE } from "../../../config/constants";
 import { useTranslation } from "react-i18next";
+import { useQuery } from "react-query";
+import { GetCategoriesQuery } from "../../../queries/categories";
+import { GetEventsQuery } from "../../../queries/events";
+import { GetPlansQuery } from "../../../queries/plans";
 
 function AddTransaction({
   setIsAdding,
@@ -29,9 +33,7 @@ function AddTransaction({
 }) {
   const { wallets, walletChosen } = useSelector((state) => state.wallet);
 
-  const [categories, setCategories] = useState([]);
   const [categorySelected, setCategorySelected] = useState(null);
-  const [events, setEvents] = useState([]);
   const [eventSelected, setEventSelected] = useState(null);
   const [walletSelected, setWalletSelected] = useState(walletChosen);
   const [title, setTitle] = useState("");
@@ -44,10 +46,6 @@ function AddTransaction({
   const [location, setLocation] = useState("");
   const [description, setDescription] = useState("");
   const [errors, setErrors] = useState(null);
-  const [planData, setPlanData] = useState(null);
-  const [loadingPlan, setLoadingPlan] = useState(false);
-  const [loadingCategories, setLoadingCategories] = useState(false);
-  const [loadingEvents, setLoadingEvents] = useState(false);
   const [processingSave, setProcessingSave] = useState(false);
   const [isWarningOverspend, setIsWarningOverspend] = useState(false);
   const [isCloning, setIsCloning] = useState(false);
@@ -55,26 +53,34 @@ function AddTransaction({
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  useEffect(() => {
-    if (
-      type === CATEGORY_TYPES.EXPENSES ||
-      (transaction && transaction.category.type === CATEGORY_TYPES.EXPENSES)
-    )
-      setLoadingPlan(true);
-    setLoadingCategories(true);
-    setLoadingEvents(true);
-    getCategories();
-    getEvents();
-  }, []);
+  const { categories, loadingCategories } = GetCategoriesQuery({
+    type: transaction ? transaction.category.type : type,
+  });
+  const { events, loadingEvents } = GetEventsQuery();
+  const { plan, loadingPlan, planRefetch } = GetPlansQuery({
+    year: new Date(date).getFullYear(),
+    month: new Date(date).getMonth() + 1,
+    category_id: categorySelected?.id,
+    wallet_id: walletSelected?.id,
+    with_report: true,
+  });
+
+  // useEffect(() => {
+  //   if (
+  //     type === CATEGORY_TYPES.EXPENSES ||
+  //     (transaction && transaction.category.type === CATEGORY_TYPES.EXPENSES)
+  //   )
+  //     setLoadingPlan(true);
+  // }, []);
 
   useEffect(() => {
     if (categorySelected && walletSelected) {
-      if (categorySelected.type === CATEGORY_TYPES.EXPENSES)
-        getTotalOfCategory();
+      if (categorySelected.type === CATEGORY_TYPES.EXPENSES) planRefetch();
     }
   }, [walletSelected, categorySelected, date]);
 
   useEffect(() => {
+    if (!categories) return;
     if (transaction) {
       setCategorySelected(
         categories.length > 0 &&
@@ -93,7 +99,9 @@ function AddTransaction({
       setDate(new Date(transaction.date));
       setLocation(transaction.location || "");
       setDescription(transaction.description || "");
-      setEventSelected(events.find((e) => e.id === transaction.event_id));
+      setEventSelected(
+        events && events.find((e) => e.id === transaction.event_id)
+      );
     } else if (event) {
       setWalletSelected(
         wallets.length > 0 &&
@@ -107,47 +115,6 @@ function AddTransaction({
       setCategorySelected(categories[0]);
     }
   }, [wallets, categories]);
-
-  const getCategories = async () => {
-    try {
-      setLoadingCategories(true);
-      const chosenType = transaction ? transaction.category.type : type;
-      const data = await CategoriesService.getCategories({ type: chosenType });
-      setCategories(data.data.categories);
-    } catch (e) {
-      toast.error(e.response.data.message);
-    }
-    setLoadingCategories(false);
-  };
-
-  const getEvents = async () => {
-    try {
-      setLoadingEvents(true);
-      const data = await EventsService.getEvents();
-      setEvents(data.data.events);
-    } catch (e) {
-      toast.error(e.response.data.message);
-    }
-    setLoadingEvents(false);
-  };
-
-  const getTotalOfCategory = async () => {
-    try {
-      setLoadingPlan(true);
-      const responseData = await PlansService.getCategoryPlans({
-        year: new Date(date).getFullYear(),
-        month: new Date(date).getMonth() + 1,
-        category_id: categorySelected?.id,
-        wallet_id: walletSelected?.id,
-        with_report: true,
-      });
-
-      setPlanData(responseData.data.plans[0]);
-    } catch (e) {
-      toast.error(e.response.data.message);
-    }
-    setLoadingPlan(false);
-  };
 
   const saveTransaction = async () => {
     try {
@@ -227,7 +194,7 @@ function AddTransaction({
     const { value } = event.target;
     const cleanAmount = value.replace(/[^0-9]/g, "");
 
-    if (planData && parseInt(cleanAmount) > planData.amount - planData.actual) {
+    if (plan && parseInt(cleanAmount) > plan.amount - plan.actual) {
       setIsWarningOverspend(true);
     } else {
       setIsWarningOverspend(false);
@@ -315,19 +282,19 @@ function AddTransaction({
                   )}
                   {!loadingPlan && (
                     <>
-                      {planData && (
+                      {plan && (
                         <div className="flex items-center gap-2">
                           <FontAwesomeIcon
                             icon={isWarningOverspend ? faWarning : faInfoCircle}
                             className={
-                              planData.amount - planData.actual >= 0
+                              plan.amount - plan.actual >= 0
                                 ? isWarningOverspend
                                   ? "text-yellow-600"
                                   : "text-blue-600"
                                 : "text-red-600"
                             }
                           />
-                          {planData.amount - planData.actual >= 0 && (
+                          {plan.amount - plan.actual >= 0 && (
                             <p
                               className={`text-sm ${
                                 isWarningOverspend
@@ -337,25 +304,23 @@ function AddTransaction({
                             >
                               {t("info.have_plan")}{" "}
                               <span className="font-bold">
-                                {formatCurrency(
-                                  planData.amount - planData.actual
-                                )}
+                                {formatCurrency(plan.amount - plan.actual)}
                               </span>
                             </p>
                           )}
-                          {planData.amount - planData.actual < 0 && (
+                          {plan.amount - plan.actual < 0 && (
                             <p className="text-sm text-red-600 italic">
                               {t("info.exceed_plan")}{" "}
                               <span className="font-bold">
                                 {formatCurrency(
-                                  (planData.amount - planData.actual) * -1
+                                  (plan.amount - plan.actual) * -1
                                 )}
                               </span>
                             </p>
                           )}
                         </div>
                       )}
-                      {!planData && (
+                      {!plan && (
                         <p className="text-sm text-blue-600 italic">
                           {t("info.no_plan")}
                         </p>
