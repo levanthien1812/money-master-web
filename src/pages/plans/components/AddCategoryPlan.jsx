@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Modal from "../../../components/modal/Modal";
-import CategoriesService from "../../../services/categories";
 import SelectWithImage from "../../../components/elements/SelectWithImage";
 import Input from "../../../components/elements/Input";
 import Select from "../../../components/elements/Select";
 import monthsGetter from "../../../utils/monthsGetter";
 import yearsGetter from "../../../utils/yearsGetter";
-import ReportsService from "../../../services/reports";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import formatCurrency from "../../../utils/currencyFormatter";
@@ -15,6 +13,8 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { CATEGORY_TYPES, REPORT_TYPES } from "../../../config/constants";
 import { useTranslation } from "react-i18next";
+import { GetCategoriesQuery } from "../../../queries/categories";
+import { GetTotalByMonth } from "../../../queries/reports";
 
 function AddCategoryPlan({
   onClose,
@@ -24,8 +24,7 @@ function AddCategoryPlan({
   category = null,
 }) {
   const { wallets, walletChosen } = useSelector((state) => state.wallet);
-  const [categories, setCategories] = useState([]);
-  const [categoryChosen, setCategoryChosen] = useState();
+  const [categoryChosen, setCategoryChosen] = useState(null);
   const [walletSelected, setWalletSelected] = useState(walletChosen);
   const [amount, setAmount] = useState();
   const [formattedAmount, setFormattedAmount] = useState();
@@ -40,78 +39,60 @@ function AddCategoryPlan({
       : yearsGetter(20).find((year) => year.id === new Date().getFullYear())
   );
   const [errors, setErrors] = useState(null);
-  const [lastMonthValue, setLastMonthValue] = useState(null);
-  const [currentMonthValue, setCurrentMonthValue] = useState(null);
-  const [loadingTotal, setLoadingTotal] = useState(false);
-  const [loadingCategories, setLoadingCategories] = useState(false);
   const [processingSave, setProcessingSave] = useState(false);
 
   const { t } = useTranslation();
 
-  const getCategories = async () => {
-    try {
-      setLoadingCategories(true);
-      const data = await CategoriesService.getCategories({
-        type: CATEGORY_TYPES.EXPENSES,
-        ignore_exists: true,
-        month: month.id + 1,
-        year: year.id,
-      });
+  const { categories, loadingCategories } = GetCategoriesQuery({
+    type: CATEGORY_TYPES.EXPENSES,
+    ignore_exists: true,
+    month: month.id + 1,
+    year: year.id,
+  });
 
-      setCategories(data.data.categories);
+  const sharedParams = useMemo(() => {
+    return {
+      year: year.id,
+      report_type: REPORT_TYPES.CATEGORY,
+      wallet: walletSelected?.id,
+    };
+  }, [year, walletSelected]);
 
-      if (category) setCategoryChosen(category);
-      else setCategoryChosen(data.data.categories[0]);
-    } catch (e) {
-      toast.error(e.response.data.message);
-    }
-    setLoadingCategories(false);
-  };
+  const {
+    total: lastMonthTotal,
+    loadingReports: loadingReportsLastMonth,
+    refetchReports: refetchReportsLastMonth,
+  } = GetTotalByMonth(
+    {
+      month: month.id,
+      ...sharedParams,
+    },
+    categoryChosen
+  );
 
-  const getReport = async () => {
-    try {
-      setLoadingTotal(true);
-      const responseDataLastMonth = await ReportsService.getReports({
-        year: year.id,
-        month: month.id,
-        report_type: REPORT_TYPES.CATEGORY,
-        wallet: walletSelected?.id,
-      });
-
-      console.log(responseDataLastMonth);
-
-      if (responseDataLastMonth.data.reports[categoryChosen.id])
-        setLastMonthValue(
-          responseDataLastMonth.data.reports[categoryChosen.id].amount
-        );
-      else setLastMonthValue(0);
-
-      const responseDataCurrentMonth = await ReportsService.getReports({
-        year: year.id,
-        month: month.id + 1,
-        report_type: REPORT_TYPES.CATEGORY,
-        wallet: walletSelected?.id,
-      });
-
-      if (responseDataCurrentMonth.data.reports[categoryChosen.id])
-        setCurrentMonthValue(
-          responseDataCurrentMonth.data.reports[categoryChosen.id].amount
-        );
-      else setCurrentMonthValue(0);
-    } catch (e) {
-      toast.error(e.response.data.message);
-    }
-    setLoadingTotal(false);
-  };
+  const {
+    total: thisMonthTotal,
+    loadingReports: loadingReportsThisMonth,
+    refetchReports: refetchReportsThisMonth,
+  } = GetTotalByMonth(
+    {
+      month: month.id + 1,
+      ...sharedParams,
+    },
+    categoryChosen
+  );
 
   useEffect(() => {
-    setLoadingTotal(true);
-    setLoadingCategories(true);
-    getCategories();
-  }, []);
+    if (categories && categories.length > 0) {
+      setCategoryChosen(categories[0]);
+    }
+  }, categories);
 
   useEffect(() => {
-    if (year && month && categoryChosen && walletSelected) getReport();
+    if (year && month && categoryChosen && walletSelected) {
+      refetchReportsLastMonth();
+      refetchReportsThisMonth();
+    }
   }, [year, month, categoryChosen, walletSelected]);
 
   const handleAmountChange = (event) => {
@@ -179,12 +160,12 @@ function AddCategoryPlan({
     >
       {categoryChosen && (
         <>
-          {loadingTotal && (
+          {(loadingReportsLastMonth || loadingReportsThisMonth) && (
             <p className="text-sm text-blue-600 italic">
               {t("info.loading_total_expenses")}
             </p>
           )}
-          {!loadingTotal && (
+          {!(loadingReportsLastMonth || loadingReportsThisMonth) && (
             <>
               <div className="flex items-center gap-2">
                 <FontAwesomeIcon
@@ -194,11 +175,11 @@ function AddCategoryPlan({
                 <p className="text-sm text-blue-600 italic">
                   {t("info.total_expenses_last_month_category")}{" "}
                   <span className="font-bold">
-                    {formatCurrency(lastMonthValue)}
+                    {formatCurrency(lastMonthTotal)}
                   </span>
                   , {t("info.current_month")}{" "}
                   <span className="font-bold">
-                    {formatCurrency(currentMonthValue)}
+                    {formatCurrency(thisMonthTotal)}
                   </span>
                 </p>
               </div>
