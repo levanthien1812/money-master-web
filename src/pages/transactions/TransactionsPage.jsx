@@ -12,7 +12,7 @@ import { CATEGORY_TYPES } from "../../config/constants";
 import logo from "../../assets/images/logo-money-master.png";
 import { useTranslation } from "react-i18next";
 import { GetTransactionsQuery } from "../../queries/transactions";
-import { GetReportByMonthQuery } from "../../queries/reports";
+import { GetReportQuery } from "../../queries/reports";
 
 function TransactionsPage() {
   const [month, setMonth] = useState(new Date().getMonth() + 1);
@@ -77,7 +77,7 @@ function TransactionsPage() {
   const { loadingTransactions, transactions, refetchTransactions } =
     GetTransactionsQuery(transactionsParams);
 
-  const { loadingReport, report, refetchReport } = GetReportByMonthQuery(
+  const { loadingReport, report, refetchReport } = GetReportQuery(
     { year, wallet: walletChosen?.id },
     month
   );
@@ -98,11 +98,11 @@ function TransactionsPage() {
   };
 
   useEffect(() => {
-    if (walletChosen) refetchReport();
+    if (walletChosen && month && year) refetchReport();
   }, [month, year, walletChosen]);
 
   useEffect(() => {
-    if (walletChosen) refetchTransactions();
+    if (walletChosen && month && year) refetchTransactions();
   }, [month, year, walletChosen, search, day]);
 
   return (

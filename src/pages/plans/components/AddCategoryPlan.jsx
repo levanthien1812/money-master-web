@@ -14,7 +14,10 @@ import { useSelector } from "react-redux";
 import { CATEGORY_TYPES, REPORT_TYPES } from "../../../config/constants";
 import { useTranslation } from "react-i18next";
 import { GetCategoriesQuery } from "../../../queries/categories";
-import { GetTotalByMonth, GetTotalByMonthCategory } from "../../../queries/reports";
+import {
+  GetTotalByMonth,
+  GetTotalByMonthCategory,
+} from "../../../queries/reports";
 
 function AddCategoryPlan({
   onClose,
@@ -43,12 +46,13 @@ function AddCategoryPlan({
 
   const { t } = useTranslation();
 
-  const { categories, loadingCategories } = GetCategoriesQuery({
-    type: CATEGORY_TYPES.EXPENSES,
-    ignore_exists: true,
-    month: month.id + 1,
-    year: year.id,
-  });
+  const { categories, loadingCategories, refetchCategories } =
+    GetCategoriesQuery({
+      type: CATEGORY_TYPES.EXPENSES,
+      ignore_exists: true,
+      month: month.id + 1,
+      year: year.id,
+    });
 
   const sharedParams = useMemo(() => {
     return {
@@ -86,14 +90,7 @@ function AddCategoryPlan({
     if (categories && categories.length > 0) {
       setCategoryChosen(categories[0]);
     }
-  }, categories);
-
-  useEffect(() => {
-    if (year && month && categoryChosen && walletSelected) {
-      refetchReportsLastMonth();
-      refetchReportsThisMonth();
-    }
-  }, [year, month, categoryChosen, walletSelected]);
+  }, [categories]);
 
   const handleAmountChange = (event) => {
     setErrors((prev) => {
@@ -138,6 +135,8 @@ function AddCategoryPlan({
 
         const responseData = await PlansService.createCategoryPlan(data);
 
+        console.log(responseData);
+
         if (responseData.status === "success") {
           onClose();
           toast.success(t("toast.create_plan_success"));
@@ -149,6 +148,19 @@ function AddCategoryPlan({
     }
     setProcessingSave(false);
   };
+
+  useEffect(() => {
+    if (month && year && categoryChosen) {
+      refetchReportsLastMonth();
+      refetchReportsThisMonth();
+    }
+  }, [month, year, categoryChosen]);
+
+  useEffect(() => {
+    if (month && year) {
+      refetchCategories();
+    }
+  }, [month, year]);
 
   return (
     <Modal

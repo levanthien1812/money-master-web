@@ -20,7 +20,11 @@ export default class TransactionsService {
       signal,
     });
 
-    return response.data;
+    if (isSuccessRes(response.status)) {
+      return response.data.data.years;
+    }
+
+    return [];
   }
 
   static async deleteTransaction(id) {

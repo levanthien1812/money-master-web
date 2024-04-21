@@ -3,13 +3,10 @@ import { isSuccessRes } from "../utils/http";
 
 export default class CategoriesService {
   static async getCategories(params, signal) {
-    const response = await instance.get(
-      "/categories",
-      {
-        params,
-      },
-      { signal: signal }
-    );
+    const response = await instance.get("/categories", {
+      params,
+      signal,
+    });
 
     if (isSuccessRes(response.status)) {
       return response.data.data.categories;

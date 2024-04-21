@@ -27,6 +27,7 @@ function MonthPlans({ onSeeCategoryPlans }) {
   });
 
   useEffect(() => {
+    if (walletChosen) refetchYears();
     if (years && years.length > 0) {
       const currentYear =
         years.find((y) => y.id === new Date().getFullYear()) || years[0];
@@ -35,6 +36,12 @@ function MonthPlans({ onSeeCategoryPlans }) {
       setYear({ id: 2024, name: 2024 });
     }
   }, [walletChosen]);
+
+  useEffect(() => {
+    if (year && walletChosen) {
+      refetchPlans();
+    }
+  }, [year, walletChosen]);
 
   return (
     <div>

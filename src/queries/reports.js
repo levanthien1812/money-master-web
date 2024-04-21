@@ -12,6 +12,7 @@ export const GetTotalByMonthCategory = (params, category) => {
   } = useQuery({
     queryKey: ["reports", { ...params, category }],
     queryFn: ({ signal }) => ReportsService.getReports(params, signal),
+    enabled: false,
   });
 
   let total = 0;
@@ -25,7 +26,7 @@ export const GetTotalByMonthCategory = (params, category) => {
   return { total, loadingReports, refetchReports };
 };
 
-export const GetReportByMonthQuery = (params, month) => {
+export const GetReportQuery = (params, month = null) => {
   const {
     data: report,
     isError: reportIsError,
@@ -33,16 +34,19 @@ export const GetReportByMonthQuery = (params, month) => {
     isLoading: loadingReport,
     refetch: refetchReport,
   } = useQuery({
-    queryKey: ["reports", { ...params, month }],
+    queryKey: ["reports", month ? { ...params, month } : params],
     queryFn: ({ signal }) => ReportsService.getReports(params, signal),
+    enabled: false,
   });
+
+  console.log(report)
 
   if (reportIsError) {
     toast.error(reportError.response?.data.message);
   }
 
   return {
-    report: report ? report[month + ""] : null,
+    report: report ? (month ? report[month + ""] : report) : null,
     loadingReport,
     refetchReport,
   };

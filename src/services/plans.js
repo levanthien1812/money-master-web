@@ -33,8 +33,6 @@ export default class PlansService {
       signal,
     });
 
-    console.log(response);
-
     if (isSuccessRes(response.status)) {
       return response.data.data.years;
     }
@@ -49,18 +47,23 @@ export default class PlansService {
     });
 
     if (isSuccessRes(response.status)) {
-      return response.data.data.plans[0];
+      return response.data.data.plans;
     }
 
     return null;
   }
 
-  static async getCategoryPlansYears(params) {
+  static async getCategoryPlansYears(params, signal) {
     const response = await instance.get("/plans/category/years", {
       params,
+      signal,
     });
 
-    return response.data;
+    if (isSuccessRes(response.status)) {
+      return response.data.data.years;
+    }
+
+    return [];
   }
 
   static async deleteMonthPlan(id) {
