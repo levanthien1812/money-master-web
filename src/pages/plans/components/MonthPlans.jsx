@@ -7,74 +7,41 @@ import Loading from "../../../components/others/Loading";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
+import { GetMonthPlansQuery, GetMonthPlansYears } from "../../../queries/plans";
 
 function MonthPlans({ onSeeCategoryPlans }) {
   const [isAddingPlan, setIsAddingPlan] = useState(false);
   const [year, setYear] = useState();
-  const [years, setYears] = useState();
-  const [loading, setLoading] = useState(false);
   const walletChosen = useSelector((state) => state.wallet.walletChosen);
-  const [plans, setPlans] = useState(null);
-  const [loadingYears, setLoadingYears] = useState(false);
 
   const { t } = useTranslation();
 
-  const getYearsBetween = async () => {
-    try {
-      setLoadingYears(true);
-      const responseData = await PlansService.getMonthPlansYears({
-        wallet_id: walletChosen?.id,
-      });
+  const { years, loadingYears, refetchYears } = GetMonthPlansYears({
+    wallet_id: walletChosen?.id,
+  });
 
-      if (responseData.status === "success") {
-        console.log(responseData);
-
-        const yearsBetween = responseData.data.years.map((y) => {
-          return { id: y, name: y };
-        });
-
-        setYears(yearsBetween);
-
-        const currentYear = yearsBetween.find(
-          (y) => y.id === new Date().getFullYear()
-        );
-
-        setYear(currentYear || yearsBetween[0]);
-      }
-    } catch (e) {
-      toast.error(e.response.data.message);
-    }
-    setLoadingYears(false);
-  };
-
-  const getMonthPlans = async () => {
-    try {
-      setLoading(true);
-      const responseData = await PlansService.getMonthPlans({
-        year: year.id,
-        wallet_id: walletChosen?.id,
-        with_report: true,
-      });
-
-      setPlans(responseData.data.plans);
-    } catch (e) {
-      toast.error(e.response.data.message);
-    }
-    setLoading(false);
-  };
+  const { plans, loadingPlans, refetchPlans } = GetMonthPlansQuery({
+    year: year?.id,
+    wallet_id: walletChosen?.id,
+    with_report: true,
+  });
 
   useEffect(() => {
-    setLoading(true);
+    if (walletChosen) refetchYears();
+    if (years && years.length > 0) {
+      const currentYear =
+        years.find((y) => y.id === new Date().getFullYear()) || years[0];
+      setYear(currentYear);
+    } else {
+      setYear({ id: 2024, name: 2024 });
+    }
+  }, [walletChosen]);
+
+  useEffect(() => {
     if (year && walletChosen) {
-      getMonthPlans();
+      refetchPlans();
     }
   }, [year, walletChosen]);
-
-  useEffect(() => {
-    setLoadingYears(true);
-    setLoading(true);
-    if (walletChosen) getYearsBetween();
-  }, [walletChosen]);
 
   return (
     <div>
@@ -95,8 +62,8 @@ function MonthPlans({ onSeeCategoryPlans }) {
         </button>
       </div>
       <div>
-        {loading && <Loading />}
-        {!loading &&
+        {loadingPlans && <Loading />}
+        {!loadingPlans &&
           plans &&
           plans.length > 0 &&
           plans.map((monthPlan) => (
@@ -104,13 +71,13 @@ function MonthPlans({ onSeeCategoryPlans }) {
               monthPlan={monthPlan}
               key={monthPlan.id}
               onUpdateSuccess={() => {
-                getYearsBetween();
-                getMonthPlans();
+                refetchYears();
+                refetchPlans();
               }}
               onSeeCategoryPlans={onSeeCategoryPlans}
             />
           ))}
-        {!loading && plans && plans.length === 0 && (
+        {!loadingPlans && plans && plans.length === 0 && (
           <p className="text-2xl text-center text-gray-600 py-4">
             {t("plan.no_plans")}
           </p>
@@ -121,8 +88,8 @@ function MonthPlans({ onSeeCategoryPlans }) {
         <AddMonthPlan
           onClose={() => setIsAddingPlan(false)}
           onAddingSuccess={() => {
-            getYearsBetween();
-            getMonthPlans();
+            refetchYears();
+            refetchPlans();
           }}
         />
       )}

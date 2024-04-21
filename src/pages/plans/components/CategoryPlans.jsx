@@ -10,6 +10,10 @@ import Loading from "../../../components/others/Loading";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
+import {
+  GetCategoryPlansQuery,
+  GetCategoryPlansYears,
+} from "../../../queries/plans";
 
 function CategoryPlans({ _month }) {
   const [isAddingPlan, setIsAddingPlan] = useState(false);
@@ -19,68 +23,35 @@ function CategoryPlans({ _month }) {
       : monthsGetter().find((month) => month.id === new Date().getMonth())
   );
   const [year, setYear] = useState();
-  const [loading, setLoading] = useState(false);
   const walletChosen = useSelector((state) => state.wallet.walletChosen);
-  const [years, setYears] = useState();
-  const [plans, setPlans] = useState(null);
-  const [loadingYears, setLoadingYears] = useState(false);
 
   const { t } = useTranslation();
 
-  const getYearsBetween = async () => {
-    try {
-      setLoadingYears(true);
-      const responseData = await PlansService.getCategoryPlansYears({
-        wallet_id: walletChosen.id,
-      });
+  const { years, loadingYears, refetchYears } = GetCategoryPlansYears({
+    wallet_id: walletChosen?.id,
+  });
 
-      if (responseData.status === "success") {
-        const yearsBetween = responseData.data.years.map((y) => {
-          return { id: y, name: y };
-        });
-
-        setYears(yearsBetween);
-
-        const currentYear = yearsBetween.find(
-          (y) => y.id === new Date().getFullYear()
-        );
-
-        setYear(currentYear || yearsBetween[0]);
-      }
-    } catch (e) {
-      toast.error(e.response.data.message);
-    }
-    setLoadingYears(false);
-  };
-
-  const getCategoryPlans = async () => {
-    try {
-      setLoading(true);
-      const responseData = await PlansService.getCategoryPlans({
-        year: year.id,
-        month: month.id + 1,
-        wallet_id: walletChosen?.id,
-        with_report: true,
-      });
-
-      setPlans(responseData.data.plans);
-    } catch (e) {
-      toast.error(e.response.data.message);
-    }
-    setLoading(false);
-  };
+  const { plans, loadingPlans, plansRefetch } = GetCategoryPlansQuery({
+    year: year?.id,
+    month: month?.id + 1,
+    wallet_id: walletChosen?.id,
+    with_report: true,
+  });
 
   useEffect(() => {
-    if (walletChosen && year && month) {
-      getCategoryPlans();
+    if (walletChosen) refetchYears();
+    if (years && years.length > 0) {
+      const currentYear =
+        years.find((y) => y.id === new Date().getFullYear()) || years[0];
+      setYear(currentYear);
+    } else {
+      setYear({ id: 2024, name: 2024 });
     }
-  }, [month, year, walletChosen]);
-
-  useEffect(() => {
-    setLoadingYears(true);
-    setLoading(true);
-    if (walletChosen) getYearsBetween();
   }, [walletChosen]);
+
+  useEffect(() => {
+    if (year && month && walletChosen) plansRefetch();
+  }, [year, month, walletChosen]);
 
   return (
     <div>
@@ -103,7 +74,7 @@ function CategoryPlans({ _month }) {
       </div>
       <div className="border-2 border-purple-400 rounded-3xl sm:p-6 p-3 bg-white shadow-xl shadow-purple-200">
         <div className="mb-4">
-          {!loading && year && (
+          {!loadingPlans && year && (
             <div className="md:bg-gradient-to-br md:from-purple-700 md:to-purple-400 md:px-6 md:py-1 md:rounded-r-full md:w-fit md:relative md:-left-6 md:shadow-lg">
               <p className="text-3xl uppercase md:text-white text-purple-500">
                 {month.name + " " + year.name}
@@ -112,8 +83,8 @@ function CategoryPlans({ _month }) {
           )}
         </div>
         <div className="mb-3">
-          {loading && <Loading />}
-          {!loading &&
+          {loadingPlans && <Loading />}
+          {!loadingPlans &&
             plans &&
             plans.length > 0 &&
             plans.map((categoryPlan) => (
@@ -121,12 +92,12 @@ function CategoryPlans({ _month }) {
                 categoryPlan={categoryPlan}
                 key={categoryPlan.id}
                 onUpdateSuccess={() => {
-                  getYearsBetween();
-                  getCategoryPlans();
+                  refetchYears();
+                  plansRefetch();
                 }}
               />
             ))}
-          {!loading && plans && plans.length === 0 && (
+          {!loadingPlans && plans && plans.length === 0 && (
             <p className="text-lg">{t("plan.no_category_plans")}</p>
           )}
         </div>
@@ -144,8 +115,8 @@ function CategoryPlans({ _month }) {
         <AddCategoryPlan
           onClose={() => setIsAddingPlan(false)}
           onUpdateSuccess={() => {
-            getYearsBetween();
-            getCategoryPlans();
+            refetchYears();
+            plansRefetch();
           }}
           _month={month.id + 1}
           _year={year.id}

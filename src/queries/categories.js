@@ -12,6 +12,7 @@ export const GetCategoriesQuery = (params) => {
   } = useQuery({
     queryKey: ["categories", params],
     queryFn: ({ signal }) => CategoriesService.getCategories(params, signal),
+    enabled: false
   });
 
   if (categoriesIsError) {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
 import monthsGetter from "../../utils/monthsGetter";
 import ReportsService from "../../services/reports";
@@ -22,79 +22,52 @@ import {
 } from "../../config/constants";
 import logo from "../../assets/images/logo-money-master.png";
 import { useTranslation } from "react-i18next";
+import { GetReportQuery } from "../../queries/reports";
+import { GetTransactionsYears } from "../../queries/transactions";
 
 function ReportsPage() {
   const location = useLocation();
   const { t } = useTranslation();
 
-  const [month, setMonth] = useState(
-    monthsGetter().find(
-      (month) =>
-        month.id ===
-        ((location.state && location.state.month - 1) || new Date().getMonth())
-    )
-  );
+  const [month, setMonth] = useState(null);
 
   const [transactionType, setTransactionType] = useState(
     TRANSACTION_TYPE.TOTAL
   );
   const [reportType, setReportType] = useState(REPORT_TYPES.DAY_MONTH);
   const [period, setPeriod] = useState(PERIODS.MONTH);
-  const [reports, setReports] = useState();
   const [filledReports, setFilledReports] = useState([]);
   const [chartLabels, setChartLabels] = useState([]);
   const [datasets, setDatasets] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [totalAmount, setTotalAmount] = useState(null);
   const walletChosen = useSelector((state) => state.wallet.walletChosen);
-  const [years, setYears] = useState([]);
   const [year, setYear] = useState();
-  const [loadingYears, setLoadingYears] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
 
-  const getYearsBetween = async () => {
-    try {
-      setLoadingYears(true);
-      const responseData = await TransactionsService.getTransactionsYears({
-        wallet_id: walletChosen?.id,
-      });
+  const { years, loadingYears, refetchYears } = GetTransactionsYears({
+    wallet_id: walletChosen?.id,
+  });
 
-      if (responseData.status === "success") {
-        const yearsBetween = responseData.data.years.map((y) => {
-          return { id: y, name: y };
-        });
+  const reportParams = useMemo(() => {
+    let params = {
+      year: year?.id,
+      transaction_type: transactionType,
+      report_type: reportType,
+      wallet: walletChosen?.id,
+    };
 
-        setYears(yearsBetween);
-
-        const currentYear = yearsBetween.find(
-          (y) => y.id === new Date().getFullYear()
-        );
-
-        setYear(currentYear || yearsBetween[0]);
-      }
-    } catch (e) {
-      toast.error(e.response.data.message);
+    if (period === PERIODS.MONTH) {
+      params = { ...params, month: month?.id + 1 };
     }
-    setLoadingYears(false);
-  };
 
-  const getReports = async (params) => {
-    try {
-      setLoading(true);
-      const responseData = await ReportsService.getReports(params);
+    return params;
+  }, [year, month, transactionType, reportType, walletChosen, period]);
 
-      if (responseData.status === "success") {
-        setReports(responseData.data.reports);
-      }
-    } catch (e) {
-      toast.error(e.response.data.message);
-    }
-    setLoading(false);
-  };
+  const { report, loadingReport, refetchReport } = GetReportQuery(reportParams);
 
   const fillReports = (labels) => {
     if (filledReports) {
-      const names = Object.keys(reports);
+      const names = Object.keys(report);
 
       labels.forEach((label) => {
         if (!names.includes(label + "")) {
@@ -157,24 +130,13 @@ function ReportsPage() {
   };
 
   useEffect(() => {
-    setLoading(true);
     if (walletChosen && year) {
-      let params = {
-        year: year?.id,
-        transaction_type: transactionType,
-        report_type: reportType,
-        wallet: walletChosen.id,
-      };
-
-      if (period === PERIODS.MONTH) {
-        params = { ...params, month: month.id + 1 };
-      }
-      getReports(params);
+      refetchReport();
     }
 
     if (reportType === REPORT_TYPES.DAY_MONTH) {
-      if (period === PERIODS.MONTH) {
-        setChartLabels(getDaysInMonth(year?.id, month.id + 1));
+      if (period === PERIODS.MONTH && month) {
+        setChartLabels(getDaysInMonth(year?.id, month?.id + 1));
       } else {
         setChartLabels([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
       }
@@ -182,20 +144,24 @@ function ReportsPage() {
   }, [transactionType, reportType, period, month, year, walletChosen]);
 
   useEffect(() => {
-    setLoadingYears(true);
-    if (walletChosen) {
-      getYearsBetween();
+    if (walletChosen) refetchYears();
+    if (years && years.length > 0) {
+      const currentYear =
+        years.find((y) => y.id === new Date().getFullYear()) || years[0];
+      setYear(currentYear);
+    } else {
+      setYear({ id: 2024, name: 2024 });
     }
   }, [walletChosen]);
 
   useEffect(() => {
-    if (reports) {
-      setFilledReports(reports);
+    if (report) {
+      setFilledReports(report);
       if (reportType === REPORT_TYPES.DAY_MONTH) {
         fillReports(chartLabels);
       }
     }
-  }, [reports, chartLabels]);
+  }, [report, chartLabels]);
 
   useEffect(() => {
     if (reportType === REPORT_TYPES.DAY_MONTH) {
@@ -253,6 +219,17 @@ function ReportsPage() {
     }
   }, [transactionType, filledReports, t]);
 
+  useEffect(() => {
+    setMonth(
+      monthsGetter().find(
+        (month) =>
+          month.id ===
+          ((location.state && location.state.month - 1) ||
+            new Date().getMonth())
+      )
+    );
+  }, []);
+
   return (
     <div className="lg:p-8 sm:p-14 p-3">
       {/* Header */}
@@ -293,11 +270,11 @@ function ReportsPage() {
             </div>
           </div>
 
-          {loading && <Loading />}
+          {loadingReport && <Loading />}
 
           <Charts
             {...{
-              loading,
+              loadingReport,
               reportType,
               chartLabels,
               datasets,
@@ -365,9 +342,9 @@ function ReportsPage() {
             {...{
               month,
               year,
-              reports,
+              reports: report,
               period,
-              loading,
+              loading: loadingReport,
               totalAmount,
               reportType,
             }}
@@ -376,11 +353,11 @@ function ReportsPage() {
             <motion.button
               className={
                 "bg-green-600 text-white hover:bg-green-700 py-2 px-8 rounded-lg shadow-xl lg:fixed static w-full lg:w-fit flex justify-center lg:bottom-4 lg:right-4 xl:bottom-10 xl:right-10 gap-1 items-center mt-6 lg:mt-0 " +
-                ((!reports || (reports && reports.length === 0)) &&
+                ((!report || (report && report.length === 0)) &&
                   "disabled:opacity-90")
               }
               onClick={handleExportExcel}
-              disabled={!reports || (reports && reports.length === 0)}
+              disabled={!report || (report && report.length === 0)}
             >
               <FontAwesomeIcon icon={faFileExcel} />{" "}
               <p>

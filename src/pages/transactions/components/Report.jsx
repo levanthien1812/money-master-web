@@ -23,6 +23,7 @@ import WarningExceed from "../../../components/warnings/WarningExceed";
 import WarningPlanExceed from "../../../components/warnings/WarningPlanExceed";
 import WarningPlanExceeded from "../../../components/warnings/WarningPlanExceeded";
 import WarningExceeded from "../../../components/warnings/WarningExceeded";
+import { GetMonthPlansQuery } from "../../../queries/plans";
 
 function Report({
   month,
@@ -35,7 +36,6 @@ function Report({
   const [plan, setPlan] = useState();
   const [isAddingPlan, setIsAddingPlan] = useState(false);
   const walletChosen = useSelector((state) => state.wallet.walletChosen);
-  const [loadingPlan, setLoadingPlan] = useState(false);
   const [showWarningExceed, setShowWarningExceed] = useState(false);
   const [showWarningPlanExceed, setShowWarningPLanExceed] = useState(false);
   const [showWarningExceeded, setShowWarningExceeded] = useState(false);
@@ -44,29 +44,21 @@ function Report({
   const navigate = useNavigate();
   const { t } = useTranslation();
 
-  const getPlan = async () => {
-    try {
-      setLoadingPlan(true);
-      const responseData = await PlansService.getMonthPlans({
-        month,
-        year,
-        wallet_id: walletChosen?.id,
-        with_report: true,
-      });
+  const { plans, loadingPlans, refetchPlans } = GetMonthPlansQuery({
+    month,
+    year,
+    wallet_id: walletChosen?.id,
+    with_report: true,
+  });
 
-      if (responseData.status === "success") {
-        if (responseData.data.plans.length > 0)
-          setPlan(responseData.data.plans[0]);
-        else setPlan(null);
-      }
-    } catch (e) {
-      toast.error(e.response.data.message);
-    }
-    setLoadingPlan(false);
-  };
+  console.log(plans)
 
   useEffect(() => {
-    if (walletChosen) getPlan();
+    setPlan(plans && plans.length > 0 ? plans[0] : null);
+  }, [plans]);
+
+  useEffect(() => {
+    if (walletChosen) refetchPlans();
   }, [month, year, walletChosen]);
 
   let percentageReport = useMemo(() => {
@@ -237,7 +229,7 @@ function Report({
           </div>
 
           <div className="text-center flex flex-col items-center">
-            {!loadingPlan && !plan && (
+            {!loadingPlans && !plan && (
               <button
                 className="py-2 px-8 rounded-lg bg-transparent text-purple-500 font-semibold hover:bg-white mb-3"
                 onClick={() => setIsAddingPlan(true)}
@@ -245,7 +237,7 @@ function Report({
                 {t("transaction.setup_plan")}
               </button>
             )}
-            {!loadingPlan && plan && (
+            {!loadingPlans && plan && (
               <div className="mb-3 bg-purple-200 rounded-xl py-2 px-4">
                 <div className="mb-2 flex justify-between items-end">
                   <div className="flex flex-col justify-center items-start text-md w-1/2 text-start">
@@ -323,7 +315,7 @@ function Report({
       {isAddingPlan && (
         <AddMonthPlan
           onClose={() => setIsAddingPlan(false)}
-          onAddingSuccess={() => getPlan()}
+          onAddingSuccess={() => refetchPlans()}
           _month={month}
           _year={year}
         />

@@ -19,7 +19,7 @@ import { useTranslation } from "react-i18next";
 import { useQuery } from "react-query";
 import { GetCategoriesQuery } from "../../../queries/categories";
 import { GetEventsQuery } from "../../../queries/events";
-import { GetPlansQuery } from "../../../queries/plans";
+import { GetCategoryPlansQuery } from "../../../queries/plans";
 
 function AddTransaction({
   setIsAdding,
@@ -49,6 +49,7 @@ function AddTransaction({
   const [processingSave, setProcessingSave] = useState(false);
   const [isWarningOverspend, setIsWarningOverspend] = useState(false);
   const [isCloning, setIsCloning] = useState(false);
+  const [plan, setPlan] = useState();
 
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -56,8 +57,10 @@ function AddTransaction({
   const { categories, loadingCategories } = GetCategoriesQuery({
     type: transaction ? transaction.category.type : type,
   });
+
   const { events, loadingEvents } = GetEventsQuery();
-  const { plan, loadingPlan, planRefetch } = GetPlansQuery({
+
+  const { plans, loadingPlans, plansRefetch } = GetCategoryPlansQuery({
     year: new Date(date).getFullYear(),
     month: new Date(date).getMonth() + 1,
     category_id: categorySelected?.id,
@@ -74,8 +77,12 @@ function AddTransaction({
   // }, []);
 
   useEffect(() => {
+    setPlan(plans && plans.length > 0 ? plans[0] : null);
+  }, [plans]);
+
+  useEffect(() => {
     if (categorySelected && walletSelected) {
-      if (categorySelected.type === CATEGORY_TYPES.EXPENSES) planRefetch();
+      if (categorySelected.type === CATEGORY_TYPES.EXPENSES) plansRefetch();
     }
   }, [walletSelected, categorySelected, date]);
 
@@ -275,12 +282,12 @@ function AddTransaction({
                 (transaction &&
                   transaction.category.type === CATEGORY_TYPES.EXPENSES)) && (
                 <>
-                  {loadingPlan && (
+                  {loadingPlans && (
                     <p className="text-sm text-blue-600 italic">
                       {t("info.loading_plan")}
                     </p>
                   )}
-                  {!loadingPlan && (
+                  {!loadingPlans && (
                     <>
                       {plan && (
                         <div className="flex items-center gap-2">

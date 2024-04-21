@@ -1,8 +1,8 @@
 import { useQuery } from "react-query";
-import ReportssService from "../services/reports";
+import ReportsService from "../services/reports";
 import { toast } from "react-toastify";
 
-export const GetTotalByMonth = (params, category) => {
+export const GetTotalByMonthCategory = (params, category) => {
   const {
     data: reports,
     isError: reportsIsError,
@@ -10,8 +10,9 @@ export const GetTotalByMonth = (params, category) => {
     isLoading: loadingReports,
     refetch: refetchReports,
   } = useQuery({
-    queryKey: ["reports", params],
-    queryFn: ({ signal }) => ReportssService.getReports(params, signal),
+    queryKey: ["reports", { ...params, category }],
+    queryFn: ({ signal }) => ReportsService.getReports(params, signal),
+    enabled: false,
   });
 
   let total = 0;
@@ -23,4 +24,30 @@ export const GetTotalByMonth = (params, category) => {
   }
 
   return { total, loadingReports, refetchReports };
+};
+
+export const GetReportQuery = (params, month = null) => {
+  const {
+    data: report,
+    isError: reportIsError,
+    error: reportError,
+    isLoading: loadingReport,
+    refetch: refetchReport,
+  } = useQuery({
+    queryKey: ["reports", month ? { ...params, month } : params],
+    queryFn: ({ signal }) => ReportsService.getReports(params, signal),
+    enabled: false,
+  });
+
+  console.log(report)
+
+  if (reportIsError) {
+    toast.error(reportError.response?.data.message);
+  }
+
+  return {
+    report: report ? (month ? report[month + ""] : report) : null,
+    loadingReport,
+    refetchReport,
+  };
 };
