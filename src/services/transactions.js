@@ -1,12 +1,17 @@
 import instance from "../config/axiosConfig";
+import { isSuccessRes } from "../utils/http";
 
 export default class TransactionsService {
-  static async getTransactions(params) {
+  static async getTransactions(params, signal) {
     const response = await instance.get("/transactions", {
       params,
     });
 
-    return response.data;
+    if (isSuccessRes(response.status)) {
+      return response.data.data.transactions;
+    }
+
+    return [];
   }
 
   static async getTransactionsYears(params, signal) {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import TransactionsService from "../../services/transactions";
 import ReportsService from "../../services/reports";
 import AddTransaction from "./components/AddTransaction";
@@ -11,24 +11,22 @@ import { useSelector } from "react-redux";
 import { CATEGORY_TYPES } from "../../config/constants";
 import logo from "../../assets/images/logo-money-master.png";
 import { useTranslation } from "react-i18next";
+import { GetTransactionsQuery } from "../../queries/transactions";
+import { GetReportByMonthQuery } from "../../queries/reports";
 
 function TransactionsPage() {
-  const [transactions, setTransactions] = useState(null);
-  const [report, setReport] = useState(null);
   const [month, setMonth] = useState(new Date().getMonth() + 1);
   const [year, setYear] = useState(new Date().getFullYear());
   const [search, setSearch] = useState("");
   const [isAddingTx, setIsAddingTx] = useState(false);
   const [typeAddTx, setTypeAddTx] = useState("expense");
-  const [loadingTransactions, setLoadingTransactions] = useState(false);
-  const [loadingReport, setLoadingReport] = useState(false);
   const [day, setDay] = useState(null);
 
   const walletChosen = useSelector((state) => state.wallet.walletChosen);
 
   const { t } = useTranslation();
 
-  const increaseMonth = () => {
+  const increaseMonth = useCallback(() => {
     if (year >= new Date().getFullYear() && month > new Date().getMonth()) {
       return;
     }
@@ -39,16 +37,16 @@ function TransactionsPage() {
     } else {
       setMonth(month + 1);
     }
-  };
+  }, [month, year]);
 
-  const decreaseMonth = () => {
+  const decreaseMonth = useCallback(() => {
     if (month === 1) {
       setMonth(12);
       setYear(year - 1);
     } else {
       setMonth(month - 1);
     }
-  };
+  }, [month, year]);
 
   const handleSearchChange = (event) => {
     setTimeout(() => setSearch(event.target.value), 300);
@@ -58,45 +56,31 @@ function TransactionsPage() {
     setDay(_day);
   };
 
-  const getTransactions = async () => {
-    try {
-      let params = {
-        month,
-        year,
-        wallet: walletChosen?.id,
-      };
+  const transactionsParams = useMemo(() => {
+    let params = {
+      month,
+      year,
+      wallet: walletChosen?.id,
+    };
 
-      if (day) {
-        params = { ...params, day };
-      }
-
-      if (search.length > 0) {
-        params = { ...params, search };
-      }
-
-      setLoadingTransactions(true);
-
-      const responseData = await TransactionsService.getTransactions(params);
-      setTransactions(responseData.data.transactions);
-    } catch (e) {
-      toast.error(e.response.data.message);
+    if (day) {
+      params = { ...params, day };
     }
-    setLoadingTransactions(false);
-  };
 
-  const getReport = async () => {
-    try {
-      setLoadingReport(true);
-      const responseData = await ReportsService.getReports({
-        year,
-        wallet: walletChosen?.id,
-      });
-      setReport(responseData.data.reports[month + ""]);
-    } catch (e) {
-      toast.error(e.response.data.message);
+    if (search.length > 0) {
+      params = { ...params, search };
     }
-    setLoadingReport(false);
-  };
+
+    return params;
+  }, [month, year, walletChosen, day, search]);
+
+  const { loadingTransactions, transactions, refetchTransactions } =
+    GetTransactionsQuery(transactionsParams);
+
+  const { loadingReport, report, refetchReport } = GetReportByMonthQuery(
+    { year, wallet: walletChosen?.id },
+    month
+  );
 
   const handleClickAddTx = (type) => {
     setIsAddingTx(true);
@@ -104,8 +88,8 @@ function TransactionsPage() {
   };
 
   const handleModifySuccess = (action) => {
-    getTransactions();
-    getReport();
+    refetchTransactions();
+    refetchReport();
 
     toast.success("Transaction is " + action + "d successfully", {
       position: toast.POSITION.TOP_CENTER,
@@ -114,13 +98,11 @@ function TransactionsPage() {
   };
 
   useEffect(() => {
-    setLoadingReport(true);
-    if (walletChosen) getReport();
+    if (walletChosen) refetchReport();
   }, [month, year, walletChosen]);
 
   useEffect(() => {
-    setLoadingTransactions(true);
-    if (walletChosen) getTransactions();
+    if (walletChosen) refetchTransactions();
   }, [month, year, walletChosen, search, day]);
 
   return (

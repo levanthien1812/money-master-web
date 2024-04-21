@@ -14,30 +14,39 @@ export default class PlansService {
     return response.data;
   }
 
-  static async getMonthPlans(params) {
+  static async getMonthPlans(params, signal) {
     const response = await instance.get("/plans/month", {
       params,
+      signal,
     });
 
-    return response.data;
+    if (isSuccessRes(response.status)) {
+      return response.data.data.plans;
+    }
+
+    return [];
   }
 
-  static async getMonthPlansYears(params) {
+  static async getMonthPlansYears(params, signal) {
     const response = await instance.get("/plans/month/years", {
       params,
+      signal,
     });
 
-    return response.data;
+    console.log(response);
+
+    if (isSuccessRes(response.status)) {
+      return response.data.data.years;
+    }
+
+    return [];
   }
 
   static async getCategoryPlans(params, signal) {
-    const response = await instance.get(
-      "/plans/category",
-      {
-        params,
-      },
-      { signal: signal }
-    );
+    const response = await instance.get("/plans/category", {
+      params,
+      signal,
+    });
 
     if (isSuccessRes(response.status)) {
       return response.data.data.plans[0];

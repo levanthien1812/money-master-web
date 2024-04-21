@@ -1,12 +1,21 @@
 import instance from "../config/axiosConfig";
+import { isSuccessRes } from "../utils/http";
 
 export default class ReportsService {
-  static async getReports(params) {
-    const response = await instance.get("/reports", {
-      params,
-    });
+  static async getReports(params, signal) {
+    const response = await instance.get(
+      "/reports",
+      {
+        params,
+      },
+      { signal: signal }
+    );
 
-    return response.data;
+    if (isSuccessRes(response.status)) {
+      return response.data.data.reports;
+    }
+
+    return [];
   }
 
   static async getUserQuantityPerMonth(params) {

@@ -14,7 +14,7 @@ import { useSelector } from "react-redux";
 import { CATEGORY_TYPES, REPORT_TYPES } from "../../../config/constants";
 import { useTranslation } from "react-i18next";
 import { GetCategoriesQuery } from "../../../queries/categories";
-import { GetTotalByMonth } from "../../../queries/reports";
+import { GetTotalByMonth, GetTotalByMonthCategory } from "../../../queries/reports";
 
 function AddCategoryPlan({
   onClose,
@@ -62,7 +62,7 @@ function AddCategoryPlan({
     total: lastMonthTotal,
     loadingReports: loadingReportsLastMonth,
     refetchReports: refetchReportsLastMonth,
-  } = GetTotalByMonth(
+  } = GetTotalByMonthCategory(
     {
       month: month.id,
       ...sharedParams,
@@ -74,7 +74,7 @@ function AddCategoryPlan({
     total: thisMonthTotal,
     loadingReports: loadingReportsThisMonth,
     refetchReports: refetchReportsThisMonth,
-  } = GetTotalByMonth(
+  } = GetTotalByMonthCategory(
     {
       month: month.id + 1,
       ...sharedParams,
