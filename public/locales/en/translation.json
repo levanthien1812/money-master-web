@@ -269,6 +269,7 @@
     "delete_transactions": "Delete all transactions",
     "remove_event": "Remove event from transactions",
     "no_transaction": "No transactions!",
+    "no_event": "No event found!",
     "today": "Hôm nay",
     "back": "Trước",
     "next": "Sau"

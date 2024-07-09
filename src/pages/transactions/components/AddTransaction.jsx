@@ -54,11 +54,12 @@ function AddTransaction({
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const { categories, loadingCategories } = GetCategoriesQuery({
-    type: transaction ? transaction.category.type : type,
-  });
+  const { categories, loadingCategories, refetchCategories } =
+    GetCategoriesQuery({
+      type: transaction ? transaction.category.type : type,
+    });
 
-  const { events, loadingEvents } = GetEventsQuery();
+  const { events, loadingEvents, refetchEvents } = GetEventsQuery();
 
   const { plans, loadingPlans, plansRefetch } = GetCategoryPlansQuery({
     year: new Date(date).getFullYear(),
@@ -79,6 +80,11 @@ function AddTransaction({
   useEffect(() => {
     setPlan(plans && plans.length > 0 ? plans[0] : null);
   }, [plans]);
+
+  useEffect(() => {
+    refetchCategories();
+    refetchEvents();
+  }, [type]);
 
   useEffect(() => {
     if (categorySelected && walletSelected) {

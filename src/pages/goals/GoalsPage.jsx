@@ -10,35 +10,21 @@ import { fetchWallets } from "../../stores/wallets";
 import { GOAL_STATUS } from "../../config/constants";
 import logo from "../../assets/images/logo-money-master.png";
 import { useTranslation } from "react-i18next";
+import { GetGoalsQuery } from "../../queries/goals";
 
 function GoalsPage() {
   const [isAddingGoal, setIsAddingGoal] = useState(false);
-  const [loadingGoals, setLoadingGoals] = useState(false);
   const [status, setStatus] = useState(GOAL_STATUS.IN_PROGRESS);
   const [isCongratulating, setIsCongratulating] = useState(false);
-  const [goals, setGoals] = useState([]);
-  const [countAll, setCountAll] = useState();
 
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const getGoals = async (params) => {
-    try {
-      setLoadingGoals(true);
-      const responseData = await GoalService.getGoals(params);
-
-      if (responseData.status === "success") {
-        setGoals(responseData.data.goals);
-        setCountAll(responseData.data.count_all);
-      }
-    } catch (e) {
-      toast.error(e.response.data.message);
-    }
-    setLoadingGoals(false);
-  };
+  const { countAll, goals, loadingGoals, refetchGoals } = GetGoalsQuery({
+    status,
+  });
 
   const handleUpdateSuccess = (goal, _status) => {
-    console.log(status);
     dispatch(fetchWallets());
     if (_status && _status !== status) {
       setStatus(_status);
@@ -46,13 +32,12 @@ function GoalsPage() {
         setIsCongratulating(true);
       }
     } else {
-      getGoals({ status });
+      refetchGoals();
     }
   };
 
   useEffect(() => {
-    setLoadingGoals(true);
-    getGoals({ status });
+    refetchGoals();
   }, [status]);
 
   return (

@@ -30,7 +30,6 @@ function ReportsPage() {
   const { t } = useTranslation();
 
   const [month, setMonth] = useState(null);
-
   const [transactionType, setTransactionType] = useState(
     TRANSACTION_TYPE.TOTAL
   );

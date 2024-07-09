@@ -8,14 +8,16 @@ export const GetEventsQuery = () => {
     isError: eventsIsError,
     error: eventsError,
     isLoading: loadingEvents,
+    refetch: refetchEvents
   } = useQuery({
     queryKey: ["events"],
     queryFn: ({ signal }) => EventsService.getEvents(signal),
+    enabled: false
   });
 
   if (eventsIsError) {
     toast.error(eventsError.response?.data.message);
   }
 
-  return { events, loadingEvents };
+  return { events, loadingEvents, refetchEvents };
 };
