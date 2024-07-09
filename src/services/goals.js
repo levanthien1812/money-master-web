@@ -1,10 +1,21 @@
 import instance from "../config/axiosConfig";
+import { isSuccessRes } from "../utils/http";
 
 export default class GoalService {
-  static async getGoals(params) {
-    const response = await instance.get("/goals", { params });
+  static async getGoals(params, signal) {
+    const response = await instance.get("/goals", { params, signal });
 
-    return response.data;
+    if (isSuccessRes(response.status)) {
+      return {
+        goals: response.data.data.goals,
+        countAll: response.data.data.count_all,
+      };
+    }
+
+    return {
+      goals: [],
+      countAll: 0,
+    };
   }
 
   static async createGoal(data) {

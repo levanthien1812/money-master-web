@@ -18,8 +18,8 @@ function UserCategories({ categories, onUpdateSuccess, loading }) {
           {t("category.expenses")}
         </h4>
 
-        {loading && <Loading />}
-        {!loading &&
+        {(loading || !categories) && <Loading />}
+        {!loading && categories &&
           categories.filter(
             (category) => category.type === CATEGORY_TYPES.EXPENSES
           ).length > 0 && (
@@ -30,7 +30,7 @@ function UserCategories({ categories, onUpdateSuccess, loading }) {
               onUpdateSuccess={onUpdateSuccess}
             />
           )}
-        {!loading &&
+        {!loading && categories &&
           categories.filter(
             (category) => category.type === CATEGORY_TYPES.EXPENSES
           ).length === 0 && (
@@ -44,8 +44,8 @@ function UserCategories({ categories, onUpdateSuccess, loading }) {
           {t("category.incomes")}
         </h4>
 
-        {loading && <Loading />}
-        {!loading &&
+        {(loading || !categories) && <Loading />}
+        {!loading && categories &&
           categories.filter(
             (category) => category.type === CATEGORY_TYPES.INCOMES
           ).length > 0 && (
@@ -56,7 +56,7 @@ function UserCategories({ categories, onUpdateSuccess, loading }) {
               onUpdateSuccess={onUpdateSuccess}
             />
           )}
-        {!loading &&
+        {!loading && categories &&
           categories.filter(
             (category) => category.type === CATEGORY_TYPES.INCOMES
           ).length === 0 && (

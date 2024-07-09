@@ -18,8 +18,8 @@ function DefaultCategories({ categories, loading, onUpdateSuccess }) {
           {t("category.expenses")}
         </h4>
 
-        {loading && <Loading />}
-        {!loading && (
+        {(loading || !categories) && <Loading />}
+        {!loading && categories && (
           <DefaultCategoryList
             categories={categories.filter(
               (category) => category.type === CATEGORY_TYPES.EXPENSES
@@ -33,8 +33,8 @@ function DefaultCategories({ categories, loading, onUpdateSuccess }) {
           {t("category.incomes")}
         </h4>
 
-        {loading && <Loading />}
-        {!loading && (
+        {(loading || !categories) && <Loading />}
+        {!loading && categories && (
           <DefaultCategoryList
             categories={categories.filter(
               (category) => category.type === CATEGORY_TYPES.INCOMES

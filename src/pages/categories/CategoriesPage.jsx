@@ -23,11 +23,14 @@ function CategoriesPage() {
     };
   }, [walletChosen]);
 
-  const { categories: defaultCategories, loadingCategories: loadingDefault } =
-    GetCategoriesQuery({
-      ...sharedParams,
-      default: true,
-    });
+  const {
+    categories: defaultCategories,
+    loadingCategories: loadingDefault,
+    refetchCategories: refetchDefault,
+  } = GetCategoriesQuery({
+    ...sharedParams,
+    default: true,
+  });
 
   const {
     categories: userCategories,
@@ -46,6 +49,13 @@ function CategoriesPage() {
       toast.success(t("toast." + action + "_category_success"));
     }
   };
+
+  useEffect(() => {
+    if (walletChosen) {
+      refetchDefault();
+      refetchUser();
+    }
+  }, [walletChosen]);
 
   return (
     <div className="lg:p-8 sm:p-14 p-3">

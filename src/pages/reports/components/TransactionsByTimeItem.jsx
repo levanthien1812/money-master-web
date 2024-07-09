@@ -7,39 +7,21 @@ import { shorten } from "../../../utils/stringFormatter";
 import TransactionsService from "../../../services/transactions";
 import { toast } from "react-toastify";
 import { CATEGORY_TYPES } from "../../../config/constants";
+import { GetTransactionsQuery } from "../../../queries/transactions";
 
 function TransactionByTimeItem({ item, index, day, month, year, wallet }) {
   const [showDropdown, setShowDropdown] = useState(false);
-  const [transactions, setTransactions] = useState(null);
-  const [loading, setLoading] = useState(false);
 
-  const getTransactions = async () => {
-    try {
-      setLoading(true);
-
-      let params = {
-        month,
-        year,
-        wallet,
-        day,
-      };
-
-      if (day) params = { ...params, day };
-
-      const responseData = await TransactionsService.getTransactions(params);
-
-      if (responseData.status === "success") {
-        setTransactions(responseData.data.transactions);
-      }
-    } catch (e) {
-      toast.error(e.response.data.message);
-    }
-    setLoading(false);
-  };
+  const {transactions, loadingTransactions, refetchTransactions} = GetTransactionsQuery({
+    month,
+    year,
+    wallet,
+    day,
+  });
 
   useEffect(() => {
     if (showDropdown && !transactions) {
-      getTransactions();
+      refetchTransactions();
     }
   }, [showDropdown, transactions]);
 
@@ -86,8 +68,8 @@ function TransactionByTimeItem({ item, index, day, month, year, wallet }) {
       {/* Show dropdown menu - expenses of categories*/}
       {showDropdown && (
         <div>
-          {loading && <p className="text-center py-1">Loading...</p>}
-          {!loading &&
+          {loadingTransactions && <p className="text-center py-1">Loading...</p>}
+          {!loadingTransactions &&
             transactions &&
             transactions.map((transaction) => (
               <div

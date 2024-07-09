@@ -1,41 +1,25 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import logo from "../../assets/images/logo-money-master.png";
 import AddEvent from "./components/AddEvent";
-import EventsService from "../../services/events";
-import { toast } from "react-toastify";
 import Loading from "../../components/others/Loading";
-import Input from "../../components/elements/Input";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "./components/bigCalendar.css";
 import { useTranslation } from "react-i18next";
+import { GetEventsQuery } from "../../queries/events";
 
 const localizer = momentLocalizer(moment);
 
 function EventsPage() {
   const [isAddingEvent, setIsAddingEvent] = useState(false);
-  const [events, setEvents] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const { t } = useTranslation();
 
-  const fetchEvents = async () => {
-    try {
-      setLoading(true);
-      const responseData = await EventsService.getEvents();
-
-      if (responseData.status === "success") {
-        setEvents(responseData.data.events);
-      }
-    } catch (error) {
-      toast.error(error.response.data.message);
-    }
-    setLoading(false);
-  };
+  const { events, loadingEvents, refetchEvents } = GetEventsQuery();
 
   useEffect(() => {
-    fetchEvents();
+    refetchEvents();
   }, []);
 
   const handleSelectEvent = (event) => {
@@ -62,12 +46,19 @@ function EventsPage() {
         {isAddingEvent && (
           <AddEvent
             onClose={() => setIsAddingEvent(false)}
-            onUpdateSuccess={fetchEvents}
+            onUpdateSuccess={refetchEvents}
           />
         )}
-        {loading && <Loading />}
+        {loadingEvents && <Loading />}
 
-        {events.length > 0 && !loading && (
+        {!events ||
+          (events.length === 0 && (
+            <p className="text-md text-gray-600 text-center py-3">
+              {t("event.no_event")}
+            </p>
+          ))}
+
+        {events && events.length > 0 && !loadingEvents && (
           <>
             <Calendar
               localizer={localizer}
@@ -89,6 +80,7 @@ function EventsPage() {
                 previous: t("event.back"),
                 next: t("event.next"),
               }}
+              
             />
           </>
         )}
@@ -98,7 +90,7 @@ function EventsPage() {
         <AddEvent
           onClose={() => setSelectedEvent(null)}
           event={selectedEvent}
-          onUpdateSuccess={fetchEvents}
+          onUpdateSuccess={refetchEvents}
         />
       )}
     </div>

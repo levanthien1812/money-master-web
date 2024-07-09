@@ -1,5 +1,5 @@
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import formatCurrency from "../../../utils/currencyFormatter";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import TransactionsService from "../../../services/transactions";
@@ -7,6 +7,7 @@ import { format } from "date-fns";
 import { shorten } from "../../../utils/stringFormatter";
 import { toast } from "react-toastify";
 import { CATEGORY_TYPES } from "../../../config/constants";
+import { GetTransactionsQuery } from "../../../queries/transactions";
 
 function TransactionsByCategoryItem({
   item,
@@ -17,37 +18,27 @@ function TransactionsByCategoryItem({
   percentage,
 }) {
   const [showDropdown, setShowDropdown] = useState(false);
-  const [transactions, setTransactions] = useState(null);
-  const [loading, setLoading] = useState(false);
 
-  const getTransactions = async () => {
-    try {
-      setLoading(true);
+  const transactionsParams = useMemo(() => {
+    let params = {
+      year,
+      wallet,
+      category: item.id,
+    };
 
-      let params = {
-        year,
-        wallet,
-        category: item.id,
-      };
-
-      if (month) {
-        params = { ...params, month };
-      }
-
-      const responseData = await TransactionsService.getTransactions(params);
-
-      if (responseData.status === "success") {
-        setTransactions(responseData.data.transactions);
-      }
-    } catch (e) {
-      toast.error(e.response.data.message);
+    if (month) {
+      params = { ...params, month };
     }
-    setLoading(false);
-  };
+
+    return params;
+  }, [year, wallet, month, item]);
+
+  const { transactions, loadingTransactions, refetchTransactions } =
+    GetTransactionsQuery(transactionsParams);
 
   useEffect(() => {
     if (showDropdown && !transactions) {
-      getTransactions();
+      refetchTransactions();
     }
   }, [showDropdown]);
 
@@ -90,8 +81,10 @@ function TransactionsByCategoryItem({
       {/* Show dropdown menu - expenses of categories*/}
       {showDropdown && (
         <div>
-          {loading && <p className="text-center py-1">Loading...</p>}
-          {!loading &&
+          {loadingTransactions && (
+            <p className="text-center py-1">Loading...</p>
+          )}
+          {!loadingTransactions &&
             transactions &&
             transactions.map((transaction) => (
               <div
