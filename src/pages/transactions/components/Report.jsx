@@ -51,8 +51,6 @@ function Report({
     with_report: true,
   });
 
-  console.log(plans)
-
   useEffect(() => {
     setPlan(plans && plans.length > 0 ? plans[0] : null);
   }, [plans]);

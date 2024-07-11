@@ -51,7 +51,6 @@ function DefaultCategoriesPage() {
           return b.transactions_count - a.transactions_count;
         return b.users_count - a.users_count;
       });
-      console.log(sortedCategories);
       return sortedCategories;
     });
   }, [sortBy]);

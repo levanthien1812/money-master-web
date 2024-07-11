@@ -39,8 +39,6 @@ export const GetReportQuery = (params, month = null) => {
     enabled: false,
   });
 
-  console.log(report)
-
   if (reportIsError) {
     toast.error(reportError.response?.data.message);
   }

@@ -135,8 +135,6 @@ function AddCategoryPlan({
 
         const responseData = await PlansService.createCategoryPlan(data);
 
-        console.log(responseData);
-
         if (responseData.status === "success") {
           onClose();
           toast.success(t("toast.create_plan_success"));

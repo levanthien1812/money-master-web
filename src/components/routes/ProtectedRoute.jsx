@@ -6,16 +6,22 @@ import { useDispatch, useSelector } from "react-redux";
 function ProtectedRoute() {
   const dispatch = useDispatch();
   const { isAuthenticated, roles } = useSelector((state) => state.auth);
+  const walletChosen = useSelector((state) => state.wallet.walletChosen);
 
   if (!isAuthenticated) {
     return <Navigate to={"/login"} />;
   }
 
-  if (roles.includes("user")) {
-    dispatch(fetchWallets());
+  if (roles.includes("admin")) {
+    return <Outlet />;
   }
 
-  return <Outlet />;
+  dispatch(fetchWallets());
+
+  if (walletChosen) {
+    console.log(walletChosen);
+    return <Outlet />;
+  }
 }
 
 export default ProtectedRoute;

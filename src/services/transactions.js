@@ -44,7 +44,6 @@ export default class TransactionsService {
   }
 
   static async updateTransaction(data, id) {
-    console.log(data);
     const response = await instance.post(
       "/transactions/" + id + "?_method=PATCH",
       data,
