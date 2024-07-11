@@ -84,7 +84,7 @@ function AddAddition({ type, onClose, goal, onUpdateSuccess }) {
       }
     } catch (e) {
       setErrors(e.response.data.error);
-      toast.error(e.response.data.message);
+      toast.error(e.response?.data.message);
     }
 
     setIsSavingAddition(false);

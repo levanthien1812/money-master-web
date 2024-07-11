@@ -32,7 +32,7 @@ function MonthPlanItem({ monthPlan, onUpdateSuccess, onSeeCategoryPlans }) {
         toast.error(responseData.error);
       }
     } catch (e) {
-      toast.error(e.response.data.message);
+      toast.error(e.response?.data.message);
     }
     setIsSavingDelete(false);
   };

@@ -34,7 +34,7 @@ function DefaultCategoriesPage() {
 
       setCategories(responseData.data.categories);
     } catch (e) {
-      toast.error(e.response.data.message);
+      toast.error(e.response?.data.message);
     }
   };
 

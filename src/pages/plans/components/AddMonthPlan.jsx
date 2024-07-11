@@ -64,7 +64,7 @@ function AddMonthPlan({ onClose, onAddingSuccess, _month, _year }) {
         setCurrentMonthValue(0);
       }
     } catch (e) {
-      toast.error(e.response.data.message);
+      toast.error(e.response?.data.message);
     }
     setLoadingTotal(false);
   };
@@ -123,7 +123,7 @@ function AddMonthPlan({ onClose, onAddingSuccess, _month, _year }) {
         }
       }
     } catch (e) {
-      toast.error(e.response.data.message);
+      toast.error(e.response?.data.message);
     }
     setProcessingSave(false);
   };

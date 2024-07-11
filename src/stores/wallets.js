@@ -9,7 +9,7 @@ export const fetchWallets = createAsyncThunk(
       const responseData = await WalletsService.getWallets();
       return responseData.data.wallets;
     } catch (e) {
-      toast.error(e.response.data.message);
+      toast.error(e.response?.data.message);
     }
   }
 );

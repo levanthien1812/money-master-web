@@ -15,7 +15,7 @@ function UsersPage() {
       const responseData = await UsersServices.getUsers();
       setUsers(responseData.data.users);
     } catch (e) {
-      toast.error(e.response.data.message);
+      toast.error(e.response?.data.message);
     }
     setLoading(false);
   };

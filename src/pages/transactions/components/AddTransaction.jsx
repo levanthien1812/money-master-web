@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ModalWithNothing from "../../../components/modal/ModalWithNothing";
 import SelectWithImage from "../../../components/elements/SelectWithImage";
-import CategoriesService from "../../../services/categories";
 import Input from "../../../components/elements/Input";
 import format from "date-fns/format";
 import TransactionsService from "../../../services/transactions";
@@ -10,13 +9,10 @@ import { toast } from "react-toastify";
 import formatCurrency from "../../../utils/currencyFormatter";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle, faWarning } from "@fortawesome/free-solid-svg-icons";
-import PlansService from "../../../services/plans";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchWallets } from "../../../stores/wallets";
-import EventsService from "../../../services/events";
 import { CATEGORY_TYPES, TRANSACTION_TYPE } from "../../../config/constants";
 import { useTranslation } from "react-i18next";
-import { useQuery } from "react-query";
 import { GetCategoriesQuery } from "../../../queries/categories";
 import { GetEventsQuery } from "../../../queries/events";
 import { GetCategoryPlansQuery } from "../../../queries/plans";
@@ -189,7 +185,7 @@ function AddTransaction({
         }
       }
     } catch (e) {
-      toast.error(e.response.data.message);
+      toast.error(e.response?.data.message);
     }
     setProcessingSave(false);
   };
@@ -386,7 +382,9 @@ function AddTransaction({
                 setSelected={setEventSelected}
                 loading={loadingEvents}
                 helperText={
-                  !loadingEvents && events.length === 0 && t("info.no_event")
+                  !loadingEvents &&
+                  (!events || events.length === 0) &&
+                  t("info.no_event")
                 }
               />
               <Input

@@ -29,7 +29,7 @@ function RegisterPage() {
       }
     } catch (e) {
       setError(e.response.data.error);
-      toast.error(e.response.data.message);
+      toast.error(e.response?.data.message);
     }
     setIsSubmitting(false);
   };
@@ -46,7 +46,7 @@ function RegisterPage() {
         toast.error(responseData.error);
       }
     } catch (e) {
-      toast.error(e.response.data.message);
+      toast.error(e.response?.data.message);
     }
     setIsSubmitting(false);
   };

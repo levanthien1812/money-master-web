@@ -25,7 +25,7 @@ function Additions({ onClose, goal }) {
         setAdditions(responseData.data.goal_additions);
       }
     } catch (e) {
-      toast.error(e.response.data.message);
+      toast.error(e.response?.data.message);
     }
     setLoadingAdditions(false);
   };

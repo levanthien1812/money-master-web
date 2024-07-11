@@ -80,7 +80,7 @@ function Profile({ onClose }) {
         setIsVerifyEmail(true);
       }
     } catch (e) {
-      toast.error(e.response.data.message);
+      toast.error(e.response?.data.message);
       setErrors(e.response.data.error);
     }
     setIsUpdating(false);
@@ -104,7 +104,7 @@ function Profile({ onClose }) {
         toast.error(responseData.error);
       }
     } catch (e) {
-      toast.error(e.response.data.message);
+      toast.error(e.response?.data.message);
     }
     setIsUpdating(false);
   };
@@ -151,7 +151,7 @@ function Profile({ onClose }) {
         toast.error(responseData.error);
       }
     } catch (e) {
-      toast.error(e.response.data.message);
+      toast.error(e.response?.data.message);
     }
   };
 

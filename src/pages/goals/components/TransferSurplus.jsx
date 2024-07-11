@@ -44,7 +44,7 @@ function TransferSurplus({ goal, onClose, amount, onUpdateSuccess }) {
         }
       }
     } catch (e) {
-      toast.error(e.response.data.message);
+      toast.error(e.response?.data.message);
     }
     setLoadingGoals(false);
   };
@@ -138,7 +138,7 @@ function TransferSurplus({ goal, onClose, amount, onUpdateSuccess }) {
               required
             />
             <p className="text-green-600 text-sm text-center">
-              {t('goal.balance')}:{" "}
+              {t("goal.balance")}:{" "}
               <span className="font-bold">
                 {formatCurrency(selectedWallet.balance)}
               </span>
