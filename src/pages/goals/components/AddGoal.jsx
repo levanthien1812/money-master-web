@@ -119,7 +119,7 @@ function AddGoal({ goal = null, status, onClose, onUpdateSuccess }) {
       }
     } catch (e) {
       setErrors(e.response.data.error);
-      toast.error(e.response.data.message);
+      toast.error(e.response?.data.message);
     }
     setIsSavingGoal(false);
   };

@@ -60,7 +60,7 @@ function AdjustBudget({ onClose, plan, onUpdateSuccess }) {
         }
       }
     } catch (e) {
-      toast.error(e.response.data.message);
+      toast.error(e.response?.data.message);
     }
     setProcessing(false);
   };

@@ -79,7 +79,7 @@ function AdminPage() {
         setDefaultCategoriesCount(responseData.data.count);
       }
     } catch (e) {
-      toast.error(e.response.data.message);
+      toast.error(e.response?.data.message);
     }
 
     setLoadingCategoryCount(false);
@@ -97,7 +97,7 @@ function AdminPage() {
         setUserQuantityPerMonth(responseData.data.quantities);
       }
     } catch (e) {
-      toast.error(e.response.data.message);
+      toast.error(e.response?.data.message);
     }
   };
 
@@ -111,7 +111,7 @@ function AdminPage() {
         setTransactionQuantityPerMonth(responseData.data.quantities);
       }
     } catch (e) {
-      toast.error(e.response.data.message);
+      toast.error(e.response?.data.message);
     }
   };
 
@@ -128,7 +128,7 @@ function AdminPage() {
         setYears(years);
       }
     } catch (e) {
-      toast.error(e.response.data.message);
+      toast.error(e.response?.data.message);
     }
     setLoadingYears(false);
   };

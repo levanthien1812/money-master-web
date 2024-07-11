@@ -37,7 +37,7 @@ function LoginPage() {
         setIsForgetting(false);
         setIsNotifyingSent(true);
 
-        Cookies.set('email', email)
+        Cookies.set("email", email);
       } else {
         setIsForgetting(true);
         setForgetError(responseData.error);
@@ -68,7 +68,7 @@ function LoginPage() {
       }
     } catch (e) {
       setError(e.response.data.error);
-      toast.error(e.response.data.message);
+      toast.error(e.response?.data.message);
     }
     setIsSubmitting(false);
   };

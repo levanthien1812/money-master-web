@@ -27,7 +27,7 @@ function ResetPasswordPage() {
       }
     } catch (e) {
       setError(e.response.data.error);
-      toast.error(e.response.data.message);
+      toast.error(e.response?.data.message);
     }
     setIsSubmitting(false);
   };
