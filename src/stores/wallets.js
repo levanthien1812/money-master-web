@@ -38,19 +38,15 @@ const walletsSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchWallets.fulfilled, (state, action) => {
-      state.wallets = action.payload;
+    builder
+      .addCase(fetchWallets.fulfilled, (state, action) => {
+        console.log("Fetched wallets:", action.payload); // Debug log
+        state.wallets = action.payload;
 
-      if (action.payload) {
-        state.haveDefaultWallet = action.payload.length > 0;
-
-        if (!state.walletChosen) {
-          state.walletChosen = action.payload.find(
-            (wallet) => wallet.default === 1
-          );
+        if (action.payload) {
+          state.haveDefaultWallet = action.payload.length > 0;
         }
-      }
-    });
+      })
   },
 });
 
