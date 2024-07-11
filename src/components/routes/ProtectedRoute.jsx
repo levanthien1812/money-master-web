@@ -6,15 +6,16 @@ import { useDispatch, useSelector } from "react-redux";
 function ProtectedRoute() {
   const dispatch = useDispatch();
   const { isAuthenticated, roles } = useSelector((state) => state.auth);
-  const { walletChosen, wallets } = useSelector((state) => state.wallet);
+  const { walletChosen } = useSelector((state) => state.wallet);
 
   useEffect(() => {
     if (isAuthenticated && roles.includes("user")) {
       dispatch(fetchWallets()).then(({ payload }) => {
         if (!walletChosen) {
-          const walletChosen = payload.find((wallet) => wallet.default === 1);
-          console.log("Chosen wallet:", walletChosen); // Debug log
-          dispatch(walletActions.setWalletChosen(walletChosen));
+          const walletChosenTemp = payload.find(
+            (wallet) => wallet.default === 1
+          );
+          dispatch(walletActions.setWalletChosen(walletChosenTemp));
         }
       });
     }
