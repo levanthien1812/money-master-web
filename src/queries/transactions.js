@@ -1,6 +1,7 @@
 import { useQuery } from "react-query";
 import TransactionsService from "../services/transactions";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
 export const GetTransactionsQuery = (params) => {
   const {
@@ -20,7 +21,11 @@ export const GetTransactionsQuery = (params) => {
     toast.error(transactionsError.response?.data.message);
   }
 
-  return { transactions, loadingTransactions, refetchTransactions };
+  return {
+    transactions,
+    loadingTransactions,
+    refetchTransactions,
+  };
 };
 
 export const GetTransactionsYears = (params) => {

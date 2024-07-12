@@ -10,7 +10,6 @@ import formatCurrency from "../../../utils/currencyFormatter";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle, faWarning } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchWallets } from "../../../stores/wallets";
 import { CATEGORY_TYPES, TRANSACTION_TYPE } from "../../../config/constants";
 import { useTranslation } from "react-i18next";
 import { GetCategoriesQuery } from "../../../queries/categories";
@@ -181,7 +180,6 @@ function AddTransaction({
         if (responseData.status === "success") {
           setIsAdding(false);
           onAddingSuccess(transaction ? "update" : "create");
-          dispatch(fetchWallets());
         }
       }
     } catch (e) {

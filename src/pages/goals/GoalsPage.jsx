@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Introduction from "./components/Introduction";
 import AddGoal from "./components/AddGoal";
-import GoalService from "../../services/goals";
-import { toast } from "react-toastify";
 import GoalList from "./components/GoalList";
 import Congratulation from "./components/Congratulation";
 import { useDispatch } from "react-redux";
-import { fetchWallets } from "../../stores/wallets";
 import { GOAL_STATUS } from "../../config/constants";
 import logo from "../../assets/images/logo-money-master.png";
 import { useTranslation } from "react-i18next";
@@ -25,7 +22,6 @@ function GoalsPage() {
   });
 
   const handleUpdateSuccess = (goal, _status) => {
-    dispatch(fetchWallets());
     if (_status && _status !== status) {
       setStatus(_status);
       if (goal) {
