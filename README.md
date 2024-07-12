@@ -13,7 +13,7 @@
     Help you master your money effectively!
     <br />
     <br />
-    <a href="https://money-master-nine.vercel.app/">View Demo</a>
+    <a href="https://money-master-web-xi.vercel.app/">View Demo</a>
     ·
     <a href="https://github.com/terry-goldenowl/personal-finance-manager-fe/issues">Report Bug</a>
     ·
