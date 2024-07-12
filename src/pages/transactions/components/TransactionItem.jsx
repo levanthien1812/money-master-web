@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import formatCurrency from "../../../utils/currencyFormatter";
 import { shorten } from "../../../utils/stringFormatter";
 import AddTransaction from "./AddTransaction";
@@ -7,7 +7,6 @@ import TransactionsService from "../../../services/transactions";
 import { toast } from "react-toastify";
 import { motion } from "framer-motion";
 import { useDispatch } from "react-redux";
-import { fetchWallets } from "../../../stores/wallets";
 import { CATEGORY_TYPES } from "../../../config/constants";
 
 function TransactionItem({ transaction, index, onModifySuccess }) {
@@ -24,7 +23,6 @@ function TransactionItem({ transaction, index, onModifySuccess }) {
       if (data.status === "success") {
         setIsDeleting(false);
         setIsViewingDetail(false);
-        dispatch(fetchWallets());
         onModifySuccess("delete");
       }
     } catch (e) {

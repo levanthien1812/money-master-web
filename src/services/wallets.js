@@ -1,10 +1,17 @@
 import instance from "../config/axiosConfig";
+import { isSuccessRes } from "../utils/http";
 
 export default class WalletsService {
   static async getWallets() {
     const responseData = await instance.get("/wallets");
+    
+    console.log(responseData.data.data.wallets)
 
-    return responseData.data;
+    if (isSuccessRes(responseData.status)) {
+      return responseData.data.data.wallets;
+    }
+
+    return [];
   }
 
   static async createWallet(data) {

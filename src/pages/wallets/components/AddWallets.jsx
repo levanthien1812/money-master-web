@@ -1,11 +1,11 @@
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Modal from "../../../components/modal/Modal";
 import Input from "../../../components/elements/Input";
 import ImageChoserPreview from "../../../components/others/ImageChoserPreview";
 import WalletsService from "../../../services/wallets";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
-import { fetchWallets, walletActions } from "../../../stores/wallets";
+import { walletActions } from "../../../stores/wallets";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import { SAMPLE_IMAGES_URL } from "../../../config/constants";
@@ -85,7 +85,6 @@ function AddWallet({ onClose, onAddSuccess, wallet = null, isNew = null }) {
 
       if (responseData.status === "success") {
         if (isNew) {
-          dispatch(fetchWallets());
           dispatch(walletActions.setHaveDefaultWallet(true));
           navigate("/transactions");
         } else {

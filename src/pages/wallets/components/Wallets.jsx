@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import ModalWithNothing from "../../../components/modal/ModalWithNothing";
 import IconButton from "../../../components/elements/IconButton";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -7,22 +7,25 @@ import Loading from "../../../components/others/Loading";
 import { toast } from "react-toastify";
 import WalletItem from "./WalletItem";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchWallets } from "../../../stores/wallets";
 import { useTranslation } from "react-i18next";
+import { GetWalletsQuery } from "../../../queries/wallets";
 
 function Wallets({ onClose }) {
-  const [loading, setLoading] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
   const { t } = useTranslation();
 
   const dispatch = useDispatch();
   const wallets = useSelector((state) => state.wallet.wallets);
 
+  const { refetchWallets, loadingWallets } = GetWalletsQuery();
+
+  useEffect(() => {
+    refetchWallets();
+  }, [refetchWallets]);
+
   const handleAddSuccess = (action) => {
     toast.success(t("toast." + action + "_wallet_success"));
-    setLoading(true);
-    dispatch(fetchWallets());
-    setLoading(false);
+    refetchWallets();
   };
 
   return (
@@ -35,8 +38,8 @@ function Wallets({ onClose }) {
       </div>
       <div className="relative sm:px-6 px-3 py-4 flex-auto">
         <div className="mb-3">
-          {loading && <Loading />}
-          {!loading &&
+          {loadingWallets && <Loading />}
+          {!loadingWallets &&
             wallets.map((wallet) => (
               <WalletItem
                 key={wallet.id}
