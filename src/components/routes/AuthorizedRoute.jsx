@@ -22,7 +22,9 @@ function AuthorizedRoute({ allowedRoles }) {
       dispatch(walletActions.setWallets(wallets));
 
       if (!walletChosen) {
-        const walletChosenTemp = wallets.find((wallet) => wallet.default === 1);
+        const walletChosenTemp = wallets.find(
+          (wallet) => parseInt(wallet.default) === 1
+        );
         dispatch(walletActions.setWalletChosen(walletChosenTemp));
       }
     }
