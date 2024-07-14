@@ -10,6 +10,7 @@ import TransactionList from "./TransactionList";
 import ModalWithNothing from "../../../components/modal/ModalWithNothing";
 import ChooseDeleteOption from "./ChooseDeleteOption";
 import { useTranslation } from "react-i18next";
+import Button from "../../../components/elements/Button";
 
 function AddEvent({ onClose, event = null, onUpdateSuccess }) {
   const { wallets, walletChosen } = useSelector((state) => state.wallet);
@@ -84,85 +85,85 @@ function AddEvent({ onClose, event = null, onUpdateSuccess }) {
           {event ? t("event.event_detail") : t("event.add_new_event")}
         </h3>
       </div>
-      <div className="relative sm:px-6 px-3 py-4 flex-auto">
-        <div className="flex flex-col lg:flex-row max-h-96 overflow-y-scroll lg:max-h-none">
+      <div className="sm:px-6 px-3 py-4">
+        <div
+          className={`grid w-full ${
+            event ? "grid-cols-2" : "grid-cols-1"
+          } gap-6`}
+        >
           <div
-            className={`grid ${event ? "grid-cols-2" : "grid-cols-1"} gap-6`}
+            className={`grid ${!event ? "grid-cols-2" : "grid-cols-1"} gap-6`}
           >
-            <div
-              className={`grid ${!event ? "grid-cols-2" : "grid-cols-1"} gap-6`}
-            >
-              <div className="">
-                <SelectWithImage
-                  data={wallets}
-                  label={t("input.wallet")}
-                  selected={walletSelected}
-                  setSelected={setWalletSelected}
-                  required
-                />
-                <Input
-                  label={t("input.name")}
-                  name={"name"}
-                  type={"text"}
-                  required
-                  size="small"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
-                <Input
-                  label={t("input.begining_date")}
-                  type={"date"}
-                  name={"date_begin"}
-                  size="small"
-                  value={format(new Date(dateBegin), "yyyy-MM-dd")}
-                  onChange={(e) => {
-                    setDateBegin(e.target.value);
-                    setDateEnd(e.target.value);
-                  }}
-                  required
-                />
-                <Input
-                  label={t("input.ending_date")}
-                  type={"date"}
-                  name={"date_end"}
-                  size="small"
-                  value={format(new Date(dateEnd), "yyyy-MM-dd")}
-                  onChange={(e) => setDateEnd(e.target.value)}
-                  required
-                />
-              </div>
-              <div className="">
-                <Input
-                  label={t("input.location")}
-                  name={"location"}
-                  type={"text"}
-                  size="small"
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                />
-                <div>
-                  <label htmlFor="description">{t("input.description")}</label>
-                  <textarea
-                    className="block border-gray-300 ring-inset ring-gray-300 focus:ring-purple-400 w-full outline-none shadow-sm rounded-md py-1.5 px-3 text-sm ring-1"
-                    type={"text"}
-                    name={"description"}
-                    size="small"
-                    rows={4}
-                    id="description"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                  />
-                </div>
-                <ImageChoserPreview
-                  image={image}
-                  setImage={setImage}
-                  errors={errors}
-                  setErrors={setErrors}
-                />
-              </div>
+            <div className="">
+              <SelectWithImage
+                data={wallets}
+                label={t("input.wallet")}
+                selected={walletSelected}
+                setSelected={setWalletSelected}
+                required
+              />
+              <Input
+                label={t("input.name")}
+                name={"name"}
+                type={"text"}
+                required
+                size="small"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+              <Input
+                label={t("input.begining_date")}
+                type={"date"}
+                name={"date_begin"}
+                size="small"
+                value={format(new Date(dateBegin), "yyyy-MM-dd")}
+                onChange={(e) => {
+                  setDateBegin(e.target.value);
+                  setDateEnd(e.target.value);
+                }}
+                required
+              />
+              <Input
+                label={t("input.ending_date")}
+                type={"date"}
+                name={"date_end"}
+                size="small"
+                value={format(new Date(dateEnd), "yyyy-MM-dd")}
+                onChange={(e) => setDateEnd(e.target.value)}
+                required
+              />
             </div>
-            {event && <TransactionList event={event} />}
+            <div className="">
+              <Input
+                label={t("input.location")}
+                name={"location"}
+                type={"text"}
+                size="small"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+              />
+              <div>
+                <label htmlFor="description">{t("input.description")}</label>
+                <textarea
+                  className="block border-gray-300 ring-inset ring-gray-300 focus:ring-purple-400 w-full outline-none shadow-sm rounded-md py-1.5 px-3 text-sm ring-1"
+                  type={"text"}
+                  name={"description"}
+                  size="small"
+                  rows={4}
+                  id="description"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                />
+              </div>
+              <ImageChoserPreview
+                image={image}
+                setImage={setImage}
+                errors={errors}
+                setErrors={setErrors}
+              />
+            </div>
           </div>
+          {event && <TransactionList event={event} />}
         </div>
       </div>
       <div
@@ -173,34 +174,34 @@ function AddEvent({ onClose, event = null, onUpdateSuccess }) {
       >
         {event && (
           <div className="flex justify-end gap-2">
-            <button
-              className="text-red-600 active:bg-red-600 font-bold uppercase text-sm px-6 py-2 rounded-xl shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+            <Button
               onClick={() => setIsDeleting(true)}
+              className="uppercase font-bold"
+              variant="danger"
             >
               {t("action.delete")}
-            </button>
+            </Button>
           </div>
         )}
         <div className="flex justify-end gap-2">
-          <button
-            className="text-gray-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-            type="button"
+          <Button
             onClick={onClose}
+            className="uppercase font-bold"
+            variant="secondary"
           >
             {t("action.cancel")}
-          </button>
-          <button
-            className="bg-purple-500 text-white active:bg-purple-600 font-bold uppercase text-sm px-6 py-2 rounded-xl shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 disabled:opacity-60"
-            type="button"
+          </Button>
+          <Button
             onClick={handleAddingEvent}
-            disabled={processingSave}
+            className="uppercase font-bold"
+            variant="primary"
           >
             {processingSave
               ? t("action.processing")
               : !event
               ? t("action.add_event")
               : t("action.update")}
-          </button>
+          </Button>
         </div>
       </div>
       {isDeleting && (

@@ -4,6 +4,7 @@ import MonthPlans from "./components/MonthPlans";
 import SelectWallet from "../wallets/components/SelectWallet";
 import logo from "../../assets/images/logo-money-master.png";
 import { useTranslation } from "react-i18next";
+import Button from "../../components/elements/Button";
 
 function PlansPage() {
   const [viewBy, setViewBy] = useState("months");
@@ -50,23 +51,22 @@ function PlansPage() {
       <div className="flex flex-col items-center">
         <div className="xl:w-3/5 sm:w-full lg:w-4/5 w-full">
           <div className="mb-4 flex justify-center w-full p-2 bg-purple-200 rounded-xl gap-2">
-            <button
-              className={
-                "py-2 w-1/2 rounded-xl hover:font-bold " + btnStyle("months")
-              }
+            <Button
               onClick={() => setViewBy("months")}
+              className="w-1/2"
+              variant={viewBy === "months" ? "primary" : "secondary"}
+              size="large"
             >
               {t("plan.by_month")}
-            </button>
-            <button
-              className={
-                "py-2 w-1/2 rounded-xl hover:font-bold " +
-                btnStyle("categories")
-              }
-              onClick={handleClickByCategoryPlans}
+            </Button>
+            <Button
+              onClick={() => setViewBy("categories")}
+              className="w-1/2"
+              variant={viewBy === "categories" ? "primary" : "secondary"}
+              size="large"
             >
               {t("plan.by_categories")}
-            </button>
+            </Button>
           </div>
           <div className="">
             {viewBy === "months" && (

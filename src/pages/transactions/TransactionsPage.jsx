@@ -13,6 +13,7 @@ import logo from "../../assets/images/logo-money-master.png";
 import { useTranslation } from "react-i18next";
 import { GetTransactionsQuery } from "../../queries/transactions";
 import { GetReportQuery } from "../../queries/reports";
+import Button from "../../components/elements/Button";
 
 function TransactionsPage() {
   const [month, setMonth] = useState(new Date().getMonth() + 1);
@@ -119,24 +120,22 @@ function TransactionsPage() {
             <SelectWallet />
           </div>
         </div>
-        <div
-          className="flex border-2 border-purple-500 rounded-2xl relative 2xl:w-1/4 lg:w-2/5 md:w-1/2 w-4/5"
-          id="add-transactions-container"
-        >
-          <button
-            className="py-2 xl:px-8 px-4 rounded-s-xl font-semibold text-purple-600 w-1/2 hover:bg-purple-100"
-            id="add-income-btn"
+        <div className="flex justify-end 2xl:w-1/4 lg:w-2/5 md:w-1/2 w-4/5 gap-2">
+          <Button
             onClick={() => handleClickAddTx(CATEGORY_TYPES.INCOMES)}
+            size="large"
+            variant="secondary"
+            className="font-bold"
           >
             {t("transaction.add_income")}
-          </button>
-          <button
-            className="py-2 xl:px-8 px-4 text-center rounded-e-xl font-semibold bg-purple-500 text-white hover:bg-purple-600 w-1/2"
-            id="add-expense-btn"
+          </Button>
+          <Button
             onClick={() => handleClickAddTx(CATEGORY_TYPES.EXPENSES)}
+            size="large"
+            className="font-bold"
           >
             {t("transaction.add_expense")}
-          </button>
+          </Button>
         </div>
       </div>
 

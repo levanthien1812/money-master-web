@@ -13,12 +13,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../../stores/auth";
 import UpdatePassword from "./UpdatePassword";
 import { useTranslation } from "react-i18next";
+import Button from "../../../components/elements/Button";
+import ImageChoserPreview from "../../../components/others/ImageChoserPreview";
 
 function Profile({ onClose }) {
   const { user, roles } = useSelector((state) => state.auth);
 
-  const [preview, setPreview] = useState(user.photo ? user.photo : profile);
-  const [photo, setPhoto] = useState();
+  const [photo, setPhoto] = useState(null);
   const [name, setName] = useState(user.name);
   const [email, setEmail] = useState(user.email);
   const [errors, setErrors] = useState(null);
@@ -31,37 +32,6 @@ function Profile({ onClose }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { t } = useTranslation();
-
-  const handleFileChange = (file) => {
-    // CLEAR ANY PHOTO STATE BEFORE
-    setPhoto(null);
-
-    setErrors((prev) => {
-      if (prev && prev.image) delete prev.image;
-      return prev;
-    });
-
-    if (file) {
-      const fileName = file.name;
-      const fileExtension = fileName.split(".").pop().toLowerCase();
-      const imageExtensions = ["jpg", "jpeg", "png", "gif"];
-
-      if (!imageExtensions.includes(fileExtension)) {
-        setPreview(null);
-        setErrors((prev) => {
-          return { ...prev, image: t("category.must_image") };
-        });
-        return;
-      }
-
-      setPhoto(file);
-
-      const objectUrl = URL.createObjectURL(file);
-      setPreview(objectUrl);
-
-      return () => URL.revokeObjectURL(objectUrl);
-    }
-  };
 
   const handleChangeEmail = async (event) => {
     setEmail(event.target.value);
@@ -135,6 +105,7 @@ function Profile({ onClose }) {
       }
 
       await handleUpdate();
+      setPhoto(null);
       setIsUpdating(false);
     }
   };
@@ -168,7 +139,7 @@ function Profile({ onClose }) {
       width={
         isUpdatingPassword
           ? "sm:w-3/5 w-11/12"
-          : "xl:w-1/4 md:w-1/3 sm:w-1/2 w-11/12"
+          : "2xl:w-1/4 xl:w-1/3 sm:w-1/2 w-11/12"
       }
       onAccept={handleAccept}
       processing={isUpdating}
@@ -193,20 +164,21 @@ function Profile({ onClose }) {
             ))}
           </div>
           <div className="">
-            {preview && (
+            {user && user.photo && (
               <div className="overflow-hidden mb-3 flex justify-center p-2">
                 <img
-                  src={preview}
+                  src={user.photo}
                   alt=""
                   className="object-cover h-60 w-60 rounded-full shadow-md"
                 />
               </div>
             )}
-            <FileUploader
-              multiple={false}
-              handleChange={handleFileChange}
-              name="image"
-              types={["JPG", "JPEG", "PNG", "GIF"]}
+            <ImageChoserPreview
+              image={photo}
+              setImage={setPhoto}
+              errors={errors}
+              setErrors={setErrors}
+              defaultPreview={null}
             />
           </div>
 
@@ -230,25 +202,19 @@ function Profile({ onClose }) {
           />
           <div
             className={
-              "flex mt-4 " +
+              "flex mt-4 gap-1 " +
               (isUpdatingPassword ? "justify-end" : "justify-between")
             }
           >
             {!isUpdatingPassword && (
-              <button
-                className="text-sm bg-gray-200 rounded-full py-1 px-3 hover:bg-blue-500 hover:text-white border border-blue-500"
-                onClick={() => setIsUpdatingPassword(true)}
-              >
+              <Button onClick={() => setIsUpdatingPassword(true)}>
                 {t("profile.update_password")}
-              </button>
+              </Button>
             )}
             {roles.includes("user") && (
-              <button
-                className="text-sm bg-red-500 rounded-full py-1 px-3 hover:bg-red-600 text-white"
-                onClick={() => setIsConfirmDelete(true)}
-              >
+              <Button onClick={() => setIsConfirmDelete(true)} variant="danger">
                 {t("profile.delete_account")}
-              </button>
+              </Button>
             )}
           </div>
         </div>

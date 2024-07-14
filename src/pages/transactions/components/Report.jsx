@@ -24,6 +24,7 @@ import WarningPlanExceed from "../../../components/warnings/WarningPlanExceed";
 import WarningPlanExceeded from "../../../components/warnings/WarningPlanExceeded";
 import WarningExceeded from "../../../components/warnings/WarningExceeded";
 import { GetMonthPlansQuery } from "../../../queries/plans";
+import Button from "../../../components/elements/Button";
 
 function Report({
   month,
@@ -228,12 +229,13 @@ function Report({
 
           <div className="text-center flex flex-col items-center">
             {!loadingPlans && !plan && (
-              <button
-                className="py-2 px-8 rounded-lg bg-transparent text-purple-500 font-semibold hover:bg-white mb-3"
+              <Button
                 onClick={() => setIsAddingPlan(true)}
+                variant="secondary"
+                className="font-bold"
               >
                 {t("transaction.setup_plan")}
-              </button>
+              </Button>
             )}
             {!loadingPlans && plan && (
               <div className="mb-3 bg-purple-200 rounded-xl py-2 px-4">
@@ -292,12 +294,13 @@ function Report({
                 </div>
               </div>
             )}
-            <button
-              className="py-2 px-8 rounded-lg bg-purple-500 text-white text-sm font-semibold uppercase mt-3 hover:bg-purple-600"
+            <Button
               onClick={handleClickViewReport}
+              className="uppercase mt-4"
+              size="large"
             >
               {t("transaction.view_report")}
-            </button>
+            </Button>
           </div>
         </>
       )}

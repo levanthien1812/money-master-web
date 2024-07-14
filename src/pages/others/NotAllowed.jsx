@@ -2,6 +2,7 @@ import React from "react";
 import noFire from "../../assets/images/no-fire.png";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Button from "../../components/elements/Button";
 
 function NotAllowed() {
   const roles = useSelector((state) => state.auth.roles);
@@ -14,11 +15,11 @@ function NotAllowed() {
         You are not allowed to perform this action!
       </p>
       <div>
-        <button className="py-1 px-4 bg-purple-500 hover:bg-purple-600 text-white rounded-xl">
+        <Button>
           <Link to={roles.includes("admin") ? "/admin" : "/transactions"}>
             Back to home
           </Link>
-        </button>
+        </Button>
       </div>
     </div>
   );

@@ -4,6 +4,7 @@ import AddCategoryPlan from "../../plans/components/AddCategoryPlan";
 import AdjustBudget from "../../plans/components/AdjustBudget";
 import { CATEGORY_TYPES } from "../../../config/constants";
 import { useTranslation } from "react-i18next";
+import Button from "../../../components/elements/Button";
 
 function DefaultCategoryItem({ category, onUpdateSuccess }) {
   const [isHover, setIsHover] = useState(false);
@@ -34,12 +35,9 @@ function DefaultCategoryItem({ category, onUpdateSuccess }) {
             className="absolute -bottom-6 z-10"
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
-            transition={{
-              type: "spring",
-            }}
+            transition={{ duration: 0.4 }}
           >
-            <button
-              className="bg-blue-600 text-white py-1 px-4 rounded-xl shadow-sm shadow-blue-300 text-sm"
+            <Button
               onClick={() => {
                 !category.plan
                   ? setIsAddingPlan(true)
@@ -50,7 +48,7 @@ function DefaultCategoryItem({ category, onUpdateSuccess }) {
               {!category.plan
                 ? t("category.set_plan")
                 : t("category.adjust_plan")}
-            </button>
+            </Button>
           </motion.div>
         )}
       </div>

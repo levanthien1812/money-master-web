@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import AddWallet from "./AddWallets";
 import formatCurrency from "../../../utils/currencyFormatter";
 import { useTranslation } from "react-i18next";
+import Button from "../../../components/elements/Button";
 
 function WalletItem({ wallet, onUpdateSuccess }) {
   const [isDeleting, setIsDeleting] = useState(false);
@@ -75,18 +76,12 @@ function WalletItem({ wallet, onUpdateSuccess }) {
 
           <Popover.Panel className="absolute z-10 -top-8 right-0 sm:right-auto shadow-lg">
             <div className="flex overflow-hidden">
-              <button
-                className="py-1 px-4 rounded-l-md bg-gray-100 hover:bg-purple-200 whitespace-nowrap"
-                onClick={() => setIsUpdating(true)}
-              >
+              <Button onClick={() => setIsUpdating(true)} variant="secondary">
                 {t("action.update")}
-              </button>
-              <button
-                className="py-1 px-4 rounded-r-md bg-gray-100 hover:bg-red-200 whitespace-nowrap"
-                onClick={() => setIsDeleting(true)}
-              >
+              </Button>
+              <Button onClick={() => setIsDeleting(true)} variant="danger">
                 {t("action.delete")}
-              </button>
+              </Button>
             </div>
           </Popover.Panel>
         </Popover>

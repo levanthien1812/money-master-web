@@ -11,7 +11,7 @@
 .rbc-event {
     background-color: rgb(168, 85, 247);
     font-size: 15px;
-    border-radius: 30px;
+    border-radius: 8px;
 }
 
 .rbc-event.rbc-event-continues-after {

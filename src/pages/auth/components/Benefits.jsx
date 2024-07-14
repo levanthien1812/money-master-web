@@ -6,6 +6,7 @@ import plan from "../../../assets/images/money-bag.png";
 import report from "../../../assets/images/seo-report.png";
 import expenses from "../../../assets/images/spending.png";
 import goal from "../../../assets/images/goal.png";
+import Button from "../../../components/elements/Button";
 
 function Benefits({ setShownBenefits }) {
   const benefits = [
@@ -32,13 +33,10 @@ function Benefits({ setShownBenefits }) {
           </div>
         ))}
       </div>
-      <button
-        className="bg-purple-600 text-white py-2 w-full rounded-lg sm:mt-12 mt-4 text-xl hover:bg-purple-700"
-        onClick={() => setShownBenefits(false)}
-      >
+      <Button onClick={() => setShownBenefits(false)} className="w-full mt-4" size="large">
         <FontAwesomeIcon icon={faArrowLeft} className="me-3" />
         <span>Back</span>
-      </button>
+      </Button>
     </div>
   );
 }

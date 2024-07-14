@@ -8,6 +8,7 @@ import { CATEGORY_TYPES } from "../../../config/constants";
 import AddTransaction from "../../transactions/components/AddTransaction";
 import TransactionItem from "./TransactionItem";
 import { useTranslation } from "react-i18next";
+import Button from "../../../components/elements/Button";
 
 function TransactionList({ event }) {
   const [transactions, setTransactions] = useState([]);
@@ -50,24 +51,26 @@ function TransactionList({ event }) {
           </button>
           {showButtons && (
             <div className="absolute right-6 flex flex-col rounded-md shadow-md bg-white overflow-hidden">
-              <button
-                className="text-sm whitespace-nowrap px-3 border-b border-b-gray-100 hover:bg-purple-600 hover:text-white py-1 hover:font-bold"
+              <Button
+                variant="secondary"
+                className="shadow-none rounded-b-none whitespace-nowrap"
                 onClick={() => {
                   setAddingType(CATEGORY_TYPES.EXPENSES);
                   setIsAdding(true);
                 }}
               >
                 {t("event.new_expense")}
-              </button>
-              <button
-                className="text-sm whitespace-nowrap px-3 hover:bg-purple-600 hover:text-white py-1 hover:font-bold"
+              </Button>
+              <Button
+                variant="secondary"
+                className="shadow-none rounded-t-none whitespace-nowrap"
                 onClick={() => {
                   setAddingType(CATEGORY_TYPES.INCOMES);
                   setIsAdding(true);
                 }}
               >
                 {t("transaction.add_income")}
-              </button>
+              </Button>
             </div>
           )}
         </div>

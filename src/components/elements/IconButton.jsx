@@ -13,12 +13,8 @@ function IconButton({
   const [isHover, setIsHover] = useState(false);
   return (
     <motion.button
-      className={
-        "flex items-center justify-center rounded-full shadow-md " +
-        bgColor +
-        " " +
-        (size === "small" ? "w-8 h-8" : "w-10 h-10")
-      }
+      className={`flex items-center justify-center rounded-full shadow-md 
+        ${bgColor} ${size === "small" ? "w-8 h-8" : "w-10 h-10"}`}
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
       whileHover={{ scale: 1.2, rotate: -10 }}

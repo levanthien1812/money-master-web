@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
+import Button from "../elements/Button";
 
 export default function Modal({
   title,
@@ -30,7 +31,7 @@ export default function Modal({
           className="border-0 rounded-xl shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none"
         >
           {/*header*/}
-          <div className="flex items-start justify-between md:p-5 py-2 px-4 border-b border-solid border-slate-200 rounded-t">
+          <div className="flex items-start justify-between md:px-5 md:py-3 py-2 px-4 border-b border-solid border-slate-200 rounded-t">
             <h3 className="text-2xl md:text-start text-center w-full">
               {title}
             </h3>
@@ -49,28 +50,16 @@ export default function Modal({
             {children}
           </div>
           {/*footer*/}
-          <div className="flex items-center justify-end px-6 md:py-4 py-2 border-t border-solid border-slate-200 rounded-b">
+          <div className="flex items-center justify-end px-6 md:px-5 md:py-3 py-2 border-t border-solid border-slate-200 rounded-b gap-2">
             {action.includes("no") && (
-              <button
-                className="text-gray-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                type="button"
-                onClick={onClose}
-              >
+              <Button onClick={onClose} variant="secondary">
                 {t("action.cancel")}
-              </button>
+              </Button>
             )}
             {action.includes("yes") && (
-              <motion.button
-                className="bg-purple-500 text-white active:bg-purple-600 font-bold uppercase text-sm px-6 py-2 rounded-xl shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 disabled:opacity-60"
-                type="button"
-                onClick={onAccept}
-                transition={{
-                  type: "spring",
-                }}
-                disabled={processing}
-              >
+              <Button onClick={onAccept} variant="primary" loading={processing}>
                 {processing ? t("action.processing") : t("action.ok")}
-              </motion.button>
+              </Button>
             )}
           </div>
         </motion.div>

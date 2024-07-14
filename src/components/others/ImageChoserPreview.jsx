@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FileUploader } from "react-drag-drop-files";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
+import Input from "../elements/Input";
 
 function ImageChoserPreview({
   image,
@@ -15,7 +16,8 @@ function ImageChoserPreview({
   const [preview, setPreview] = useState(defaultPreview);
   const { t } = useTranslation();
 
-  const handleFileChange = (file) => {
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
     // CLEAR ANY PHOTO STATE BEFORE
     setImage(null);
 
@@ -60,20 +62,16 @@ function ImageChoserPreview({
   return (
     <>
       <div className="mb-3">
-        <label htmlFor={"image"} className="flex items-center text-sm">
-          {t("input.image")}{" "}
-          <span className="text-red-600 text-2xl">{required && "*"}</span>
-        </label>
-
-        <div className="w-full overflow-hidden">
-          <FileUploader
-            multiple={false}
-            handleChange={handleFileChange}
-            name="image"
-            types={["JPG", "JPEG", "PNG", "GIF"]}
-            label={t("info.upload_drop_file")}
-          />
-        </div>
+        <Input
+          type="file"
+          name="image"
+          style={`w-full file:mr-4 file:py-1 file:border-0 file:bg-purple-50 file:hover:bg-purple-100 file:text-purple-500 file:px-4 file:rounded-lg cursor-pointer`}
+          onChange={handleFileChange}
+          accept=".png,.jpg,.jpeg,.gif"
+          multiple={false}
+          size="md"
+          label={t("input.image")}
+        />
 
         <p className="text-red-500 text-end italic text-sm mt-1">
           {errors && errors.image}

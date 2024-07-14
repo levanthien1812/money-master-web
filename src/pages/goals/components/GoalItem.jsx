@@ -18,6 +18,7 @@ import { shorten } from "../../../utils/stringFormatter";
 import goalImage from "../../../assets/images/goal.png";
 import { GOAL_STATUS } from "../../../config/constants";
 import { useTranslation } from "react-i18next";
+import Button from "../../../components/elements/Button";
 
 function GoalItem({ goal, status, onUpdateSuccess }) {
   const [isUpdating, setIsUpdating] = useState(false);
@@ -147,16 +148,16 @@ function GoalItem({ goal, status, onUpdateSuccess }) {
                 )}
               </p>
               {status !== GOAL_STATUS.NOT_STARTED && (
-                <button
-                  className=" text-purple-600 whitespace-nowrap rounded-md text-sm uppercase py-1 hover:underline"
+                <Button
                   onClick={() => setIsViewingAdditions(true)}
+                  variant="link"
                 >
                   {t("goal.see_additions")}
                   <FontAwesomeIcon
                     icon={faChevronRight}
                     className="text-purple-600 ms-2"
                   />
-                </button>
+                </Button>
               )}
             </div>
 
@@ -194,44 +195,39 @@ function GoalItem({ goal, status, onUpdateSuccess }) {
               </>
             )}
           </div>
-          <div className="flex sm:justify-end justify-center sm:gap-2 gap-1">
-            <button
-              className="bg-red-200 text-red-500 rounded-md whitespace-nowrap text-sm sm:px-4 px-2 py-1 hover:font-bold"
-              onClick={() => setIsConfirmDelete(true)}
-            >
+          <div className="flex sm:justify-end justify-center gap-1">
+            <Button onClick={() => setIsConfirmDelete(true)} className="px-2">
               {t("action.delete")}
-            </button>
-            <button
-              className="bg-purple-200 text-purple-500 rounded-md whitespace-nowrap text-sm sm:px-4 px-2 py-1 hover:font-bold"
-              onClick={() => setIsUpdating(true)}
-            >
+            </Button>
+
+            <Button onClick={() => setIsUpdating(true)} className="px-2">
               {t("action.update")}
-            </button>
+            </Button>
+
             {status !== GOAL_STATUS.NOT_STARTED && (
-              <button
-                className="bg-purple-200 text-purple-500 rounded-md whitespace-nowrap text-sm sm:px-4 px-2 py-1 hover:font-bold"
+              <Button
                 onClick={() => setIsAddingWithdrawal(true)}
+                className="px-2"
               >
                 {t("goal.withdraw")}
-              </button>
+              </Button>
             )}
-            {(status === GOAL_STATUS.IN_PROGRESS ||
-              status === GOAL_STATUS.FINISH) && (
-              <button
-                className="bg-purple-600 text-white rounded-md whitespace-nowrap text-sm sm:px-4 px-2 py-1 hover:bg-purple-700"
+            {status === GOAL_STATUS.IN_PROGRESS && (
+              <Button
                 onClick={() => setIsAddingAddition(true)}
+                className="px-2 whitespace-nowrap"
               >
                 {t("goal.add_to_goal")}
-              </button>
+              </Button>
             )}
             {status === GOAL_STATUS.FINISH &&
               goal.total_contributions > goal.amount && (
-                <button
-                  className="bg-purple-600 text-white rounded-md whitespace-nowrap text-sm px-4 py-1 hover:bg-purple-700"
+                <Button
                   onClick={() => setIsTransferingSurplus(true)}
+                  className="px-2 whitespace-nowrap"
                 >
                   {t("goal.transfer_surplus")}
-                </button>
+                </Button>
               )}
           </div>
         </div>

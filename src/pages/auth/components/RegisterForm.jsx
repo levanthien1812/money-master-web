@@ -2,6 +2,7 @@ import React from "react";
 import { Formik } from "formik";
 import { useNavigate } from "react-router";
 import Input from "../../../components/elements/Input";
+import Button from "../../../components/elements/Button";
 
 function RegisterForm({ submitting, error, setError, onSubmit }) {
   const navigate = useNavigate();
@@ -110,13 +111,14 @@ function RegisterForm({ submitting, error, setError, onSubmit }) {
                 errors.password_confirmation
               }
             />
-            <button
+            <Button
               type="submit"
-              disabled={submitting}
-              className="bg-purple-600 text-white py-2 w-full rounded-lg mt-8 text-xl hover:bg-purple-700"
+              loading={submitting}
+              className="w-full mt-4"
+              size="large"
             >
               {submitting ? "Registering...." : "Register"}
-            </button>
+            </Button>
             <p className="text-center mt-2 text-md">
               Already have account?{" "}
               <button

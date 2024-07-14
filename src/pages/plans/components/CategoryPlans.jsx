@@ -14,6 +14,7 @@ import {
   GetCategoryPlansQuery,
   GetCategoryPlansYears,
 } from "../../../queries/plans";
+import Button from "../../../components/elements/Button";
 
 function CategoryPlans({ _month }) {
   const [isAddingPlan, setIsAddingPlan] = useState(false);
@@ -102,13 +103,9 @@ function CategoryPlans({ _month }) {
           )}
         </div>
         <div className="flex lg:justify-end justify-center">
-          <button
-            className="flex items-center gap-2 rounded-md bg-purple-700 text-white py-1 px-4 hover:bg-purple-800"
-            onClick={() => setIsAddingPlan(true)}
-          >
-            <FontAwesomeIcon icon={faPlusCircle} />
+          <Button onClick={() => setIsAddingPlan(true)}>
             {t("plan.add_new")}
-          </button>
+          </Button>
         </div>
       </div>
       {isAddingPlan && (

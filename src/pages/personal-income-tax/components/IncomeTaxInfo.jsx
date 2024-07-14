@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import Calculation from "./Calculation";
 import formatCurrency from "../../../utils/currencyFormatter";
+import Button from "../../../components/elements/Button";
 
 function IncomeTaxInfo({ onClose }) {
   const [dependentQuantity, setDependentQuantity] = useState(0);
@@ -132,12 +133,7 @@ function IncomeTaxInfo({ onClose }) {
         onChange={handleDependentQuantityChange}
       />
       <div className="flex justify-between relative mt-6">
-        <button
-          className="text-sm bg-purple-500 rounded-full py-1 px-3 hover:bg-purple-600 text-white"
-          onClick={handleCalculateIncomeTax}
-        >
-          Calculate Income
-        </button>
+        <Button onClick={handleCalculateIncomeTax}>Calculate Income</Button>
         <button
           onMouseEnter={() => setShowCalculation(true)}
           onMouseLeave={() => setShowCalculation(false)}

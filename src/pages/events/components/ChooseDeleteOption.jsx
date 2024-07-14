@@ -3,6 +3,7 @@ import Modal from "../../../components/modal/Modal";
 import EventsService from "../../../services/events";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
+import Button from "../../../components/elements/Button";
 
 function ChooseDeleteOption({ event, onUpdateSuccess, onClose }) {
   const { t } = useTranslation();
@@ -39,18 +40,12 @@ function ChooseDeleteOption({ event, onUpdateSuccess, onClose }) {
       <div className="flex flex-col justify-center items-center">
         <p className="text-xl mb-4">{t("warning.delete_event")}</p>
         <div className="flex w-full gap-2">
-          <button
-            className="w-1/2 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
-            onClick={() => handleDeleteEvent("with-transactions")}
-          >
+          <Button onClick={() => handleDeleteEvent("with-transactions")}>
             {t("event.delete_transactions")}
-          </button>
-          <button
-            className="w-1/2 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed"
-            onClick={() => handleDeleteEvent("without-transactions")}
-          >
+          </Button>
+          <Button onClick={() => handleDeleteEvent("remove_event")}>
             {t("event.remove_event")}
-          </button>
+          </Button>
         </div>
       </div>
     </Modal>

@@ -15,6 +15,7 @@ import { useTranslation } from "react-i18next";
 import { GetCategoriesQuery } from "../../../queries/categories";
 import { GetEventsQuery } from "../../../queries/events";
 import { GetCategoryPlansQuery } from "../../../queries/plans";
+import Button from "../../../components/elements/Button";
 
 function AddTransaction({
   setIsAdding,
@@ -46,7 +47,6 @@ function AddTransaction({
   const [isCloning, setIsCloning] = useState(false);
   const [plan, setPlan] = useState();
 
-  const dispatch = useDispatch();
   const { t } = useTranslation();
 
   const { categories, loadingCategories, refetchCategories } =
@@ -431,40 +431,29 @@ function AddTransaction({
         >
           {transaction && !isCloning && (
             <div className="flex justify-end gap-2">
-              <button
-                className="text-red-600 active:bg-red-600 font-bold uppercase text-sm px-6 py-2 rounded-xl shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                onClick={() => setIsDeleting(true)}
-              >
+              <Button onClick={() => setIsDeleting(true)} variant="danger">
                 {t("action.delete")}
-              </button>
-              <button
-                className="text-purple-600 active:bg-purple-600 font-bold uppercase text-sm px-6 py-2 rounded-xl shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                onClick={handleClone}
-              >
+              </Button>
+              <Button onClick={handleClone} variant="secondary">
                 {t("action.clone")}
-              </button>
+              </Button>
             </div>
           )}
           <div className="flex justify-end gap-2">
-            <button
-              className="text-gray-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-              type="button"
-              onClick={handleCancel}
-            >
+            <Button onClick={handleCancel} variant="secondary">
               {t("action.cancel")}
-            </button>
-            <button
-              className="bg-purple-500 text-white active:bg-purple-600 font-bold uppercase text-sm px-6 py-2 rounded-xl shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 disabled:opacity-60"
-              type="button"
+            </Button>
+            <Button
               onClick={saveTransaction}
-              disabled={processingSave}
+              variant="primary"
+              loading={processingSave}
             >
               {processingSave
                 ? t("action.processing")
                 : !transaction || isCloning
                 ? t("action.add_transaction")
                 : t("action.update")}
-            </button>
+            </Button>
           </div>
         </div>
       </ModalWithNothing>

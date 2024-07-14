@@ -24,6 +24,7 @@ import logo from "../../assets/images/logo-money-master.png";
 import { useTranslation } from "react-i18next";
 import { GetReportQuery } from "../../queries/reports";
 import { GetTransactionsYears } from "../../queries/transactions";
+import Button from "../../components/elements/Button";
 
 function ReportsPage() {
   const location = useLocation();
@@ -284,38 +285,57 @@ function ReportsPage() {
 
           <div>
             <div className="flex gap-2 mb-2 p-2 rounded-xl bg-purple-100">
-              <button
+              <Button
+                variant={period === PERIODS.MONTH ? "primary" : "secondary"}
+                className={`w-1/2 ${period === PERIODS.MONTH && "font-bold"}`}
                 onClick={() => setPeriod(PERIODS.MONTH)}
-                className={periodStyle(PERIODS.MONTH)}
+                size="large"
               >
                 {t("report.month")}
-              </button>
-              <button
+              </Button>
+              <Button
+                variant={period === PERIODS.YEAR ? "primary" : "secondary"}
+                className={`w-1/2 ${period === PERIODS.YEAR && "font-bold"}`}
                 onClick={() => setPeriod(PERIODS.YEAR)}
-                className={periodStyle(PERIODS.YEAR)}
+                size="large"
               >
                 {t("report.year")}
-              </button>
+              </Button>
             </div>
             <div className="flex gap-2">
-              <button
+              <Button
+                variant={
+                  transactionType === TRANSACTION_TYPE.TOTAL
+                    ? "primary"
+                    : "secondary"
+                }
+                className="w-1/3"
                 onClick={() => setTransactionType(TRANSACTION_TYPE.TOTAL)}
-                className={transactionTypeStyle(TRANSACTION_TYPE.TOTAL)}
               >
                 {t("report.total")}
-              </button>
-              <button
+              </Button>
+              <Button
+                variant={
+                  transactionType === TRANSACTION_TYPE.INCOME
+                    ? "primary"
+                    : "secondary"
+                }
+                className="w-1/3"
                 onClick={() => setTransactionType(TRANSACTION_TYPE.INCOME)}
-                className={transactionTypeStyle(TRANSACTION_TYPE.INCOME)}
               >
                 {t("report.incomes")}
-              </button>
-              <button
+              </Button>
+              <Button
+                variant={
+                  transactionType === TRANSACTION_TYPE.EXPENSE
+                    ? "primary"
+                    : "secondary"
+                }
+                className="w-1/3"
                 onClick={() => setTransactionType(TRANSACTION_TYPE.EXPENSE)}
-                className={transactionTypeStyle(TRANSACTION_TYPE.EXPENSE)}
               >
                 {t("report.expenses")}
-              </button>
+              </Button>
             </div>
           </div>
         </div>
