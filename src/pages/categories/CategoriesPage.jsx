@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import logo from "../../assets/images/logo-money-master.png";
 import { useTranslation } from "react-i18next";
 import { GetCategoriesQuery } from "../../queries/categories";
+import Button from "../../components/elements/Button";
 
 function CategoriesPage() {
   const [isAddingCategory, setisAddingCategory] = useState(false);
@@ -67,18 +68,9 @@ function CategoriesPage() {
           </div>
           <h2 className="sm:text-4xl text-3xl">{t("category.categories")}</h2>
         </div>
-        <div
-          className="flex border-2 border-purple-500 rounded-2xl relative"
-          id="add-transactions-container"
-        >
-          <button
-            className="sm:py-2 sm:px-8 py-1 px-2 text-center rounded-xl font-semibold bg-purple-500 text-white hover:bg-purple-600"
-            id="add-expense-btn"
-            onClick={() => setisAddingCategory(true)}
-          >
-            {t("category.create_category")}
-          </button>
-        </div>
+        <Button onClick={() => setisAddingCategory(true)} size="large">
+          {t("category.create_category")}
+        </Button>
       </div>
 
       <div className="flex gap-8 lg:flex-row flex-col">

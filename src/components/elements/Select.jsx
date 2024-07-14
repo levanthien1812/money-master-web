@@ -14,7 +14,7 @@ export default function Select({
   required,
   loading = false,
   helperText = null,
-  size = "normal",
+  size = "medium",
   width,
 }) {
   return (
@@ -29,7 +29,7 @@ export default function Select({
             <div className="relative mt-0">
               <Listbox.Button
                 className={`relative w-full cursor-default rounded-md bg-white ${
-                  size === "normal" ? "py-1.5" : "py-1"
+                  size === "medium" ? "py-1.5" : "py-1"
                 } pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500 sm:text-sm sm:leading-6`}
               >
                 <span className="flex items-center">
@@ -64,7 +64,7 @@ export default function Select({
                               ? "bg-purple-600 text-white"
                               : "text-gray-900",
                             `relative cursor-default select-none ${
-                              size === "normal" ? "py-2" : "py-1"
+                              size === "medium" ? "py-2" : "py-1"
                             } pl-3 pr-9`
                           )
                         }

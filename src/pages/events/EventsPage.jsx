@@ -8,6 +8,7 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import "./components/bigCalendar.css";
 import { useTranslation } from "react-i18next";
 import { GetEventsQuery } from "../../queries/events";
+import Button from "../../components/elements/Button";
 
 const localizer = momentLocalizer(moment);
 
@@ -35,12 +36,9 @@ function EventsPage() {
           </div>
           <h2 className="sm:text-4xl text-3xl">{t("event.events")}</h2>
         </div>
-        <button
-          className="sm:py-2 sm:px-12 py-1 px-4 text-center rounded-xl font-semibold bg-purple-500 text-white hover:bg-purple-600"
-          onClick={() => setIsAddingEvent(true)}
-        >
+        <Button onClick={() => setIsAddingEvent(true)} size="large">
           {t("event.add_event")}
-        </button>
+        </Button>
       </div>
       <div className="mx-auto 2xl:w-4/5 xl:w-5/6">
         {isAddingEvent && (
@@ -80,7 +78,6 @@ function EventsPage() {
                 previous: t("event.back"),
                 next: t("event.next"),
               }}
-              
             />
           </>
         )}

@@ -2,6 +2,7 @@ import React from "react";
 import notFound from "../../assets/images/not-found.jpg";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Button from "../../components/elements/Button";
 
 function NotFound() {
   const roles = useSelector((state) => state.auth.roles);
@@ -17,11 +18,11 @@ function NotFound() {
         The link you followed probably broken, or the page has been remove
       </p>
       <div>
-        <button className="py-1 px-4 bg-purple-500 hover:bg-purple-600 text-white rounded-xl">
+        <Button size="large">
           <Link to={roles.includes("admin") ? "/admin" : "/transactions"}>
             Back to home
           </Link>
-        </button>
+        </Button>
       </div>
     </div>
   );

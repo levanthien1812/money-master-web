@@ -14,7 +14,7 @@ function AuthorizedRoute({ allowedRoles }) {
   const { wallets, loadingWallets, refetchWallets } = GetWalletsQuery();
 
   useEffect(() => {
-    refetchWallets();
+    if (roles.includes("user")) refetchWallets();
   }, []);
 
   useEffect(() => {

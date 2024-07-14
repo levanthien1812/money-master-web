@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import { GetMonthPlansQuery, GetMonthPlansYears } from "../../../queries/plans";
+import Button from "../../../components/elements/Button";
 
 function MonthPlans({ onSeeCategoryPlans }) {
   const [isAddingPlan, setIsAddingPlan] = useState(false);
@@ -45,7 +46,7 @@ function MonthPlans({ onSeeCategoryPlans }) {
 
   return (
     <div>
-      <div className="mb-3 flex justify-end items-start gap-2">
+      <div className="mb-3 flex justify-between items-center gap-2">
         <div className="w-32">
           <Select
             selected={year}
@@ -54,12 +55,9 @@ function MonthPlans({ onSeeCategoryPlans }) {
             loading={loadingYears}
           />
         </div>
-        <button
-          className="rounded-lg bg-purple-600 text-white px-6 py-1.5 hover:bg-purple-700"
-          onClick={() => setIsAddingPlan(true)}
-        >
+        <Button onClick={() => setIsAddingPlan(true)} >
           {t("plan.create_plan")}
-        </button>
+        </Button>
       </div>
       <div>
         {loadingPlans && <Loading />}

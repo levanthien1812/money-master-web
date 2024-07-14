@@ -9,6 +9,7 @@ import CategoryItem from "./components/CategoryItem";
 import { toast } from "react-toastify";
 import { CATEGORY_TYPES } from "../../config/constants";
 import logo from "../../assets/images/logo-money-master.png";
+import Button from "../../components/elements/Button";
 
 function DefaultCategoriesPage() {
   const [categories, setCategories] = useState([]);
@@ -176,12 +177,9 @@ function DefaultCategoriesPage() {
         </p>
       )}
       <div className="mt-4 flex justify-end">
-        <button
-          className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md"
-          onClick={() => setIsAddingCategory(true)}
-        >
+        <Button onClick={() => setIsAddingCategory(true)}>
           <FontAwesomeIcon icon={faPlus} /> Add default category
-        </button>
+        </Button>
       </div>
       {isAddingCategory && (
         <AddCategories

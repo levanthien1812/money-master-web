@@ -10,6 +10,7 @@ import AdjustBudget from "../../plans/components/AdjustBudget";
 import { toast } from "react-toastify";
 import { CATEGORY_TYPES } from "../../../config/constants";
 import { useTranslation } from "react-i18next";
+import Button from "../../../components/elements/Button";
 
 function UserCategoryItem({ category, onUpdateSuccess }) {
   const [isHover, setIsHover] = useState(false);
@@ -61,12 +62,9 @@ function UserCategoryItem({ category, onUpdateSuccess }) {
           <motion.div
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
-            transition={{
-              type: "spring",
-            }}
+            transition={{ duration: 0.4 }}
           >
-            <button
-              className="bg-blue-600 text-white py-1 px-4 rounded-xl shadow-sm shadow-blue-300 text-sm"
+            <Button
               onClick={() => {
                 !category.plan
                   ? setIsAddingPlan(true)
@@ -77,7 +75,7 @@ function UserCategoryItem({ category, onUpdateSuccess }) {
               {!category.plan
                 ? t("category.set_plan")
                 : t("category.adjust_plan")}
-            </button>
+            </Button>
           </motion.div>
         )}
         <IconButton

@@ -9,6 +9,7 @@ import { useNavigate } from "react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWarning } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
+import Button from "../../../components/elements/Button";
 
 function UpdatePassword({ onClose }) {
   const [password, setPassword] = useState("");
@@ -125,20 +126,14 @@ function UpdatePassword({ onClose }) {
       </div>
 
       <div className="flex justify-between mt-3">
-        <button
-          className="text-sm bg-gray-200 rounded-full py-1 px-3 hover:bg-blue-500 hover:text-white"
-          onClick={onClose}
-        >
+        <Button onClick={onClose} variant="secondary">
           {t("profile.back")}
-        </button>
-        <button
-          className="py-1 px-3 rounded-full bg-blue-500 text-white hover:bg-blue-600 text-sm"
-          onClick={handleUpdatePassword}
-        >
+        </Button>
+        <Button onClick={handleUpdatePassword}>
           {isSavingPassword
             ? t("profile.updating_password")
             : t("profile.update_password")}
-        </button>
+        </Button>
       </div>
     </div>
   );

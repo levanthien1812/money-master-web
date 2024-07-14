@@ -1,6 +1,7 @@
 import React from "react";
 import { Formik } from "formik";
 import Input from "../../../components/elements/Input";
+import Button from "../../../components/elements/Button";
 
 function ResetPasswordForm({ onSubmit, error, submitting }) {
   return (
@@ -94,13 +95,13 @@ function ResetPasswordForm({ onSubmit, error, submitting }) {
               }
             />
 
-            <button
+            <Button
               type="submit"
-              disabled={submitting}
-              className="bg-purple-600 text-white py-2 w-full rounded-lg mt-12 text-xl hover:bg-purple-700"
+              loading={submitting}
+              className="w-full"
             >
               {submitting ? "Resetting password ..." : "Reset password"}
-            </button>
+            </Button>
           </form>
         )}
       </Formik>

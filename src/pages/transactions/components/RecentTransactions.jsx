@@ -6,6 +6,7 @@ import Loading from "../../../components/others/Loading";
 import Input from "../../../components/elements/Input";
 import { format } from "date-fns";
 import { useTranslation } from "react-i18next";
+import Button from "../../../components/elements/Button";
 
 function RecentTransactions({
   transactions,
@@ -55,28 +56,20 @@ function RecentTransactions({
         </div>
       </div>
       <div className="flex justify-center items-center mb-3 gap-2">
-        <button
-          className={
-            "py-1 rounded-lg px-5 uppercase text-sm " +
-            (isAll
-              ? "bg-purple-500 text-white font-bold hover hover:bg-purple-600"
-              : "bg-gray-200 hover:bg-gray-300")
-          }
+        <Button
           onClick={() => setIsAll(true)}
+          variant={isAll ? "primary" : "secondary"}
+          className="uppercase"
         >
           {t("transaction.all")}
-        </button>
-        <button
-          className={
-            "py-1 rounded-lg px-3 uppercase text-sm " +
-            (!isAll
-              ? "bg-purple-500 text-white font-bold hover:bg-purple-600"
-              : "bg-gray-200 hover:bg-gray-300")
-          }
+        </Button>
+        <Button
           onClick={() => setIsAll(false)}
+          variant={isAll ? "secondary" : "primary"}
+          className="uppercase"
         >
           {t("transaction.custom_date")}
-        </button>
+        </Button>
         {!isAll && (
           <Input
             type={"date"}

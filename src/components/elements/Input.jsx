@@ -3,21 +3,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 
 function Input({
-  type,
-  name,
-  onChange = null,
-  onBlur = null,
-  value = "",
-  label,
+  type = "text",
   error,
   style = "",
-  size = "medium",
-  placeholder = "",
-  accept = "*",
-  required = null,
-  disable = false,
   mb = "mb-3",
   helperText = null,
+  label,
+  required = false,
+  size = "medium",
+  ...props
 }) {
   const [appear, setAppear] = useState(false);
 
@@ -34,7 +28,12 @@ function Input({
   return (
     <div className={mb}>
       {label && (
-        <label htmlFor={name} className={`flex items-center ${size === "medium" ? "text-md" : "text-sm"}`}>
+        <label
+          htmlFor={props.name}
+          className={`flex items-center ${
+            size === "medium" ? "text-md" : "text-sm"
+          }`}
+        >
           {label}{" "}
           <span className="text-red-600 text-2xl">{required && "*"}</span>
         </label>
@@ -43,23 +42,11 @@ function Input({
       <div className="relative flex items-center">
         <input
           type={type === "password" && appear ? "text" : type}
-          name={name}
-          onChange={onChange}
-          onBlur={onBlur}
-          value={value}
-          accept={accept}
-          className={
-            "block border-gray-300 ring-inset ring-gray-300 focus:ring-purple-400 w-full outline-none shadow-sm " +
-            sizeStyle +
-            " " +
-            style +
-            " " +
-            (error ? "ring-red-500" : "ring-gray-300")
-          }
-          placeholder={placeholder}
-          disabled={disable}
+          {...props}
+          className={`block border-gray-300 ring-inset ring-gray-300 focus:ring-purple-400 w-full outline-none shadow-sm 
+            ${sizeStyle} ${error ? "ring-red-500" : "ring-gray-300"} ${style} `}
         />
-        {type === "password" && value.length > 0 && (
+        {type === "password" && (
           <button
             className="absolute right-2 bg-gray-200 w-6 h-6 rounded-full p-2 flex justify-center items-center"
             onClick={handleToggleEye}

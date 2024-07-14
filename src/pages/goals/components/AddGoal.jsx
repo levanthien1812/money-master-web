@@ -263,7 +263,9 @@ function AddGoal({ goal = null, status, onClose, onUpdateSuccess }) {
           checked={isImportant}
           onChange={(event) => setIsImportant(event.target.checked)}
         />
-        <label htmlFor="important">{t("input.set_important")}</label>
+        <label htmlFor="important" className="text-sm">
+          {t("input.set_important")}
+        </label>
       </div>
     </Modal>
   );

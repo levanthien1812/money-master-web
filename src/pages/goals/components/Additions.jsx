@@ -7,6 +7,7 @@ import Loading from "../../../components/others/Loading";
 import { format } from "date-fns";
 import goalImage from "../../../assets/images/goal.png";
 import { useTranslation } from "react-i18next";
+import Button from "../../../components/elements/Button";
 
 function Additions({ onClose, goal }) {
   const [additions, setAdditions] = useState([]);
@@ -44,11 +45,6 @@ function Additions({ onClose, goal }) {
       );
   }, [type, additions]);
 
-  const btnStyle = (_type) => {
-    if (type === _type) return "bg-purple-600 text-white font-bold";
-    else return "text-purple-600 bg-purple-200  hover:bg-purple-200";
-  };
-
   return (
     <Modal
       onClose={onClose}
@@ -59,22 +55,20 @@ function Additions({ onClose, goal }) {
     >
       <div>
         <div className="mb-4 flex justify-center w-full p-1 bg-purple-200 rounded-xl gap-2">
-          <button
-            className={
-              "py-1 w-1/2 rounded-xl hover:font-bold " + btnStyle("additions")
-            }
+          <Button
+            className={`w-1/2 `}
             onClick={() => setType("additions")}
+            variant={type === "additions" ? "primary" : "secondary"}
           >
             {t("goal.additions")}
-          </button>
-          <button
-            className={
-              "py-1 w-1/2 rounded-xl hover:font-bold " + btnStyle("withdrawals")
-            }
+          </Button>
+          <Button
+            className={`w-1/2 `}
             onClick={() => setType("withdrawals")}
+            variant={type === "withdrawals" ? "primary" : "secondary"}
           >
             {t("goal.withdrawals")}
-          </button>
+          </Button>
         </div>
         {!loadingAdditions && shownAdditions.length > 0 && (
           <table className="w-full table-auto">

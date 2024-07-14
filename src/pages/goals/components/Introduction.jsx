@@ -8,6 +8,7 @@ import relief from "../../../assets/images/relief.png";
 import savings from "../../../assets/images/savings.png";
 import phone from "../../../assets/images/phone.png";
 import { useTranslation } from "react-i18next";
+import Button from "../../../components/elements/Button";
 
 function Introduction({ setIsAddingGoal }) {
   const { t } = useTranslation();
@@ -108,12 +109,9 @@ function Introduction({ setIsAddingGoal }) {
             ))}
           </div>
           <div className="flex justify-center">
-            <button
-              className="bg-purple-500 py-3 px-12 text-white text-md font-bold rounded-md hover:bg-purple-600"
-              onClick={() => setIsAddingGoal(true)}
-            >
+            <Button onClick={() => setIsAddingGoal(true)} size="large">
               {t("goal.set_up_goal")}
-            </button>
+            </Button>
           </div>
         </div>
 

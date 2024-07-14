@@ -8,6 +8,7 @@ import GoalService from "../../../services/goals";
 import goalImage from "../../../assets/images/goal.png";
 import Loading from "../../../components/others/Loading";
 import { useTranslation } from "react-i18next";
+import Button from "../../../components/elements/Button";
 
 function TransferSurplus({ goal, onClose, amount, onUpdateSuccess }) {
   const [type, setType] = useState(null);
@@ -113,19 +114,12 @@ function TransferSurplus({ goal, onClose, amount, onUpdateSuccess }) {
         </p>
         {!type && (
           <div className="flex w-full gap-2">
-            <button
-              className="w-1/2 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
-              onClick={() => setType("return")}
-            >
+            <Button onClick={() => setType("return")} className="w-1/2">
               {t("goal.return_wallet")}
-            </button>
-            <button
-              className="w-1/2 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed"
-              onClick={() => setType("transfer")}
-              disabled={transferableGoals.length === 0}
-            >
+            </Button>
+            <Button onClick={() => setType("transfer")} className="w-1/2">
               {t("goal.transfer_goal")}
-            </button>
+            </Button>
           </div>
         )}
         {type && type === "return" && (

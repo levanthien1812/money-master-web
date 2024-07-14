@@ -12,6 +12,7 @@ import ConfirmDeleteModal from "../../../components/modal/ConfirmDeleteModal";
 import { format } from "date-fns";
 import UsersServices from "../../../services/users";
 import { toast } from "react-toastify";
+import Button from "../../../components/elements/Button";
 
 function Table({ data, onUpdateSuccess }) {
   const [isDeletingUser, setIsDeletingUser] = useState(false);
@@ -59,12 +60,13 @@ function Table({ data, onUpdateSuccess }) {
         Header: "Actions",
         Cell: ({ row }) => (
           <div>
-            <button
-              className="bg-red-500 hover:bg-red-600 text-white rounded-md py-1 px-3 text-xs font-bold uppercase"
+            <Button
+              variant="danger"
+              size="small"
               onClick={() => handleClickDelete(row.original.id)}
             >
               Delete
-            </button>
+            </Button>
           </div>
         ),
       },
@@ -198,26 +200,30 @@ function Table({ data, onUpdateSuccess }) {
       </div>
 
       <div className="flex items-center gap-3 mt-5 justify-center">
-        <button
+        <Button
+          variant="primary"
+          size="small"
           onClick={() => previousPage()}
           disabled={!canPreviousPage}
-          className="py-1 px-3 bg-purple-500 text-white rounded-md w-24 hover:bg-purple-600"
+          className="w-24"
         >
           Previous
-        </button>
+        </Button>
         <span>
           Page{" "}
           <strong>
             {pageIndex + 1} of {pageOptions.length}
           </strong>{" "}
         </span>
-        <button
+        <Button
+          variant="primary"
+          size="small"
           onClick={() => nextPage()}
           disabled={!canNextPage}
-          className="py-1 px-3 bg-purple-500 text-white rounded-md w-24 hover:bg-purple-600"
+          className="w-24"
         >
           Next
-        </button>
+        </Button>
       </div>
 
       {isDeletingUser && (

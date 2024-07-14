@@ -8,6 +8,7 @@ import { GOAL_STATUS } from "../../config/constants";
 import logo from "../../assets/images/logo-money-master.png";
 import { useTranslation } from "react-i18next";
 import { GetGoalsQuery } from "../../queries/goals";
+import Button from "../../components/elements/Button";
 
 function GoalsPage() {
   const [isAddingGoal, setIsAddingGoal] = useState(false);
@@ -46,12 +47,9 @@ function GoalsPage() {
           <h2 className="sm:text-4xl text-3xl">{t("goal.goals")}</h2>
         </div>
         {countAll !== 0 && (
-          <button
-            className="sm:py-2 sm:px-12 py-1 px-4 text-center rounded-xl font-semibold bg-purple-500 text-white hover:bg-purple-600"
-            onClick={() => setIsAddingGoal(true)}
-          >
+          <Button onClick={() => setIsAddingGoal(true)} size="large">
             {t("goal.add_goal")}
-          </button>
+          </Button>
         )}
       </div>
       {!loadingGoals && countAll === 0 && (

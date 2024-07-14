@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { motion } from "framer-motion";
 import getMonthName from "../../../utils/getMonthName";
 import { useTranslation } from "react-i18next";
+import Button from "../../../components/elements/Button";
 
 function MonthPlanItem({ monthPlan, onUpdateSuccess, onSeeCategoryPlans }) {
   const [isAdjusting, setIsAdjusting] = useState(false);
@@ -47,12 +48,12 @@ function MonthPlanItem({ monthPlan, onUpdateSuccess, onSeeCategoryPlans }) {
 
   return (
     <motion.div
-      className={
-        " rounded-3xl p-4 bg-white mb-6 overflow-hidden " +
-        (monthPlan.month === new Date().getMonth() + 1
-          ? "border-2 shadow-md border-purple-500"
-          : "border shadow-md")
-      }
+      className={`group rounded-3xl p-4 bg-white mb-6 overflow-hidden 
+        ${
+          monthPlan.month === new Date().getMonth() + 1
+            ? "border-2 shadow-md border-purple-500"
+            : "border shadow-md"
+        }`}
       whileHover={{
         scale: 1.05,
       }}
@@ -66,24 +67,27 @@ function MonthPlanItem({ monthPlan, onUpdateSuccess, onSeeCategoryPlans }) {
         </div>
 
         <div className="flex gap-1">
-          <button
-            className="py-1.5 px-4 rounded-md bg-purple-100 text-purple-600 text-sm hover:bg-purple-200 font-bold"
-            onClick={handleClickSeeCategoryPlans}
-          >
-            {t("plan.see_category_plans")}
-          </button>
-          <button
-            className="py-1.5 px-4 rounded-md bg-purple-100 text-purple-600 text-sm hover:bg-purple-200 font-bold"
+          <Button
             onClick={() => setIsAdjusting(true)}
+            variant="secondary"
+            className=" border border-purple-500"
           >
             {t("plan.adjust_budget")}
-          </button>
-          <button
-            className="py-1.5 px-4 rounded-md bg-red-100 text-red-600 text-sm hover:bg-red-200 font-bold"
+          </Button>
+          <Button
+            onClick={handleClickSeeCategoryPlans}
+            variant="primary"
+            className=" border-purple-500"
+          >
+            {t("plan.see_category_plans")}
+          </Button>
+          <Button
             onClick={() => setIsDeleting(true)}
+            variant="danger"
+            className="opacity-0 group-hover:opacity-100 hidden group-hover:block transition-all ease-in-out duration-150"
           >
             {t("action.delete")}
-          </button>
+          </Button>
         </div>
       </div>
       <div>

@@ -2,6 +2,7 @@ import React from "react";
 import { Formik } from "formik";
 import { useNavigate } from "react-router";
 import Input from "../../../components/elements/Input";
+import Button from "../../../components/elements/Button";
 
 function LoginForm({ onForgetting, onLogin, submitting, error }) {
   const navigate = useNavigate();
@@ -90,13 +91,14 @@ function LoginForm({ onForgetting, onLogin, submitting, error }) {
                 Forget password?
               </button>
             </div>
-            <button
+            <Button
               type="submit"
-              disabled={submitting}
-              className="bg-purple-600 text-white py-2 w-full rounded-lg mt-12 text-xl hover:bg-purple-700"
+              loading={submitting}
+              className="w-full mt-4"
+              size="large"
             >
               {submitting ? "Logining...." : "Login"}
-            </button>
+            </Button>
             <p className="text-center mt-2 text-md">
               Not have account yet?{" "}
               <button

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useMemo, useState } from "react";
 import graphic1 from "../../assets/images/personal-finance-graphics.png";
 import graphic2 from "../../assets/images/personal-finance-graphics-1.jpg";
 import graphic3 from "../../assets/images/personal-finance-graphics-2.jpg";
@@ -7,13 +7,29 @@ import logoText from "../../assets/images/name-money-master.png";
 import { useNavigate } from "react-router";
 import "../../styles/auth.css";
 import Benefits from "./components/Benefits";
-import { motion } from "framer-motion";
+import Button from "../../components/elements/Button";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 function LoginRegisterLayout({ children }) {
-  const images = [graphic1, graphic2, graphic3];
+  const images = useMemo(() => [graphic1, graphic2, graphic3], []);
   const [currentImage, setCurrentImage] = useState(0);
   const [shownBenefits, setShownBenefits] = useState(false);
   const navigate = useNavigate();
+  const slickSettings = useMemo(
+    () => ({
+      dots: true,
+      infinite: true,
+      speed: 1000,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      autoplay: true,
+      autoplaySpeed: 3000,
+      fade: true,
+    }),
+    []
+  );
 
   setTimeout(() => {
     setCurrentImage(currentImage + 1 === images.length ? 0 : currentImage + 1);
@@ -32,60 +48,49 @@ function LoginRegisterLayout({ children }) {
           </h2>
           <h5 className="text-white text-2xl">Let&apos;s join.</h5>
           <div className="flex justify-end mt-1">
-            <button
-              className="bg-purple-600 py-2 px-6 text-white rounded-full md:absolute block right-16 bottom-4 hover:bg-purple-700"
+            <Button
+              className="rounded-full"
               onClick={() => setShownBenefits(!shownBenefits)}
             >
               See what you can benefit
-            </button>
+            </Button>
           </div>
         </div>
-        <div className="md:block hidden">
-          <motion.div
-            className=""
-            style={{ width: 500, height: 500 }}
-            initial={{ opacity: 0, translateX: 20 }}
-            animate={{ opacity: 1, translateX: 0 }}
-          >
-            <img src={images[currentImage]} alt="" className="" />
-          </motion.div>
-          <div className="flex gap-2 justify-center">
-            {images.map((image, index) => {
-              return (
-                <button
-                  key={Math.random()}
-                  className={`rounded-md w-full ${
-                    currentImage === index ? "bg-purple-300" : "bg-gray-300"
-                  }`}
-                  style={{ width: 80, height: 5 }}
-                  onClick={() => setCurrentImage(index)}
-                ></button>
-              );
-            })}
-          </div>
+        <div className="lg:block hidden w-3/4">
+          <Slider {...slickSettings}>
+            {images.map((image) => (
+              <div
+                className="h-[500px] flex justify-center items-center"
+                key={Math.random()}
+              >
+                <img src={image} alt="" className="object-contain w-full h-full" />
+              </div>
+            ))}
+          </Slider>
         </div>
       </div>
 
       <div className="lg:w-1/2 w-full grow flex flex-col relative overflow-hidden">
         <div
-          className="hidden gap-2 justify-end py-3 pe-8 md:flex"
+          className="hidden gap-2 justify-end py-3 pe-8 lg:flex"
           style={{
             backgroundImage:
               "linear-gradient(to left, rgb(216, 180, 254), #ffffff)",
           }}
         >
-          <button
-            className="bg-purple-600 w-40 px-6 rounded-full text-white hover:bg-purple-700"
-            onClick={() => navigate("/register")}
-          >
-            Register
-          </button>
-          <button
-            className="border w-40 border-purple-600 py-2 px-6 rounded-full text-purple-600 bg-white hover:bg-purple-50"
+          <Button
+            variant="secondary"
+            className="rounded-full w-36"
             onClick={() => navigate("/login")}
           >
             Login
-          </button>
+          </Button>
+          <Button
+            className="rounded-full w-36"
+            onClick={() => navigate("/register")}
+          >
+            Register
+          </Button>
         </div>
 
         <div
